@@ -3,61 +3,61 @@ const calcularenvido = function (c1n, c1p, c2n, c2p, c3n, c3) {
     return c1n
 */
 const calcularenvido = (c1n, c1p, c2n, c2p, c3n, c3p) => {
-    let envido=0; 
+    let envido = 0; 
     // SI LAS CARTAS SON FIGURAS LES ASIGNO EL VALOR DE 0
     switch (c1n){
         case 10:
         case 11:
         case 12:
-            c1n=0;
+            c1n = 0;
             break;
     }
     switch (c2n){
         case 10:
         case 11:
         case 12:
-            c2n=0;
+            c2n = 0;
             break;
     }
     switch (c3n){
         case 10:
         case 11:
         case 12:
-            c3n=0;
+            c3n = 0;
             break;
     }
     // VERIFICO SI HAY 3 CARTAS DEL MISMO PALO
     // EN ESE CASO SUMO LAS 2 MAS ALTAS Y LE SUMO 20
-    if (c1p===c2p && c2p===c3p){
-        if (c1n<=c2n && c1n<=c3n){
-            envido=c3n+c2n+20;
+    if (c1p === c2p && c2p === c3p){
+        if (c1n <= c2n && c1n <= c3n){
+            envido = c3n + c2n + 20;
         }
-        else if (c2n<=c1n && c2n<=c3n){
-            envido=c3n+c1n+20;
+        else if (c2n <= c1n && c2n <= c3n){
+            envido = c3n + c1n + 20;
         }
-        else if (c3n<=c2n && c3n<=c1n){
-           envido=c1n+c2n+20;
+        else if (c3n <= c2n && c3n <= c1n){
+           envido = c1n + c2n + 20;
        }
     }
     // VERIFICO SI HAY 2 CARTAS DEL MISMO PALO
     // EN ESE CASO SUMO LAS 2 Y LE SUMO 20
-    else if (c1p===c2p){
-        envido=c1n+c2n+20;
+    else if (c1p === c2p){
+        envido = c1n + c2n + 20;
     }
-    else if (c1p===c3p){
-        envido=c1n+c3n+20;
+    else if (c1p === c3p){
+        envido = c1n + c3n + 20;
     }
-    else if (c3p===c2p){
-        envido=c3n+c2n+20;
+    else if (c3p === c2p){
+        envido = c3n + c2n + 20;
     }
     // SI TODAS LAS CARTAS SON DE PALOS DISTINTOS BUSCO LA CARTA MAS ALTA
-    else if (c1n>=c2n && c1n>=c3n){
+    else if (c1n >= c2n && c1n >= c3n){
         envido=c1n;
     }
-    else if (c2n>=c1n && c2n>=c3n){
+    else if (c2n >= c1n && c2n >= c3n){
         envido=c2n;
     }
-    else if (c3n>=c2n && c3n>=c1n){
+    else if (c3n >= c2n && c3n >= c1n){
         envido=c3n;
     }
         return envido;
@@ -68,7 +68,7 @@ const verificarnumero = (num) => {
 };
 // VERIFICO SI EL PALO INGRESADO ES VALIDO
 const verificarpalo = (palo) => {
-    return (palo!=='O' && palo!=='C' && palo!=='E' && palo!=='B');
+    return (palo !== 'O' && palo !== 'C' && palo !== 'E' && palo !== 'B');
 }
 
 let c1n;
@@ -106,10 +106,10 @@ do {
             mensaje = "El palo ingresado es incorrecto\nEl palo de las cartas debe ser O (oro), C (copa), E (espada) o B (basto)\nProbá de nuevo.";
         } while (verificarpalo(c2p));
         // ALERTO SI LA CARTA YA FUE CARGADA
-        if (c1n+c1p===c2n+c2p) {
+        if (c1n + c1p === c2n + c2p) {
             alert ('Ya ingresaste esa carta. Ingresá una carta distinta.');
         }
-    } while (c1n+c1p===c2n+c2p); 
+    } while (c1n + c1p === c2n + c2p); 
     // CARGO LA TERCERA CARTA HASTA QUE SEA DISTINTA DE LA PRIMERA Y DE LA SEGUNDA
     do {
         mensaje = "Ingresá el valor de tu tercera carta";
@@ -123,11 +123,11 @@ do {
             mensaje = "El palo ingresado es incorrecto\nEl palo de las cartas debe ser O (oro), C (copa), E (espada) o B (basto)\nProbá de nuevo.";
         } while (verificarpalo(c3p));
         // ALERTO SI LA CARTA YA FUE CARGADA
-        if (c1n+c1p===c3n+c3p || c3n+c3p===c2n+c2p) {
+        if (c1n + c1p === c3n + c3p || c3n + c3p === c2n + c2p) {
             alert ('Ya ingresaste esa carta. Ingresá una carta distinta.');
         }  
-    } while (c1n+c1p===c3n+c3p || c3n+c3p===c2n+c2p);
+    } while (c1n + c1p === c3n + c3p || c3n + c3p === c2n + c2p);
     envido = calcularenvido(c1n, c1p, c2n, c2p, c3n, c3p);
-    continuar = prompt('Tenés '+envido+' para el envido.\n¿Querés que te asista otra mano? (S/N)');
+    continuar = prompt('Tenés ' + envido + ' para el envido.\n¿Querés que te asista otra mano? (S/N)');
     mensaje = "Ingresá el valor de tu primera carta";  
-} while (continuar !=='NO' && continuar !=='no' && continuar !=='N' && continuar !=='n' && continuar !=='No' && continuar !=='nO');
+} while (continuar !== 'NO' && continuar !== 'no' && continuar !== 'N' && continuar !== 'n' && continuar !== 'No' && continuar !== 'nO');
