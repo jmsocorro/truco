@@ -71,6 +71,210 @@ const verificarpalo = (palo) => {
     return (palo !== 'O' && palo !== 'C' && palo !== 'E' && palo !== 'B');
 }
 
+const mazo = [
+    { 
+        palo: "Oro",
+        número : "1",
+        valor: "10"
+    },
+    { 
+        palo: "Oro",
+        número : "2",
+        valor: "8"
+    },
+    { 
+        palo: "Oro",
+        número : "3",
+        valor: "4"
+    },
+    { 
+        palo: "Oro",
+        número : "4",
+        valor: "36"
+    },
+    { 
+        palo: "Oro",
+        número : "5",
+        valor: "32"
+    },
+    { 
+        palo: "Oro",
+        número : "6",
+        valor: "28"
+    },
+    { 
+        palo: "Oro",
+        número : "7",
+        valor: "3"
+    },
+    { 
+        palo: "Oro",
+        número : "10",
+        valor: "22"
+    },
+    { 
+        palo: "Oro",
+        número : "11",
+        valor: "18"
+    },
+    { 
+        palo: "Oro",
+        número : "12",
+        valor: "14"
+    },
+    { 
+        palo: "Copa",
+        número : "1",
+        valor: "10"
+    },
+    { 
+        palo: "Copa",
+        número : "2",
+        valor: "8"
+    },
+    { 
+        palo: "Copa",
+        número : "3",
+        valor: "4"
+    },
+    { 
+        palo: "Copa",
+        número : "4",
+        valor: "36"
+    },
+    { 
+        palo: "Copa",
+        número : "5",
+        valor: "32"
+    },
+    { 
+        palo: "Copa",
+        número : "6",
+        valor: "28"
+    },
+    { 
+        palo: "Copa",
+        número : "7",
+        valor: "26"
+    },
+    { 
+        palo: "Copa",
+        número : "10",
+        valor: "22"
+    },
+    { 
+        palo: "Copa",
+        número : "11",
+        valor: "18"
+    },
+    { 
+        palo: "Copa",
+        número : "12",
+        valor: "14"
+    },
+    { 
+        palo: "Espada",
+        número : "1",
+        valor: "0"
+    },
+    { 
+        palo: "Espada",
+        número : "2",
+        valor: "8"
+    },
+    { 
+        palo: "Espada",
+        número : "3",
+        valor: "4"
+    },
+    { 
+        palo: "Espada",
+        número : "4",
+        valor: "36"
+    },
+    { 
+        palo: "Espada",
+        número : "5",
+        valor: "32"
+    },
+    { 
+        palo: "Espada",
+        número : "6",
+        valor: "28"
+    },
+    { 
+        palo: "Espada",
+        número : "7",
+        valor: "2"
+    },
+    { 
+        palo: "Espada",
+        número : "10",
+        valor: "22"
+    },
+    { 
+        palo: "Espada",
+        número : "11",
+        valor: "18"
+    },
+    { 
+        palo: "Espada",
+        número : "12",
+        valor: "14"
+    },
+    { 
+        palo: "Basto",
+        número : "1",
+        valor: "1"
+    },
+    { 
+        palo: "Basto",
+        número : "2",
+        valor: "8"
+    },
+    { 
+        palo: "Basto",
+        número : "3",
+        valor: "4"
+    },
+    { 
+        palo: "Basto",
+        número : "4",
+        valor: "36"
+    },
+    { 
+        palo: "Basto",
+        número : "5",
+        valor: "32"
+    },
+    { 
+        palo: "Basto",
+        número : "6",
+        valor: "28"
+    },
+    { 
+        palo: "Basto",
+        número : "7",
+        valor: "26"
+    },
+    { 
+        palo: "Basto",
+        número : "10",
+        valor: "22"
+    },
+    { 
+        palo: "Basto",
+        número : "11",
+        valor: "18"
+    },
+    { 
+        palo: "Basto",
+        número : "12",
+        valor: "14"
+    }
+]
+
+
 let c1n;
 let c1p;
 let c2n;
