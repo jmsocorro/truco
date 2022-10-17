@@ -70,7 +70,7 @@ const verificarnumero = (num) => {
 const verificarpalo = (palo) => {
     return (palo !== 'O' && palo !== 'C' && palo !== 'E' && palo !== 'B');
 }
-
+// MAZO DE CARTAS PARA JUGAR
 const mazo = [
     { 
         palo: "Oro",
@@ -273,8 +273,61 @@ const mazo = [
         valor: "14"
     }
 ]
+// COSTRUCTOR DE PARTIDO NUEVO
+function Partido (objeto) {
+    this.chicos = objeto.chicos;
+    this.puntostotal = objeto.puntos;
+    this.flor = objeto.flor;
+    this.jugadores = objeto.jugadores;
+    this.jugadormano = objeto.jugadormano;
+}
+// CONSTRUCTOR DE MANO
+function Mano (objeto) {
+    cartas1 = objeto.cartas1;
+    cartas2 = objeto.cartas2;
+    jugadormano = objeto.jugadormano;
+    vueltas = [];
+    envido = {
+        canto: [],
+        cantojugador: 0,
+        puntos: 0,
+        ganador: 0
+    };
+    truco = {
+        canto: [],
+        cantojugador: 0,
+        puntos: 1,
+        ganador: 0
+    }
+}
 
-
+// CARGAR LOS DATOS DEL PARTIDO NUEVO
+let chicos;
+let puntostotal;
+let flor;
+let jugadornombre;
+let jugadormano;
+let mensaje = "Hola soy JSAI y te defafío a jugar al truco\n¿Cuál es tu nombre?";
+do {
+    jugadornombre = prompt(mensaje);
+    mensaje = "Tu nombre debe tener por lo menos 2 caracteres"
+} while (jugadornombre.length<2);
+mensaje = "¿A cuántos chicos querés jugar? (1,2,3)"
+do {
+    chicos = parseInt(prompt(mensaje));
+    mensaje = "Tenes que ingresar una de las opciones (1,2,3)"
+} while (chicos !== 1 && chicos !==2 && chicos !== 3);
+mensaje = "¿A cuántos puntos querés jugar? (15 ó 30)"
+do {
+    puntostotal = parseInt(prompt(mensaje));
+    mensaje = "Tenes que ingresar una de las opciones (15 ó 30)"
+} while (puntostotal !== 15 && puntostotal !== 30);
+mensaje = "¿Jugamos con Flor? (SI / NO)";
+do {
+    flor = prompt(mensaje);
+    mensaje = "Tenes que ingresar una de las opciones (SI /  NO)";
+} while (puntostotal!==15 && puntostotal!==30);
+/*a
 let c1n;
 let c1p;
 let c2n;
@@ -335,3 +388,4 @@ do {
     continuar = prompt('Tenés ' + envido + ' para el envido.\n¿Querés que te asista otra mano? (S/N)');
     mensaje = "Ingresá el valor de tu primera carta";  
 } while (continuar !== 'NO' && continuar !== 'no' && continuar !== 'N' && continuar !== 'n' && continuar !== 'No' && continuar !== 'nO');
+*/
