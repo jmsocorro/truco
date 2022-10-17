@@ -275,11 +275,39 @@ const mazo = [
 ]
 // COSTRUCTOR DE PARTIDO NUEVO
 function Partido (objeto) {
-    this.chicos = objeto.chicos;
-    this.puntostotal = objeto.puntos;
+    this.cantchicos = objeto.cantchicos;
+    this.puntostotal = objeto.puntostotal;
+    this.jugadormano = objeto.jugadormano;
     this.flor = objeto.flor;
     this.jugadores = objeto.jugadores;
+    this.chicos = [];
+    this.iniciarnuevochico = () => {
+        if (this.chicos.length < this.cantchicos){
+            this.chicos.push(
+                new Chico(
+                    {
+                        jugadormano: this.jugadormano,
+                        puntos1 : 0,
+                        puntos2 : 0
+                    }
+                )
+            );
+            if (this.jugadormano === 1) {
+                this.jugadormano === 2;
+            } else {
+                this. jugadormano === 1;
+            }
+        } else {
+            console.log('fin del partido');
+        }
+    }
+}
+// COSTRUCTOR DE CHICO NUEVO
+function Chico (objeto) {
     this.jugadormano = objeto.jugadormano;
+    this.puntos1 = objeto.puntos1;
+    this.puntos2 = objeto.puntos2;
+    this.ganador = 0;
 }
 // CONSTRUCTOR DE MANO
 function Mano (objeto) {
@@ -302,32 +330,95 @@ function Mano (objeto) {
 }
 
 // CARGAR LOS DATOS DEL PARTIDO NUEVO
-let chicos;
-let puntostotal;
-let flor;
-let jugadornombre;
-let jugadormano;
-let mensaje = "Hola soy JSAI y te defafío a jugar al truco\n¿Cuál es tu nombre?";
-do {
-    jugadornombre = prompt(mensaje);
-    mensaje = "Tu nombre debe tener por lo menos 2 caracteres"
-} while (jugadornombre.length<2);
-mensaje = "¿A cuántos chicos querés jugar? (1,2,3)"
-do {
-    chicos = parseInt(prompt(mensaje));
-    mensaje = "Tenes que ingresar una de las opciones (1,2,3)"
-} while (chicos !== 1 && chicos !==2 && chicos !== 3);
-mensaje = "¿A cuántos puntos querés jugar? (15 ó 30)"
-do {
-    puntostotal = parseInt(prompt(mensaje));
-    mensaje = "Tenes que ingresar una de las opciones (15 ó 30)"
-} while (puntostotal !== 15 && puntostotal !== 30);
-mensaje = "¿Jugamos con Flor? (SI / NO)";
-do {
-    flor = prompt(mensaje);
-    mensaje = "Tenes que ingresar una de las opciones (SI /  NO)";
-} while (puntostotal!==15 && puntostotal!==30);
-/*a
+const cargarnuevopartido = () => {
+    let chicos;
+    let puntostotal;
+    let flor;
+    let jugadornombre;
+    let jugadormano;
+    let mensaje = "Hola soy JSAI y te defafío a jugar al truco\n¿Cuál es tu nombre?";
+    do {
+        jugadornombre = prompt(mensaje);
+        mensaje = "Tu nombre debe tener por lo menos 2 caracteres"
+    } while (jugadornombre.length<2);
+    mensaje = "¿A cuántos chicos querés jugar? (1,2,3)"
+    do {
+        chicos = parseInt(prompt(mensaje));
+        mensaje = "Tenes que ingresar una de las opciones (1,2,3)"
+    } while (chicos !== 1 && chicos !==2 && chicos !== 3);
+    mensaje = "¿A cuántos puntos querés jugar? (15 ó 30)"
+    do {
+        puntostotal = parseInt(prompt(mensaje));
+        mensaje = "Tenes que ingresar una de las opciones (15 ó 30)"
+    } while (puntostotal !== 15 && puntostotal !== 30);
+    mensaje = "¿Jugamos con Flor? (SI / NO)";
+    do {
+        flor = prompt(mensaje);
+        if (flor.toLowerCase() === "si" || flor.toLowerCase() === "s"){
+            flor = true;
+        } else if (flor.toLowerCase() === "no" || flor.toLowerCase() === "n"){
+            flor = false;
+        }
+        mensaje = "Tenes que ingresar una de las opciones (SI /  NO)";
+    } while (flor !== true && flor !== false);
+    mensaje = "¿Reparto yo? (SI / NO)";
+    do {
+        jugadormano = prompt(mensaje);
+        if (jugadormano.toLowerCase() === "si" || jugadormano.toLowerCase() === "s"){
+            jugadormano = 2;
+        } else if (jugadormano.toLowerCase() === "no" || jugadormano.toLowerCase() === "n"){
+            jugadormano = 1;
+        } else {
+        jugadormano = 0; 
+        }
+        mensaje = "Tenes que ingresar una de las opciones (SI /  NO)";
+    } while (jugadormano !== 1 && jugadormano !== 2);
+    let nuevopartido = new  Partido ({
+        cantchicos : chicos,
+        puntostotal : puntostotal,
+        flor : flor,
+        jugadores: [
+            {jugadornombre : jugadornombre},
+            {jugadornombre : 'JSAI'}
+        ],
+        jugadormano: jugadormano,
+        chicos : [
+            {
+                jugadormano: jugadormano,
+                puntos1: 0,
+                puntos2: 0,
+                ganador: 0
+            }
+        ]
+    });
+    return nuevopartido;
+}
+
+/* INICIAR NUEVO CHICO
+const iniciarnuevochico = () => {
+    let partido = partidos [partidos.length-1];
+    if (partido.chicos.length > partido.cantchicos){
+        partido.chicos.push(
+            {
+                jugadormano: partido.jugadormano,
+                puntos1: 0,
+                puntos2: 0,
+                ganador: 0
+            }
+        )
+    } else {
+        console.log('fin del partido');
+    }
+}
+*/
+let partidos = [];
+partidos.push(cargarnuevopartido());
+let partidoencurso = partidos[partidos.length-1];
+partidoencurso.iniciarnuevochico();
+partidoencurso.iniciarnuevochico();
+partidoencurso.iniciarnuevochico();
+console.table(partidos);
+/*
 let c1n;
 let c1p;
 let c2n;
