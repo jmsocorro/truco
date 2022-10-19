@@ -1,3 +1,4 @@
+// CALCULAR EL ENVIDO DADAS LAS CARTAS
 const calcularenvido = (cartas) => {
     let envido = 0;
     let tenesflor = false;
@@ -66,214 +67,206 @@ const calcularenvido = (cartas) => {
     }
         return {envido: envido , flor: tenesflor};
 };
-// VERIFICO SI EL NUMERO INGRESADO ES VALIDO
-const verificarnumero = (num) => {
-    return (num>0 && num<13 && num!==8 && num!==9);
-};
-// VERIFICO SI EL PALO INGRESADO ES VALIDO
-const verificarpalo = (palo) => {
-    return (palo !== 'O' && palo !== 'C' && palo !== 'E' && palo !== 'B');
-}
 // MAZO DE CARTAS PARA JUGAR
 const mazo = [
     { 
         palo: "Oro",
-        numero : "1",
+        numero : 1,
         valor: "10"
     },
     { 
         palo: "Oro",
-        numero : "2",
+        numero : 2,
         valor: "8"
     },
     { 
         palo: "Oro",
-        numero : "3",
+        numero : 3,
         valor: "4"
     },
     { 
         palo: "Oro",
-        numero : "4",
+        numero : 4,
         valor: "36"
     },
     { 
         palo: "Oro",
-        numero : "5",
+        numero : 5,
         valor: "32"
     },
     { 
         palo: "Oro",
-        numero : "6",
+        numero : 6,
         valor: "28"
     },
     { 
         palo: "Oro",
-        numero : "7",
+        numero : 7,
         valor: "3"
     },
     { 
         palo: "Oro",
-        numero : "10",
+        numero : 10,
         valor: "22"
     },
     { 
         palo: "Oro",
-        numero : "11",
+        numero : 11,
         valor: "18"
     },
     { 
         palo: "Oro",
-        numero : "12",
+        numero : 12,
         valor: "14"
     },
     { 
         palo: "Copa",
-        numero : "1",
+        numero : 1,
         valor: "10"
     },
     { 
         palo: "Copa",
-        numero : "2",
+        numero : 2,
         valor: "8"
     },
     { 
         palo: "Copa",
-        numero : "3",
+        numero : 3,
         valor: "4"
     },
     { 
         palo: "Copa",
-        numero : "4",
+        numero : 4,
         valor: "36"
     },
     { 
         palo: "Copa",
-        numero : "5",
+        numero : 5,
         valor: "32"
     },
     { 
         palo: "Copa",
-        numero : "6",
+        numero : 6,
         valor: "28"
     },
     { 
         palo: "Copa",
-        numero : "7",
+        numero : 7,
         valor: "26"
     },
     { 
         palo: "Copa",
-        numero : "10",
+        numero : 10,
         valor: "22"
     },
     { 
         palo: "Copa",
-        numero : "11",
+        numero : 11,
         valor: "18"
     },
     { 
         palo: "Copa",
-        numero : "12",
+        numero : 12,
         valor: "14"
     },
     { 
         palo: "Espada",
-        numero : "1",
+        numero : 1,
         valor: "0"
     },
     { 
         palo: "Espada",
-        numero : "2",
+        numero : 2,
         valor: "8"
     },
     { 
         palo: "Espada",
-        numero : "3",
+        numero : 3,
         valor: "4"
     },
     { 
         palo: "Espada",
-        numero : "4",
+        numero : 4,
         valor: "36"
     },
     { 
         palo: "Espada",
-        numero : "5",
+        numero : 5,
         valor: "32"
     },
     { 
         palo: "Espada",
-        numero : "6",
+        numero : 6,
         valor: "28"
     },
     { 
         palo: "Espada",
-        numero : "7",
+        numero : 7,
         valor: "2"
     },
     { 
         palo: "Espada",
-        numero : "10",
+        numero : 10,
         valor: "22"
     },
     { 
         palo: "Espada",
-        numero : "11",
+        numero : 11,
         valor: "18"
     },
     { 
         palo: "Espada",
-        numero : "12",
+        numero : 12,
         valor: "14"
     },
     { 
         palo: "Basto",
-        numero : "1",
+        numero : 1,
         valor: "1"
     },
     { 
         palo: "Basto",
-        numero : "2",
+        numero : 2,
         valor: "8"
     },
     { 
         palo: "Basto",
-        numero : "3",
+        numero : 3,
         valor: "4"
     },
     { 
         palo: "Basto",
-        numero : "4",
+        numero : 4,
         valor: "36"
     },
     { 
         palo: "Basto",
-        numero : "5",
+        numero : 5,
         valor: "32"
     },
     { 
         palo: "Basto",
-        numero : "6",
+        numero : 6,
         valor: "28"
     },
     { 
         palo: "Basto",
-        numero : "7",
+        numero : 7,
         valor: "26"
     },
     { 
         palo: "Basto",
-        numero : "10",
+        numero : 10,
         valor: "22"
     },
     { 
         palo: "Basto",
-        numero : "11",
+        numero : 11,
         valor: "18"
     },
     { 
         palo: "Basto",
-        numero : "12",
+        numero : 12,
         valor: "14"
     }
 ]
@@ -287,8 +280,6 @@ function Partido (objeto) {
     this.chicos = [];
     this.chicoencurso = 0;
     this.mazo = mazo;
-    this.cartas1 = [];
-    this.cartas2 = [];
     this.iniciarnuevochico = () => {
         this.chicos.push(
             new Chico(
@@ -329,6 +320,28 @@ function Partido (objeto) {
             }
         )
     }
+    // EVALUAR SI CANTAR EL ENVIDO
+    this.cantarenvido = () => {
+
+    }
+    // EVALUAR SI CANTAR EL TRUCO
+    this.cantartruco = () => {
+        
+    }
+    // EVALUAR SI QUERER EL ENVIDO
+    this.quererenvido = () => {
+        
+    }
+    // EVALUAR SI QUERER EL TRUCO
+    this.querertruco = () => {
+        
+    }
+    // EVALUAR QUE CARTA JUGAR
+    this.jugarcarta = () => {
+        
+    }
+
+
 }
 // COSTRUCTOR DE CHICO NUEVO
 function Chico (objeto) {
@@ -342,7 +355,23 @@ function Chico (objeto) {
 function Mano (objeto) {
     this.cartas = objeto.cartas;
     this.jugadormano = objeto.jugadormano;
-    this.vueltas = [];
+    this.vueltas = [
+        {
+            cartaj1: {},
+            cartaj2: {},
+            ganador: 0
+        },
+        {
+            cartaj1: {},
+            cartaj2: {},
+            ganador: 0
+        },
+        {
+            cartaj1: {},
+            cartaj2: {},
+            ganador: 0
+        }
+    ];
     this.envido = {
         canto: [],
         cantojugador: 0,
@@ -422,24 +451,24 @@ const cargarnuevopartido = () => {
     });
     return nuevopartido;
 */
-let nuevopartido = new  Partido ({
-    cantchicos : 5,
-    puntostotal : 30,
-    flor : false,
-    jugadores: [
-        {jugadornombre : 'Juan'},
-        {jugadornombre : 'JSAI'}
-    ],
-    jugadormano: 1,
-    chicos : [
-        {
-            jugadormano: 1,
-            puntos1: 0,
-            puntos2: 0,
-            ganador: 0
-        }
-    ]
-});
+    let nuevopartido = new  Partido ({
+        cantchicos : 5,
+        puntostotal : 30,
+        flor : false,
+        jugadores: [
+            {jugadornombre : 'Juan'},
+            {jugadornombre : 'JSAI'}
+        ],
+        jugadormano: 1,
+        chicos : [
+            {
+                jugadormano: 1,
+                puntos1: 0,
+                puntos2: 0,
+                ganador: 0
+            }
+        ]
+    });
 return nuevopartido;
 }
 
@@ -449,29 +478,86 @@ let partidoencurso = partidos[partidos.length-1];
 let chicoencurso;
 let envidomanoj1;
 let envidomanoj2;
-//do {
+do {
     partidoencurso.iniciarnuevochico();
-   // do{
+   do{
         chicoencurso = partidoencurso.chicos[partidoencurso.chicoencurso];
         partidoencurso.iniciarmano();
         envidomanoj1 = calcularenvido(chicoencurso.mano.cartas.j1);
         envidomanoj2 = calcularenvido(chicoencurso.mano.cartas.j2);
-        alert(`Tus cartas son:
-        ${chicoencurso.mano.cartas.j1[0]['numero']} de ${chicoencurso.mano.cartas.j1[0].palo}
-        ${chicoencurso.mano.cartas.j1[1].numero} de ${chicoencurso.mano.cartas.j1[1].palo}
-        ${chicoencurso.mano.cartas.j1[2].numero} de ${chicoencurso.mano.cartas.j1[2].palo}
-        Tenés ${envidomanoj1.envido} para el envido.
-        `)
-        console.log(`Mis cartas son:
-        ${chicoencurso.mano.cartas.j2[0]['numero']} de ${chicoencurso.mano.cartas.j2[0].palo}
-        ${chicoencurso.mano.cartas.j2[1].numero} de ${chicoencurso.mano.cartas.j2[1].palo}
-        ${chicoencurso.mano.cartas.j2[2].numero} de ${chicoencurso.mano.cartas.j2[2].palo}
-        Tengo ${envidomanoj2.envido} para el envido.
-        `)
-   // } while (chicoencurso.puntos1>partidoencurso.puntostotal && chicoencurso.puntos2>partidoencurso.puntostotal);
-//} while (partidoencurso.chicos.length < partidoencurso.cantchicos);
+        let respuestasOK = ['e','r','f','t','1','2','3'];
+        let accion;
+        let vueltanum = 1;
+        for (let vuelta of chicoencurso.mano.vueltas) {
+            let mensaje =`Tus cartas son:
+`;
+            let mensaje2 = `Tus posibles acciones son:
+`;
+            let indice = 1;
+            for (let carta of chicoencurso.mano.cartas.j1) {
+                mensaje += `${carta.numero} de ${carta.palo}
+`;
+                mensaje2 += `${indice}: Jugar el ${carta.numero} de ${carta.palo}
+`;
+                indice +=1
+            }
+            mensaje += `
+Tenés ${envidomanoj1.envido} para el envido.
+
+`;
+            if (vueltanum===1){
+                mensaje2 += `E: Cantar envido / R: Cantar real envido /F: Cantar Falta envido
+`
+            }
+            mensaje2 += `T: Cantar truco
+
+Ingresá una opción`;
+            do {
+                accion=prompt(mensaje+mensaje2).toLowerCase();
+            } while (!respuestasOK.includes(accion));
+            console.log(`Mis cartas son:
+            ${chicoencurso.mano.cartas.j2[0].numero} de ${chicoencurso.mano.cartas.j2[0].palo}
+            ${chicoencurso.mano.cartas.j2[1].numero} de ${chicoencurso.mano.cartas.j2[1].palo}
+            ${chicoencurso.mano.cartas.j2[2].numero} de ${chicoencurso.mano.cartas.j2[2].palo}
+            Tengo ${envidomanoj2.envido} para el envido.
+            `);
+            switch (accion){
+                case "1":
+                case "2":
+                case "3":
+                    console.log(`Jugaste el ${chicoencurso.mano.cartas.j1[parseInt(accion)-1].numero} de ${chicoencurso.mano.cartas.j1[parseInt(accion)-1].palo}`);
+                    chicoencurso.mano.vueltas[0].cartaj1 = chicoencurso.mano.cartas.j1.splice([parseInt(accion)-1],1);
+                    partidoencurso.cantarenvido(chicoencurso);
+                    partidoencurso.jugarcarta(chicoencurso);
+                    break;
+                case "e":
+                case "r":
+                case "f":
+                    partidoencurso.quererenvido(chicoencurso);
+                    partidoencurso.jugarcarta(chicoencurso);
+                case "t":
+                    partidoencurso.cantarenvido(chicoencurso);
+                    partidoencurso.querertruco(chicoencurso);
+                    partidoencurso.jugarcarta(chicoencurso);
+            }
+            vueltanum += 1;
+        }
+   } while (chicoencurso.puntos1>partidoencurso.puntostotal && chicoencurso.puntos2>partidoencurso.puntostotal && 1 === 0);
+} while (partidoencurso.chicos.length < partidoencurso.cantchicos && 1 === 0);
 console.log(partidos);
 /*
+// VERIFICO SI EL NUMERO INGRESADO ES VALIDO
+const verificarnumero = (num) => {
+    return (num>0 && num<13 && num!==8 && num!==9);
+};
+// VERIFICO SI EL PALO INGRESADO ES VALIDO
+const verificarpalo = (palo) => {
+    return (palo !== 'O' && palo !== 'C' && palo !== 'E' && palo !== 'B');
+}
+
+
+
+
 let c1n;
 let c1p;
 let c2n;
