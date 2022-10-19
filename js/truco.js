@@ -280,6 +280,7 @@ function Partido (objeto) {
     this.chicos = [];
     this.chicoencurso = 0;
     this.mazo = mazo;
+    // METODOS
     this.iniciarnuevochico = () => {
         this.chicos.push(
             new Chico(
@@ -387,8 +388,7 @@ function Mano (objeto) {
 }
 
 // CARGAR LOS DATOS DEL PARTIDO NUEVO
-const cargarnuevopartido = () => {
-/*    
+const cargarnuevopartido = () => { 
     let chicos;
     let puntostotal;
     let flor;
@@ -450,7 +450,7 @@ const cargarnuevopartido = () => {
         ]
     });
     return nuevopartido;
-*/
+    /* SACAR COMENTARIO PARA EVITAR CARGAR TODOS LOS DATOS
     let nuevopartido = new  Partido ({
         cantchicos : 5,
         puntostotal : 30,
@@ -469,6 +469,7 @@ const cargarnuevopartido = () => {
             }
         ]
     });
+    */
 return nuevopartido;
 }
 
@@ -542,7 +543,7 @@ Ingresá una opción`;
             }
             vueltanum += 1;
         }
-   } while (chicoencurso.puntos1>partidoencurso.puntostotal && chicoencurso.puntos2>partidoencurso.puntostotal && 1 === 0);
+   } while (chicoencurso.puntos1>partidoencurso.puntostotal && chicoencurso.puntos2>partidoencurso.puntostotal && 1 === 10);
 } while (partidoencurso.chicos.length < partidoencurso.cantchicos && 1 === 0);
 console.log(partidos);
 /*
