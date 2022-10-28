@@ -388,7 +388,8 @@ function Mano (objeto) {
 }
 
 // CARGAR LOS DATOS DEL PARTIDO NUEVO
-const cargarnuevopartido = () => { 
+const cargarnuevopartido = (datospartido) => { 
+    /*
     let chicos;
     let puntostotal;
     let flor;
@@ -431,18 +432,19 @@ const cargarnuevopartido = () => {
         }
         mensaje = "Tenes que ingresar una de las opciones (SI /  NO)";
     } while (jugadormano !== 1 && jugadormano !== 2);
+    */
     let nuevopartido = new  Partido ({
-        cantchicos : chicos,
-        puntostotal : puntostotal,
+        cantchicos : datospartido.chicos,
+        puntostotal : datospartido.puntostotal,
         flor : flor,
         jugadores: [
-            {jugadornombre : jugadornombre},
+            {jugadornombre : datospartido.jugadornombre},
             {jugadornombre : 'JSAI'}
         ],
-        jugadormano: jugadormano,
+        jugadormano: datospartido.jugadormano,
         chicos : [
             {
-                jugadormano: jugadormano,
+                jugadormano: datospartido.jugadormano,
                 puntos1: 0,
                 puntos2: 0,
                 ganador: 0
@@ -450,29 +452,33 @@ const cargarnuevopartido = () => {
         ]
     });
     return nuevopartido;
-    /* SACAR COMENTARIO PARA EVITAR CARGAR TODOS LOS DATOS
-    let nuevopartido = new  Partido ({
-        cantchicos : 5,
-        puntostotal : 30,
-        flor : false,
-        jugadores: [
-            {jugadornombre : 'Juan'},
-            {jugadornombre : 'JSAI'}
-        ],
-        jugadormano: 1,
-        chicos : [
-            {
-                jugadormano: 1,
-                puntos1: 0,
-                puntos2: 0,
-                ganador: 0
-            }
-        ]
-    });
-    */
-return nuevopartido;
 }
 
+const formdatospartido = document.querySelector('#datospartido');
+const inputjugadornombre = document.querySelector('#jugadornombre');
+const inputjugadormail = document.querySelector('#jugadormail');
+const inputpuntostotal = document.querySelector('[name="puntostotal"]:checked');
+const inputchicos = document.querySelector('[name="chicos"]:checked') ; 
+const inputflor = document.querySelector('#flor') ;
+const inputjugadormano = document.querySelector('#jugadormano') ;
+const partidos = [];
+const datospartido = {};
+formdatospartido.onsubmit = (e) => {
+    e.preventDefault();
+    const datospartido = {
+        jugadornombre: inputjugadornombre.value,
+        jugadormail: inputjugadormail.value,
+        puntostotal: inputpuntostotal.value,
+        chicos : inputchicos.value,
+        flor: inputflor.value,
+        jugadormano: inputjugadormano.value
+    };
+    console.log(datospartido);
+    cargarnuevopartido(datospartido);
+}
+
+console.log(formdatospartido.innerHTML);
+/*
 let partidos = [];
 partidos.push(cargarnuevopartido());
 let partidoencurso = partidos[partidos.length-1];
@@ -546,6 +552,7 @@ Ingresá una opción`;
    } while (chicoencurso.puntos1>partidoencurso.puntostotal && chicoencurso.puntos2>partidoencurso.puntostotal && 1 === 10);
 } while (partidoencurso.chicos.length < partidoencurso.cantchicos && 1 === 0);
 console.log(partidos);
+*/
 /*
 // VERIFICO SI EL NUMERO INGRESADO ES VALIDO
 const verificarnumero = (num) => {

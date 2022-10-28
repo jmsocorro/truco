@@ -1,4 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;600;700;800&display=swap");
 html * {
   font-family: "Assistant", sans-serif;
+}
+
+.inicio {
+  height: 100vh;
+  background: #060;
+  color: #FFF;
 }/*# sourceMappingURL=truco.css.map */

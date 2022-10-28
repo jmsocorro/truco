@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -37,7 +37,88 @@
           </div>
         </div>
     </nav>
-    <h1 class="text-center">TRUCO JAVASCRIPT</h1>
+    <section class="inicio container-fluid">
+		<div class="row align-items-center h-100">
+			<div class="text-center">
+				<h1 class="text-center"><b>TRUCO</b> JAVASCRIPT</h1>
+				<h2 class="mt-2">Hola soy JSAI y te defafío a jugar al truco</h2>
+				<h2>Hacé click en el boton para empezar a jugar</h2>
+				<button id="jugar" class="mt-4 btn btn-light"  data-bs-toggle="modal" data-bs-target="#forminicio">¡VAMOS!</button>
+			</div>
+		</div>
+		<div class="modal fade text-dark" id="forminicio" tabindex="-1" aria-labelledby="forminicioLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="forminicioLabel">Nuevo partido</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<form id="datospartido">
+							<div class="row mb-3">
+								<div class="jugadornombre col-12">
+									<label for="jugadornombre" class="form-label">¿Cuál es tu nombre?</label>
+									<input type="text" class="form-control" id="jugadornombre" placeholder="Juan Pérez" required>
+								</div>
+							</div>
+							<div class="row mb-3">
+								<div class="jugadormail col-12">
+									<label for="jugadormail" class="form-label">Dejame tu correo electrónico</label>
+									<input type="email" class="form-control" id="jugadormail" placeholder="jperez@mimail.com" required>
+								</div>
+							</div>
+							<div class="row pb-3">
+								<div class="col-8">
+									<label class="form-label" for="">¿A cuántos chicos querés jugar?</label>
+								</div>
+								<div class="col-4">
+									<input type="radio" class="btn-check" name="chicos" id="chicos1" autocomplete="off" checked>
+									<label class="btn btn-outline-secondary" for="chicos1">1</label>
+									
+									<input type="radio" class="btn-check" name="chicos" id="chicos3" autocomplete="off">
+									<label class="btn btn-outline-secondary" for="chicos3">3</label>
+									
+									<input type="radio" class="btn-check" name="chicos" id="chicos5" autocomplete="off">
+									<label class="btn btn-outline-secondary" for="chicos5">5</label>
+								</div>
+							</div>
+							<div class="row pb-3">
+								<div class="col-8">
+									<label class="form-label" for="">¿A cuántos puntos querés jugar?</label>
+								</div>
+								<div class="col-4">
+									<input type="radio" class="btn-check" name="puntostotal" id="puntostotal15" value="15" autocomplete="off">
+									<label class="btn btn-outline-secondary" for="puntostotal15">15</label>
+									
+									<input type="radio" class="btn-check" name="puntostotal" id="puntostotal30" value="30" autocomplete="off" checked>
+									<label class="btn btn-outline-secondary" for="puntostotal30">30</label>							
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-6">
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" role="switch" id="flor">
+										<label class="form-check-label" for="flor">¿Jugamos con flor?</label>
+									</div>
+								</div>
+								<div class="col-6">
+									<div class="form-check form-switch ">
+										<input class="form-check-input" type="checkbox" role="switch" id="jugadormano">
+										<label class="form-check-label" for="jugadormano">¿Reparto yo?</label>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-dark" data-bs-dismiss="modal">Me arrepentí</button>
+						<button type="submit" id="enviardatos" form="datospartido" class="btn btn-success">¡JUGUEMOS!</button>
+					</div>
+				</div>
+			</div>
+		  </div>
+	</section>
+	
     <script src="./js/bootstrap.bundle.min.js"></script>
     <script language="javascript" type="text/javascript" src="./js/truco.js"></script>
     </body>
