@@ -461,6 +461,8 @@ const inputpuntostotal = document.querySelector('[name="puntostotal"]:checked');
 const inputchicos = document.querySelector('[name="chicos"]:checked') ; 
 const inputflor = document.querySelector('#flor') ;
 const inputjugadormano = document.querySelector('#jugadormano') ;
+const datosguardados = JSON.stringify(localStorage.getItem('datos'));
+console.log(localStorage.getItem('datos')===null);
 const partidos = [];
 const datospartido = {};
 formdatospartido.onsubmit = (e) => {
@@ -470,14 +472,14 @@ formdatospartido.onsubmit = (e) => {
         jugadormail: inputjugadormail.value,
         puntostotal: inputpuntostotal.value,
         chicos : inputchicos.value,
-        flor: inputflor.value,
-        jugadormano: inputjugadormano.value
+        flor: inputflor.checked,
+        jugadormano: inputjugadormano.checked
     };
     console.log(datospartido);
     cargarnuevopartido(datospartido);
-}
+};
 
-console.log(formdatospartido.innerHTML);
+
 /*
 let partidos = [];
 partidos.push(cargarnuevopartido());
