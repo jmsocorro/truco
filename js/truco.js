@@ -270,6 +270,28 @@ const mazo = [
         valor: "14"
     }
 ]
+// COSTRUCTOR DE JUGADORES
+function Jugador (objeto) {
+    this.jugadornombre = objeto.jugadornombre;
+    this.jugadormail = objeto.jugadormail;
+    this.estadisticas = {
+        partidosjugados: 0,
+        partidosganados: 0,
+        puntostotalesganados: 0,
+        puntostotalesrecibidos: 0,
+        chicostotales: 0,
+        chicosganados: 0
+    };
+    this.preferencias = {
+        mesa: 0,
+        cartas: 0
+    };
+    // METODOS
+    this.actualizarestadisticas = () => {
+    };
+    this.ectualizarpreferencias = () => {
+    }
+}
 // COSTRUCTOR DE PARTIDO NUEVO
 function Partido (objeto) {
     this.cantchicos = objeto.cantchicos;
@@ -433,7 +455,7 @@ const cargarnuevopartido = (datospartido) => {
         mensaje = "Tenes que ingresar una de las opciones (SI /  NO)";
     } while (jugadormano !== 1 && jugadormano !== 2);
     */
-    let nuevopartido = new  Partido ({
+    const nuevopartido = new  Partido ({
         cantchicos : datospartido.chicos,
         puntostotal : datospartido.puntostotal,
         flor : flor,
@@ -454,6 +476,8 @@ const cargarnuevopartido = (datospartido) => {
     return nuevopartido;
 }
 
+// asigno los elementos html a las variables
+const cambiarjugador = document.querySelector('#cambiarjugador');
 const formdatospartido = document.querySelector('#datospartido');
 const inputjugadornombre = document.querySelector('#jugadornombre');
 const inputjugadormail = document.querySelector('#jugadormail');
@@ -461,10 +485,29 @@ const inputpuntostotal = document.querySelector('[name="puntostotal"]:checked');
 const inputchicos = document.querySelector('[name="chicos"]:checked') ; 
 const inputflor = document.querySelector('#flor') ;
 const inputjugadormano = document.querySelector('#jugadormano') ;
-const datosguardados = JSON.stringify(localStorage.getItem('datos'));
-console.log(localStorage.getItem('datos')===null);
-const partidos = [];
-const datospartido = {};
+
+// Busco los datos guardados en localStorage y los guardo. Si no hay datos genero el objeto
+const datosguardados = localStorage.getItem('datos') === null ? { jugadores: [], jugadoractivo : false} : JSON.parse(localStorage.getItem('datos'));
+if (datosguardados.jugadoractivo === false) {
+    // Agrego una class al body para marcar que NO HAY datos
+    document.querySelector('body').className = "sindatos";
+} else {
+    // Agrego una class al body para marcar que HAY datos y los copleto
+    document.querySelector('body').className = "jugadoractivo";
+    const htmlnombre = document.querySelectorAll('span.jugadornombre');
+    [...htmlnombre].forEach((nombre) => {
+        nombre.innerHTML = datosguardados.jugadores[datosguardados.jugadoractivo].jugadornombre;
+    });
+    inputjugadornombre.value = datosguardados.jugadores[datosguardados.jugadoractivo].jugadornombre;
+    inputjugadormail.value = datosguardados.jugadores[datosguardados.jugadoractivo].jugadormail;
+}
+// Asigno el evento para cambiar de jugador
+
+// Inicializo las variables para el partido
+// const partidos = [];
+// const datospartido = {};
+
+// Carputo los datos del form e inicio el partido
 formdatospartido.onsubmit = (e) => {
     e.preventDefault();
     const datospartido = {
@@ -475,7 +518,20 @@ formdatospartido.onsubmit = (e) => {
         flor: inputflor.checked,
         jugadormano: inputjugadormano.checked
     };
-    console.log(datospartido);
+    // si es un jugador nuevo guardo los datos en localStorage
+    if (datosguardados.jugadoractivo === false) {
+        datosguardados.jugadores.push ( 
+            new Jugador (
+                {
+                    jugadornombre: inputjugadornombre.value,
+                    jugadormail: inputjugadormail.value
+                }
+            )
+        );
+        datosguardados.jugadoractivo = datosguardados.jugadores.length-1;
+        localStorage.setItem ("datos", JSON.stringify(datosguardados));
+    }
+    console.log(datosguardados);
     cargarnuevopartido(datospartido);
 };
 

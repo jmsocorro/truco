@@ -41,9 +41,15 @@
 		<div class="row align-items-center h-100">
 			<div class="text-center">
 				<h1 class="text-center"><b>TRUCO</b> JAVASCRIPT</h1>
-				<h2 class="mt-2">Hola soy JSAI y te defafío a jugar al truco</h2>
+				<h2 class="mt-2 jugadornuevo">Hola soy JSAI y te defafío a jugar al truco</h2>
+				<h2 class="mt-2 jugadorviejo">Hola <span class="jugadornombre"></span>. Veo que tenés ganas de una revancha.</h2>
 				<h2>Hacé click en el boton para empezar a jugar</h2>
-				<button id="jugar" class="mt-4 btn btn-light"  data-bs-toggle="modal" data-bs-target="#forminicio">¡VAMOS!</button>
+				<div>
+					<button id="jugar" class="mt-4 btn btn-light"  data-bs-toggle="modal" data-bs-target="#forminicio">¡VAMOS!</button>
+				</div>
+				<div>
+					<button id="cambiarjugador" class="mt-4 btn btn-outline-light btn-sm jugadorviejo">No soy <span class="jugadornombre"></span>.</button>
+				</div>
 			</div>
 		</div>
 		<div class="modal fade text-dark" id="forminicio" tabindex="-1" aria-labelledby="forminicioLabel" aria-hidden="true">
@@ -55,14 +61,14 @@
 					</div>
 					<div class="modal-body">
 						<form id="datospartido">
-							<div class="row mb-3">
-								<div class="jugadornombre col-12">
+							<div class="row">
+								<div class="jugadornombre col-12 jugadornuevo mb-3 ">
 									<label for="jugadornombre" class="form-label">¿Cuál es tu nombre?</label>
 									<input type="text" class="form-control" id="jugadornombre" placeholder="Juan Pérez" required>
 								</div>
 							</div>
-							<div class="row mb-3">
-								<div class="jugadormail col-12">
+							<div class="row">
+								<div class="jugadormail col-12 jugadornuevo mb-3">
 									<label for="jugadormail" class="form-label">Dejame tu correo electrónico</label>
 									<input type="email" class="form-control" id="jugadormail" placeholder="jperez@mimail.com" required>
 								</div>
@@ -97,7 +103,7 @@
 							<div class="row">
 								<div class="col-6">
 									<div class="form-check form-switch">
-										<input class="form-check-input" type="checkbox" role="switch" id="flor">
+										<input class="form-check-input" type="checkbox" role="switch" id="flor" >
 										<label class="form-check-label" for="flor">¿Jugamos con flor?</label>
 									</div>
 								</div>
