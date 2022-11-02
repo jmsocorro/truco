@@ -543,7 +543,7 @@ formdatospartido.onsubmit = (e) => {
 			let cont = 0;
 			for (let carta of chicoencurso.mano.cartas.j1) {
 				let imagencarta = document.createElement('img');
-				imagencarta.setAttribute('src',`./jpg/cartas/${datosguardados.jugadores[datosguardados.jugadoractivo].preferencias.cartas}/${carta.palo}${carta.numero}.jpg`)
+				imagencarta.setAttribute('src',`jpg/cartas/${datosguardados.jugadores[datosguardados.jugadoractivo].preferencias.cartas}/${carta.palo}${carta.numero}.jpg`)
 				imagencarta.setAttribute("alt", `${carta.numero} de ${carta.palo}`);
 				console.log(cartasmanoJ1)
 				cartasmanoJ1[cont].appendChild(imagencarta);
