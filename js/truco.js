@@ -220,52 +220,52 @@ const mazo = [
 		valor: "14"
 	},
 	{ 
-		palo: "Basto",
+		palo: "basto",
 		numero : 1,
 		valor: "1"
 	},
 	{ 
-		palo: "Basto",
+		palo: "basto",
 		numero : 2,
 		valor: "8"
 	},
 	{ 
-		palo: "Basto",
+		palo: "basto",
 		numero : 3,
 		valor: "4"
 	},
 	{ 
-		palo: "Basto",
+		palo: "basto",
 		numero : 4,
 		valor: "36"
 	},
 	{ 
-		palo: "Basto",
+		palo: "basto",
 		numero : 5,
 		valor: "32"
 	},
 	{ 
-		palo: "Basto",
+		palo: "basto",
 		numero : 6,
 		valor: "28"
 	},
 	{ 
-		palo: "Basto",
+		palo: "basto",
 		numero : 7,
 		valor: "26"
 	},
 	{ 
-		palo: "Basto",
+		palo: "basto",
 		numero : 10,
 		valor: "22"
 	},
 	{ 
-		palo: "Basto",
+		palo: "basto",
 		numero : 11,
 		valor: "18"
 	},
 	{ 
-		palo: "Basto",
+		palo: "basto",
 		numero : 12,
 		valor: "14"
 	}
