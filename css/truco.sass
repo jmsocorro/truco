@@ -3,18 +3,46 @@
 html
 	*
 		font-family: 'Assistant', sans-serif
-
-.inicio
-	height: 100vh
-	background: #060   
-	color: #FFF
-.sindatos
-	.jugadornuevo
-		display: unset 
-	.jugadorviejo
+body
+	.inicio
+		height: 100vh
+		background: #060   
+		color: #FFF
+	&.sindatos
+		.inicio
+			.jugadornuevo
+				display: unset 
+			.jugadorviejo
+				display: none
+	&.jugadoractivo
+		.inicio
+			.jugadornuevo
+				display: none 
+			.jugadorviejo
+				display: unset
+	.juego
 		display: none
-.jugadoractivo
-	.jugadornuevo
-		display: none 
-	.jugadorviejo
-		display: unset
+		.manojugador1,
+		.manojugador2
+			.carta
+				height: 25vh
+				margin-bottom: 1rem
+				img
+					height: 100%
+					object-fit: contain
+					box-shadow: 5px 5px 5px rgba(#000,.5)
+		.manojugador2
+			.carta
+				background-image: url("../jpg/cartas/0/dorso.jpg")
+				background-position: center
+				background-size: contain
+				background-repeat: no-repeat
+	&.jugando
+		height: 100vh
+		padding-top: 5rem
+		background: #040   
+		color: #FFF
+		.inicio
+			display: none
+		.juego
+			display: block

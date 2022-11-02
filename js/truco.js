@@ -319,6 +319,7 @@ function Partido (objeto) {
 			this. jugadormano = 1;
 		}
 		this.chicoencurso = this.chicos.length-1;
+		return this.chicos[this.chicoencurso];
 	};
 	this.iniciarmano = () => {
 		// REPARTO LAS CARTAS AL AZAR
@@ -411,50 +412,6 @@ function Mano (objeto) {
 
 // CARGAR LOS DATOS DEL PARTIDO NUEVO
 const cargarnuevopartido = (datospartido) => { 
-	/*
-	let chicos;
-	let puntostotal;
-	let flor;
-	let jugadornombre;
-	let jugadormano;
-	let mensaje = "Hola soy JSAI y te defafío a jugar al truco\n¿Cuál es tu nombre?";
-	do {
-		jugadornombre = prompt(mensaje);
-		mensaje = "Tu nombre debe tener por lo menos 2 caracteres"
-	} while (jugadornombre.length<2);
-	mensaje = "¿A cuántos chicos querés jugar? (1,3,5)"
-	do {
-		chicos = parseInt(prompt(mensaje));
-		mensaje = "Tenes que ingresar una de las opciones (1,3,5)"
-	} while (chicos !== 1 && chicos !==3 && chicos !== 5);
-	mensaje = "¿A cuántos puntos querés jugar? (15 ó 30)"
-	do {
-		puntostotal = parseInt(prompt(mensaje));
-		mensaje = "Tenes que ingresar una de las opciones (15 ó 30)"
-	} while (puntostotal !== 15 && puntostotal !== 30);
-	mensaje = "¿Jugamos con Flor? (SI / NO)";
-	do {
-		flor = prompt(mensaje);
-		if (flor.toLowerCase() === "si" || flor.toLowerCase() === "s"){
-			flor = true;
-		} else if (flor.toLowerCase() === "no" || flor.toLowerCase() === "n"){
-			flor = false;
-		}
-		mensaje = "Tenes que ingresar una de las opciones (SI /  NO)";
-	} while (flor !== true && flor !== false);
-	mensaje = "¿Reparto yo? (SI / NO)";
-	do {
-		jugadormano = prompt(mensaje);
-		if (jugadormano.toLowerCase() === "si" || jugadormano.toLowerCase() === "s"){
-			jugadormano = 2;
-		} else if (jugadormano.toLowerCase() === "no" || jugadormano.toLowerCase() === "n"){
-			jugadormano = 1;
-		} else {
-		jugadormano = 0; 
-		}
-		mensaje = "Tenes que ingresar una de las opciones (SI /  NO)";
-	} while (jugadormano !== 1 && jugadormano !== 2);
-	*/
 	const nuevopartido = new  Partido ({
 		cantchicos : datospartido.chicos,
 		puntostotal : datospartido.puntostotal,
@@ -477,23 +434,49 @@ const cargarnuevopartido = (datospartido) => {
 }
 
 // asigno los elementos html a las variables
+// espacios
+const body = document.querySelector('body');
+const inicio = document.querySelector('.inicio');
+const juego = document.querySelector('.juego');
+// elementos del inicio
 const cambiarjugador = document.querySelector('#cambiarjugador');
 const formdatospartido = document.querySelector('#datospartido');
 const inputjugadornombre = document.querySelector('#jugadornombre');
 const inputjugadormail = document.querySelector('#jugadormail');
 const inputpuntostotal = document.querySelector('[name="puntostotal"]:checked');
-const inputchicos = document.querySelector('[name="chicos"]:checked') ; 
-const inputflor = document.querySelector('#flor') ;
-const inputjugadormano = document.querySelector('#jugadormano') ;
+const inputchicos = document.querySelector('[name="chicos"]:checked'); 
+const inputflor = document.querySelector('#flor');
+const inputjugadormano = document.querySelector('#jugadormano');
+// elementos de la mesa
+// cartas en la mesa
+// jugador 1
+const cartasmesaJ1 = [document.querySelector('#me-j1-c1'), document.querySelector('#me-j1-c2'), document.querySelector('#me-j1-c3')];
+// jugador 2
+const cartasmesaJ2 = [document.querySelector('#me-j2-c1'), document.querySelector('#me-j2-c2'), document.querySelector('#me-j2-c3')];
+// cartas en la mano
+// jugador 1
+const cartasmanoJ1 = [document.querySelector('#ma-j1-c1'), document.querySelector('#ma-j1-c2'), document.querySelector('#ma-j1-c3')];
+// jugador 2
+const cartasmanoJ2 = [document.querySelector('#ma-j2-c1'), document.querySelector('#ma-j2-c2'), document.querySelector('#ma-j2-c3')];
+// botones de accion
+const botonenvido = document.querySelector('#envido');
+const botonrealenvido = document.querySelector('#realenvido');
+const botonfaltaenvido = document.querySelector('#faltaenvido');
+const botontruco = document.querySelector('#truco');
+const botonretruco = document.querySelector('#retruco');
+const botonvale4 = document.querySelector('#vale4');
+const botonrquiero = document.querySelector('#quiero');
+const botonnoquiero = document.querySelector('#noquiero');
+const botonguardar = document.querySelector('#guardar');
 
 // Busco los datos guardados en localStorage y los guardo. Si no hay datos genero el objeto
 const datosguardados = localStorage.getItem('datos') === null ? { jugadores: [], jugadoractivo : false} : JSON.parse(localStorage.getItem('datos'));
 if (datosguardados.jugadoractivo === false) {
 	// Agrego una class al body para marcar que NO HAY datos
-	document.querySelector('body').className = "sindatos";
+	body.className = "sindatos";
 } else {
 	// Agrego una class al body para marcar que HAY datos y los copleto
-	document.querySelector('body').className = "jugadoractivo";
+	body.className = "jugadoractivo";
 	const htmlnombre = document.querySelectorAll('span.jugadornombre');
 	[...htmlnombre].forEach((nombre) => {
 		nombre.innerHTML = datosguardados.jugadores[datosguardados.jugadoractivo].jugadornombre;
@@ -508,7 +491,8 @@ cambiarjugador.onclick = (e) => {
 	// borro el jugador activo
 	datosguardados.jugadoractivo = false;
 	// cambio el class del body a "sindatos"
-	document.querySelector('body').className = "sindatos";
+	body.classList.add("sindatos");
+	body.classList.remove("jugadoractivo");
 }
 
 // Inicializo las variables para el partido
@@ -538,9 +522,100 @@ formdatospartido.onsubmit = (e) => {
 		);
 		datosguardados.jugadoractivo = datosguardados.jugadores.length-1;
 		localStorage.setItem ("datos", JSON.stringify(datosguardados));
+		// cambio el class del body a "jugadoractivo"
+		body.classList.remove("sindatos");
+		body.classList.add("jugadoractivo");
 	}
 	console.log(datosguardados);
-	cargarnuevopartido(datospartido);
+	// creamos un nuevo partido
+	const partidoencurso = cargarnuevopartido(datospartido);
+	// agrego el class "jugando" al body para mostrar la mesa
+	body.classList.add("jugando");
+	console.log(partidoencurso);
+
+	do {
+		// creamos un nuevo chico
+		const chicoencurso = partidoencurso.iniciarnuevochico();
+		do{
+			// creamos una nueva mano
+			partidoencurso.iniciarmano();
+			// repartimos las cartas
+			let cont = 0;
+			for (let carta of chicoencurso.mano.cartas.j1) {
+				let imagencarta = document.createElement('img');
+				imagencarta.setAttribute('src',`./jpg/cartas/${datosguardados.jugadores[datosguardados.jugadoractivo].preferencias.cartas}/${carta.palo}${carta.numero}.jpg`)
+				imagencarta.setAttribute("alt", `${carta.numero} de ${carta.palo}`);
+				console.log(cartasmanoJ1)
+				cartasmanoJ1[cont].appendChild(imagencarta);
+				cont ++;
+				console.log(carta.numero,carta.palo)
+			}
+			/*
+			const envidomanoj1 = calcularenvido(chicoencurso.mano.cartas.j1);
+			const envidomanoj2 = calcularenvido(chicoencurso.mano.cartas.j2);
+			let respuestasOK = ['e','r','f','t','1','2','3'];
+			let accion;
+			let vueltanum = 1;
+			for (let vuelta of chicoencurso.mano.vueltas) {
+				let mensaje =`Tus cartas son:
+	`;
+				let mensaje2 = `Tus posibles acciones son:
+	`;
+				let indice = 1;
+				for (let carta of chicoencurso.mano.cartas.j1) {
+					mensaje += `${carta.numero} de ${carta.palo}
+	`;
+					mensaje2 += `${indice}: Jugar el ${carta.numero} de ${carta.palo}
+	`;
+					indice +=1
+				}
+				mensaje += `
+	Tenés ${envidomanoj1.envido} para el envido.
+	
+	`;
+				if (vueltanum===1){
+					mensaje2 += `E: Cantar envido / R: Cantar real envido /F: Cantar Falta envido
+	`
+				}
+				mensaje2 += `T: Cantar truco
+	
+	Ingresá una opción`;
+				do {
+					accion=prompt(mensaje+mensaje2).toLowerCase();
+				} while (!respuestasOK.includes(accion));
+				console.log(`Mis cartas son:
+				${chicoencurso.mano.cartas.j2[0].numero} de ${chicoencurso.mano.cartas.j2[0].palo}
+				${chicoencurso.mano.cartas.j2[1].numero} de ${chicoencurso.mano.cartas.j2[1].palo}
+				${chicoencurso.mano.cartas.j2[2].numero} de ${chicoencurso.mano.cartas.j2[2].palo}
+				Tengo ${envidomanoj2.envido} para el envido.
+				`);
+				switch (accion){
+					case "1":
+					case "2":
+					case "3":
+						console.log(`Jugaste el ${chicoencurso.mano.cartas.j1[parseInt(accion)-1].numero} de ${chicoencurso.mano.cartas.j1[parseInt(accion)-1].palo}`);
+						chicoencurso.mano.vueltas[0].cartaj1 = chicoencurso.mano.cartas.j1.splice([parseInt(accion)-1],1);
+						partidoencurso.cantarenvido(chicoencurso);
+						partidoencurso.jugarcarta(chicoencurso);
+						break;
+					case "e":
+					case "r":
+					case "f":
+						partidoencurso.quererenvido(chicoencurso);
+						partidoencurso.jugarcarta(chicoencurso);
+					case "t":
+						partidoencurso.cantarenvido(chicoencurso);
+						partidoencurso.querertruco(chicoencurso);
+						partidoencurso.jugarcarta(chicoencurso);
+				}
+				vueltanum += 1;
+			}
+			*/
+	   } while (chicoencurso.puntos1>partidoencurso.puntostotal && chicoencurso.puntos2>partidoencurso.puntostotal && 1 === 10);
+	} while (partidoencurso.chicos.length < partidoencurso.cantchicos && 1 === 0);
+	
+
+
 };
 
 
@@ -618,78 +693,4 @@ Ingresá una opción`;
    } while (chicoencurso.puntos1>partidoencurso.puntostotal && chicoencurso.puntos2>partidoencurso.puntostotal && 1 === 10);
 } while (partidoencurso.chicos.length < partidoencurso.cantchicos && 1 === 0);
 console.log(partidos);
-*/
-/*
-// VERIFICO SI EL NUMERO INGRESADO ES VALIDO
-const verificarnumero = (num) => {
-	return (num>0 && num<13 && num!==8 && num!==9);
-};
-// VERIFICO SI EL PALO INGRESADO ES VALIDO
-const verificarpalo = (palo) => {
-	return (palo !== 'O' && palo !== 'C' && palo !== 'E' && palo !== 'B');
-}
-
-
-
-
-let c1n;
-let c1p;
-let c2n;
-let c2p;
-let c3n;
-let c3p;
-let envido;
-let continuar;
-let mensaje = "Hola soy tu calculador de envido.\nPara ingresar las cartas primero\ntenés que escribir el valor en números\ny después la inicial del palo en mayúsculas.\nO - Oro | C - Copa | E - Espada | B - Basto\n_____________________________________\nIngresá el valor de tu primera carta";
-
-// CARGO LAS TRES CARTAS DE LA MANO HASTA QUE ME RESPONDAN QUE "NO"
-do {
-	// CARGO LA PRIMERA CARTA  
-	do {
-		c1n = parseInt(prompt(mensaje));
-		mensaje = "El número ingresado es incorrecto\nEl valor de las cartas debe ser 1, 2, 3, 4, 5, 6, 7, 10, 11 o 12\nProbá de nuevo.";
-	} while (!verificarnumero(c1n));
-	mensaje = "Ingresá el palo de tu primera carta";
-	do {
-		c1p = prompt(mensaje);
-		mensaje = "El palo ingresado es incorrecto\nEl palo de las cartas debe ser O (oro), C (copa), E (espada) o B (basto)\nProbá de nuevo.";
-	} while (verificarpalo(c1p));
-	// CARGO LA SEGUNDA CARTA HASTA QUE SEA DISTINTA DE LA PRIMERA
-	do {
-		mensaje = "Ingresá el valor de tu segunda carta";
-		do {
-			c2n = parseInt(prompt(mensaje));
-			mensaje = "El número ingresado es incorrecto\nEl valor de las cartas debe ser 1, 2, 3, 4, 5, 6, 7, 10, 11 o 12\nProbá de nuevo.";
-		} while (!verificarnumero(c2n));
-		mensaje = "Ingresá el palo de tu segunda carta";
-		do {
-			c2p = prompt(mensaje);
-			mensaje = "El palo ingresado es incorrecto\nEl palo de las cartas debe ser O (oro), C (copa), E (espada) o B (basto)\nProbá de nuevo.";
-		} while (verificarpalo(c2p));
-		// ALERTO SI LA CARTA YA FUE CARGADA
-		if (c1n + c1p === c2n + c2p) {
-			alert ('Ya ingresaste esa carta. Ingresá una carta distinta.');
-		}
-	} while (c1n + c1p === c2n + c2p); 
-	// CARGO LA TERCERA CARTA HASTA QUE SEA DISTINTA DE LA PRIMERA Y DE LA SEGUNDA
-	do {
-		mensaje = "Ingresá el valor de tu tercera carta";
-		do {
-			c3n = parseInt(prompt(mensaje));
-			mensaje = "El número ingresado es incorrecto\nEl valor de las cartas debe ser 1, 2, 3, 4, 5, 6, 7, 10, 11 o 12\nProbá de nuevo.";
-		} while (!verificarnumero(c3n));
-		mensaje = "Ingresá el palo de tu tercera carta";
-		do {
-			c3p = prompt(mensaje);
-			mensaje = "El palo ingresado es incorrecto\nEl palo de las cartas debe ser O (oro), C (copa), E (espada) o B (basto)\nProbá de nuevo.";
-		} while (verificarpalo(c3p));
-		// ALERTO SI LA CARTA YA FUE CARGADA
-		if (c1n + c1p === c3n + c3p || c3n + c3p === c2n + c2p) {
-			alert ('Ya ingresaste esa carta. Ingresá una carta distinta.');
-		}  
-	} while (c1n + c1p === c3n + c3p || c3n + c3p === c2n + c2p);
-	envido = calcularenvido(c1n, c1p, c2n, c2p, c3n, c3p);
-	continuar = prompt('Tenés ' + envido + ' para el envido.\n¿Querés que te asista otra mano? (S/N)');
-	mensaje = "Ingresá el valor de tu primera carta";  
-} while (continuar !== 'NO' && continuar !== 'no' && continuar !== 'N' && continuar !== 'n' && continuar !== 'No' && continuar !== 'nO');
 */

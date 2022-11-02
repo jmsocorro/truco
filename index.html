@@ -125,27 +125,54 @@
 		  </div>
 	</section>
 	<section class="juego container-fluid">
-		<div class="mesa">
-			<div class="cartasjugador1">
-				<div class="carta carta1"></div>
-				<div class="carta carta2"></div>
-				<div class="carta carta3"></div>
+		<div class="row">
+			<div class="col-12 col-lg-6 order-1">
+				<div class="mesa">
+					<div class="cartasjugador1">
+						<div class="carta carta1" id="me-j1-c1"></div>
+						<div class="carta carta2" id="me-j1-c2"></div>
+						<div class="carta carta3" id="me-j1-c3"></div>
+					</div>
+					<div class="cartasjugador2">
+						<div class="carta carta1" id="me-j2-c1"></div>
+						<div class="carta carta2" id="me-j2-c2"></div>
+						<div class="carta carta3" id="me-j2-c3"></div>
+					</div>
+				</div>
+				<div class="accionesjugador1 text-center fixed-bottom">
+					<div class="envido pb-2">
+						<button class="btn btn-light" id="envido">Envido</button>
+						<button class="btn btn-light" id="realenvido">Real envido</button>
+						<button class="btn btn-light" id="faltaenvido">Falta envido</button>
+					</div>
+					<div class="truco pb-2">
+						<button class="btn btn-light" id="truco">Truco</button>
+						<button class="btn btn-light" id="retruco">Retruco</button>
+						<button class="btn btn-light" id="vale4">Vale cuatro</button>
+					</div>
+					<div class="quiero pb-2">
+						<button class="btn btn-light" id="quiero">Quiero</button>
+						<button class="btn btn-light" id="noquiero">No quiero</button>
+					</div>
+					<div class="salir pb-4">
+						<button class="btn btn-danger" id="guardar">Guardar y salir</button>
+					</div>
+				</div>
 			</div>
-			<div class="cartasjugador2">
-				<div class="carta carta1"></div>
-				<div class="carta carta2"></div>
-				<div class="carta carta3"></div>
+			<div class="col-12 col-lg-3 order-0">
+				<div class="manojugador2 row">
+					<div class="carta carta1 col-4 col-lg-12" id="ma-j2-c1"></div>
+					<div class="carta carta2 col-4 col-lg-12" id="ma-j2-c2"></div>
+					<div class="carta carta3 col-4 col-lg-12" id="ma-j2-c3"></div>
+				</div>
 			</div>
-		</div>
-		<div class="manojugador1">
-			<div class="carta carta1"></div>
-			<div class="carta carta2"></div>
-			<div class="carta carta3"></div>
-		</div>
-		<div class="manojugador2">
-			<div class="carta carta1"></div>
-			<div class="carta carta2"></div>
-			<div class="carta carta3"></div>
+			<div class="col-12 col-lg-3 order-2">
+				<div class="manojugador1 row">
+					<div class="carta carta1 col-4 col-lg-12" id="ma-j1-c1"></div>
+					<div class="carta carta2 col-4 col-lg-12" id="ma-j1-c2"></div>
+					<div class="carta carta3 col-4 col-lg-12" id="ma-j1-c3"></div>
+				</div>
+			</div>
 		</div>
 	</section>
 	

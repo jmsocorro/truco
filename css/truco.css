@@ -3,22 +3,53 @@ html * {
   font-family: "Assistant", sans-serif;
 }
 
-.inicio {
+body .inicio {
   height: 100vh;
   background: #060;
   color: #FFF;
 }
-
-.sindatos .jugadornuevo {
+body.sindatos .inicio .jugadornuevo {
   display: unset;
 }
-.sindatos .jugadorviejo {
+body.sindatos .inicio .jugadorviejo {
   display: none;
 }
-
-.jugadoractivo .jugadornuevo {
+body.jugadoractivo .inicio .jugadornuevo {
   display: none;
 }
-.jugadoractivo .jugadorviejo {
+body.jugadoractivo .inicio .jugadorviejo {
   display: unset;
+}
+body .juego {
+  display: none;
+}
+body .juego .manojugador1 .carta,
+body .juego .manojugador2 .carta {
+  height: 25vh;
+  margin-bottom: 1rem;
+}
+body .juego .manojugador1 .carta img,
+body .juego .manojugador2 .carta img {
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+}
+body .juego .manojugador2 .carta {
+  background-image: url("../jpg/cartas/0/dorso.jpg");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+body.jugando {
+  height: 100vh;
+  padding-top: 5rem;
+  background: #040;
+  color: #FFF;
+}
+body.jugando .inicio {
+  display: none;
+}
+body.jugando .juego {
+  display: block;
 }/*# sourceMappingURL=truco.css.map */
