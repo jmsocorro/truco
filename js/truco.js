@@ -70,152 +70,152 @@ const calcularenvido = (cartas) => {
 // MAZO DE CARTAS PARA JUGAR
 const mazo = [
 	{ 
-		palo: "Oro",
+		palo: "oro",
 		numero : 1,
 		valor: "10"
 	},
 	{ 
-		palo: "Oro",
+		palo: "oro",
 		numero : 2,
 		valor: "8"
 	},
 	{ 
-		palo: "Oro",
+		palo: "oro",
 		numero : 3,
 		valor: "4"
 	},
 	{ 
-		palo: "Oro",
+		palo: "oro",
 		numero : 4,
 		valor: "36"
 	},
 	{ 
-		palo: "Oro",
+		palo: "oro",
 		numero : 5,
 		valor: "32"
 	},
 	{ 
-		palo: "Oro",
+		palo: "oro",
 		numero : 6,
 		valor: "28"
 	},
 	{ 
-		palo: "Oro",
+		palo: "oro",
 		numero : 7,
 		valor: "3"
 	},
 	{ 
-		palo: "Oro",
+		palo: "oro",
 		numero : 10,
 		valor: "22"
 	},
 	{ 
-		palo: "Oro",
+		palo: "oro",
 		numero : 11,
 		valor: "18"
 	},
 	{ 
-		palo: "Oro",
+		palo: "oro",
 		numero : 12,
 		valor: "14"
 	},
 	{ 
-		palo: "Copa",
+		palo: "copa",
 		numero : 1,
 		valor: "10"
 	},
 	{ 
-		palo: "Copa",
+		palo: "copa",
 		numero : 2,
 		valor: "8"
 	},
 	{ 
-		palo: "Copa",
+		palo: "copa",
 		numero : 3,
 		valor: "4"
 	},
 	{ 
-		palo: "Copa",
+		palo: "copa",
 		numero : 4,
 		valor: "36"
 	},
 	{ 
-		palo: "Copa",
+		palo: "copa",
 		numero : 5,
 		valor: "32"
 	},
 	{ 
-		palo: "Copa",
+		palo: "copa",
 		numero : 6,
 		valor: "28"
 	},
 	{ 
-		palo: "Copa",
+		palo: "copa",
 		numero : 7,
 		valor: "26"
 	},
 	{ 
-		palo: "Copa",
+		palo: "copa",
 		numero : 10,
 		valor: "22"
 	},
 	{ 
-		palo: "Copa",
+		palo: "copa",
 		numero : 11,
 		valor: "18"
 	},
 	{ 
-		palo: "Copa",
+		palo: "copa",
 		numero : 12,
 		valor: "14"
 	},
 	{ 
-		palo: "Espada",
+		palo: "espada",
 		numero : 1,
 		valor: "0"
 	},
 	{ 
-		palo: "Espada",
+		palo: "espada",
 		numero : 2,
 		valor: "8"
 	},
 	{ 
-		palo: "Espada",
+		palo: "espada",
 		numero : 3,
 		valor: "4"
 	},
 	{ 
-		palo: "Espada",
+		palo: "espada",
 		numero : 4,
 		valor: "36"
 	},
 	{ 
-		palo: "Espada",
+		palo: "espada",
 		numero : 5,
 		valor: "32"
 	},
 	{ 
-		palo: "Espada",
+		palo: "espada",
 		numero : 6,
 		valor: "28"
 	},
 	{ 
-		palo: "Espada",
+		palo: "espada",
 		numero : 7,
 		valor: "2"
 	},
 	{ 
-		palo: "Espada",
+		palo: "espada",
 		numero : 10,
 		valor: "22"
 	},
 	{ 
-		palo: "Espada",
+		palo: "espada",
 		numero : 11,
 		valor: "18"
 	},
 	{ 
-		palo: "Espada",
+		palo: "espada",
 		numero : 12,
 		valor: "14"
 	},
@@ -543,7 +543,7 @@ formdatospartido.onsubmit = (e) => {
 			let cont = 0;
 			for (let carta of chicoencurso.mano.cartas.j1) {
 				let imagencarta = document.createElement('img');
-				imagencarta.setAttribute('src',`jpg/cartas/${datosguardados.jugadores[datosguardados.jugadoractivo].preferencias.cartas}/${carta.palo}${carta.numero}.jpg`)
+				imagencarta.setAttribute('src',`./jpg/cartas/${datosguardados.jugadores[datosguardados.jugadoractivo].preferencias.cartas}/${carta.palo}${carta.numero}.jpg`)
 				imagencarta.setAttribute("alt", `${carta.numero} de ${carta.palo}`);
 				console.log(cartasmanoJ1)
 				cartasmanoJ1[cont].appendChild(imagencarta);
