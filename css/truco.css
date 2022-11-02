@@ -33,7 +33,7 @@ body .juego .manojugador2 .carta img {
   height: 100%;
   -o-object-fit: contain;
      object-fit: contain;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
 }
 body .juego .manojugador2 .carta {
   background-image: url("../jpg/cartas/0/dorso.jpg");
