@@ -343,6 +343,7 @@ function Partido (objeto) {
 				jugadormano : this.chicos[this.chicoencurso].jugadormano
 			}
 		)
+		return this.chicos[this.chicoencurso].mano;
 	}
 	// EVALUAR SI CANTAR EL ENVIDO
 	this.cantarenvido = () => {
@@ -379,6 +380,7 @@ function Chico (objeto) {
 function Mano (objeto) {
 	this.cartas = objeto.cartas;
 	this.jugadormano = objeto.jugadormano;
+	this.vueltanum = 0;
 	this.vueltas = [
 		{
 			cartaj1: {},
@@ -420,10 +422,10 @@ const cargarnuevopartido = (datospartido) => {
 			{jugadornombre : datospartido.jugadornombre},
 			{jugadornombre : 'JSAI'}
 		],
-		jugadormano: datospartido.jugadormano,
+		jugadormano: datospartido.jugadormano ? 2 : 1,
 		chicos : [
 			{
-				jugadormano: datospartido.jugadormano,
+				jugadormano: datospartido.jugadormano ? 2 : 1,
 				puntos1: 0,
 				puntos2: 0,
 				ganador: 0
@@ -438,6 +440,7 @@ const cargarnuevopartido = (datospartido) => {
 const body = document.querySelector('body');
 const inicio = document.querySelector('.inicio');
 const juego = document.querySelector('.juego');
+const mesa = document.querySelector('.mesa');
 // elementos del inicio
 const cambiarjugador = document.querySelector('#cambiarjugador');
 const formdatospartido = document.querySelector('#datospartido');
@@ -538,18 +541,19 @@ formdatospartido.onsubmit = (e) => {
 		const chicoencurso = partidoencurso.iniciarnuevochico();
 		do{
 			// creamos una nueva mano
-			partidoencurso.iniciarmano();
+			const manoencurso = partidoencurso.iniciarmano();
 			// repartimos las cartas
 			let cont = 0;
-			for (let carta of chicoencurso.mano.cartas.j1) {
+			for (let carta of manoencurso.cartas.j1) {
 				let imagencarta = document.createElement('img');
 				imagencarta.setAttribute('src',`./jpg/cartas/${datosguardados.jugadores[datosguardados.jugadoractivo].preferencias.cartas}/${carta.palo}${carta.numero}.jpg`)
 				imagencarta.setAttribute("alt", `${carta.numero} de ${carta.palo}`);
 				console.log(cartasmanoJ1)
 				cartasmanoJ1[cont].appendChild(imagencarta);
 				cont ++;
-				console.log(carta.numero,carta.palo)
 			}
+			console.log(manoencurso);
+			body.classList.add("jugando");
 			/*
 			const envidomanoj1 = calcularenvido(chicoencurso.mano.cartas.j1);
 			const envidomanoj2 = calcularenvido(chicoencurso.mano.cartas.j2);
