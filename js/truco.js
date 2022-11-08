@@ -553,7 +553,16 @@ formdatospartido.onsubmit = (e) => {
 				cont ++;
 			}
 			console.log(manoencurso);
-			body.classList.add("jugando");
+			juego.classList.add("jugando");
+			// evento para jugar las cartas a la mesa
+			cartasmanoJ1.forEach( (carta,i) =>{
+				carta.onclick = (e) => {
+					console.log(e);
+					cartasmesaJ1[manoencurso.vueltanum].appendChild(e.target);
+					manoencurso.vueltanum ++;
+				}
+			});
+			
 			/*
 			const envidomanoj1 = calcularenvido(chicoencurso.mano.cartas.j1);
 			const envidomanoj2 = calcularenvido(chicoencurso.mano.cartas.j2);

@@ -34,12 +34,29 @@ body .juego .manojugador2 .carta img {
   -o-object-fit: contain;
      object-fit: contain;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
+  transition: all 0.5s;
 }
 body .juego .manojugador2 .carta {
   background-image: url("../jpg/cartas/0/dorso.jpg");
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
+}
+body .juego .manojugador1 .carta:hover img {
+  cursor: pointer;
+  box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.4);
+  transform: matrix(1.02, 0, 0, 1.02, 0, 0);
+}
+body .juego .mesa .carta {
+  height: 20vh;
+  margin-bottom: 1rem;
+}
+body .juego .mesa .carta img {
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
+  transition: all 0.5s;
 }
 body.jugando {
   height: 100vh;

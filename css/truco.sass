@@ -31,12 +31,31 @@ body
 					height: 100%
 					object-fit: contain
 					box-shadow: 5px 5px 5px rgba(#000,.4)
+					transition: all .5s
 		.manojugador2
 			.carta
 				background-image: url("../jpg/cartas/0/dorso.jpg")
 				background-position: center
 				background-size: contain
 				background-repeat: no-repeat
+		.manojugador1
+			.carta
+				&:hover
+					img
+						cursor: pointer
+						box-shadow: 15px 15px 15px rgba(#000,.4)
+						transform: matrix(1.02, 0, 0, 1.02, 0, 0)
+		.mesa
+			.cartasjugador1
+			.cartasjugador2
+			.carta
+				height: 20vh
+				margin-bottom: 1rem
+				img
+					height: 100%
+					object-fit: contain
+					box-shadow: 5px 5px 5px rgba(#000,.4)
+					transition: all .5s
 	&.jugando
 		height: 100vh
 		padding-top: 5rem
