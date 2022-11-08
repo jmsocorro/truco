@@ -342,7 +342,7 @@ function Partido (objeto) {
 				cartas: cartas,
 				jugadormano : this.chicos[this.chicoencurso].jugadormano
 			}
-		)
+		);
 		return this.chicos[this.chicoencurso].mano;
 	}
 	// EVALUAR SI CANTAR EL ENVIDO
@@ -365,7 +365,12 @@ function Partido (objeto) {
 	this.jugarcarta = () => {
 		
 	}
-
+	this.actualizarestado = () => {
+		const mano = this.chicos[this.chicoencurso].mano;
+		console.log(this.chicos[this.chicoencurso].mano);
+		juego.setAttribute('vueltanum', mano.vueltanum);
+		juego.setAttribute('jugadorturno', mano.jugadorturno);
+	}
 
 }
 // COSTRUCTOR DE CHICO NUEVO
@@ -380,6 +385,7 @@ function Chico (objeto) {
 function Mano (objeto) {
 	this.cartas = objeto.cartas;
 	this.jugadormano = objeto.jugadormano;
+	this.jugadorturno = objeto.jugadormano;
 	this.vueltanum = 0;
 	this.vueltas = [
 		{
@@ -498,9 +504,6 @@ cambiarjugador.onclick = (e) => {
 	body.classList.remove("jugadoractivo");
 }
 
-// Inicializo las variables para el partido
-// const partidos = [];
-// const datospartido = {};
 
 // Carputo los datos del form e inicio el partido
 formdatospartido.onsubmit = (e) => {
@@ -535,97 +538,96 @@ formdatospartido.onsubmit = (e) => {
 	// agrego el class "jugando" al body para mostrar la mesa
 	body.classList.add("jugando");
 	console.log(partidoencurso);
+	//do {
+	// creamos un nuevo chico
+	const chicoencurso = partidoencurso.iniciarnuevochico();
+	//do{
+	// creamos una nueva mano
+	const manoencurso = partidoencurso.iniciarmano();
+	// repartimos las cartas
+	let cont = 0;
+	for (let carta of manoencurso.cartas.j1) {
+		let imagencarta = document.createElement('img');
+		imagencarta.setAttribute('src',`./jpg/cartas/${datosguardados.jugadores[datosguardados.jugadoractivo].preferencias.cartas}/${carta.palo}${carta.numero}.jpg`)
+		imagencarta.setAttribute("alt", `${carta.numero} de ${carta.palo}`);
+		console.log(cartasmanoJ1)
+		cartasmanoJ1[cont].appendChild(imagencarta);
+		cont ++;
+	}
+	console.log(manoencurso);
+	juego.classList.add("jugando");
+	// evento para jugar las cartas a la mesa
+	cartasmanoJ1.forEach( (carta,i) =>{
+		carta.onclick = (e) => {
+			console.log(e);
+			cartasmesaJ1[manoencurso.vueltanum].appendChild(e.target);
+			manoencurso.vueltanum ++;
+		}
+	});
+	partidoencurso.actualizarestado();
+	/*
+	const envidomanoj1 = calcularenvido(chicoencurso.mano.cartas.j1);
+	const envidomanoj2 = calcularenvido(chicoencurso.mano.cartas.j2);
+	let respuestasOK = ['e','r','f','t','1','2','3'];
+	let accion;
+	let vueltanum = 1;
+	for (let vuelta of chicoencurso.mano.vueltas) {
+		let mensaje =`Tus cartas son:
+`;
+		let mensaje2 = `Tus posibles acciones son:
+`;
+		let indice = 1;
+		for (let carta of chicoencurso.mano.cartas.j1) {
+			mensaje += `${carta.numero} de ${carta.palo}
+`;
+			mensaje2 += `${indice}: Jugar el ${carta.numero} de ${carta.palo}
+`;
+			indice +=1
+		}
+		mensaje += `
+Tenés ${envidomanoj1.envido} para el envido.
 
-	do {
-		// creamos un nuevo chico
-		const chicoencurso = partidoencurso.iniciarnuevochico();
-		do{
-			// creamos una nueva mano
-			const manoencurso = partidoencurso.iniciarmano();
-			// repartimos las cartas
-			let cont = 0;
-			for (let carta of manoencurso.cartas.j1) {
-				let imagencarta = document.createElement('img');
-				imagencarta.setAttribute('src',`./jpg/cartas/${datosguardados.jugadores[datosguardados.jugadoractivo].preferencias.cartas}/${carta.palo}${carta.numero}.jpg`)
-				imagencarta.setAttribute("alt", `${carta.numero} de ${carta.palo}`);
-				console.log(cartasmanoJ1)
-				cartasmanoJ1[cont].appendChild(imagencarta);
-				cont ++;
-			}
-			console.log(manoencurso);
-			juego.classList.add("jugando");
-			// evento para jugar las cartas a la mesa
-			cartasmanoJ1.forEach( (carta,i) =>{
-				carta.onclick = (e) => {
-					console.log(e);
-					cartasmesaJ1[manoencurso.vueltanum].appendChild(e.target);
-					manoencurso.vueltanum ++;
-				}
-			});
-			
-			/*
-			const envidomanoj1 = calcularenvido(chicoencurso.mano.cartas.j1);
-			const envidomanoj2 = calcularenvido(chicoencurso.mano.cartas.j2);
-			let respuestasOK = ['e','r','f','t','1','2','3'];
-			let accion;
-			let vueltanum = 1;
-			for (let vuelta of chicoencurso.mano.vueltas) {
-				let mensaje =`Tus cartas son:
-	`;
-				let mensaje2 = `Tus posibles acciones son:
-	`;
-				let indice = 1;
-				for (let carta of chicoencurso.mano.cartas.j1) {
-					mensaje += `${carta.numero} de ${carta.palo}
-	`;
-					mensaje2 += `${indice}: Jugar el ${carta.numero} de ${carta.palo}
-	`;
-					indice +=1
-				}
-				mensaje += `
-	Tenés ${envidomanoj1.envido} para el envido.
-	
-	`;
-				if (vueltanum===1){
-					mensaje2 += `E: Cantar envido / R: Cantar real envido /F: Cantar Falta envido
-	`
-				}
-				mensaje2 += `T: Cantar truco
-	
-	Ingresá una opción`;
-				do {
-					accion=prompt(mensaje+mensaje2).toLowerCase();
-				} while (!respuestasOK.includes(accion));
-				console.log(`Mis cartas son:
-				${chicoencurso.mano.cartas.j2[0].numero} de ${chicoencurso.mano.cartas.j2[0].palo}
-				${chicoencurso.mano.cartas.j2[1].numero} de ${chicoencurso.mano.cartas.j2[1].palo}
-				${chicoencurso.mano.cartas.j2[2].numero} de ${chicoencurso.mano.cartas.j2[2].palo}
-				Tengo ${envidomanoj2.envido} para el envido.
-				`);
-				switch (accion){
-					case "1":
-					case "2":
-					case "3":
-						console.log(`Jugaste el ${chicoencurso.mano.cartas.j1[parseInt(accion)-1].numero} de ${chicoencurso.mano.cartas.j1[parseInt(accion)-1].palo}`);
-						chicoencurso.mano.vueltas[0].cartaj1 = chicoencurso.mano.cartas.j1.splice([parseInt(accion)-1],1);
-						partidoencurso.cantarenvido(chicoencurso);
-						partidoencurso.jugarcarta(chicoencurso);
-						break;
-					case "e":
-					case "r":
-					case "f":
-						partidoencurso.quererenvido(chicoencurso);
-						partidoencurso.jugarcarta(chicoencurso);
-					case "t":
-						partidoencurso.cantarenvido(chicoencurso);
-						partidoencurso.querertruco(chicoencurso);
-						partidoencurso.jugarcarta(chicoencurso);
-				}
-				vueltanum += 1;
-			}
-			*/
-	   } while (chicoencurso.puntos1>partidoencurso.puntostotal && chicoencurso.puntos2>partidoencurso.puntostotal && 1 === 10);
-	} while (partidoencurso.chicos.length < partidoencurso.cantchicos && 1 === 0);
+`;
+		if (vueltanum===1){
+			mensaje2 += `E: Cantar envido / R: Cantar real envido /F: Cantar Falta envido
+`
+		}
+		mensaje2 += `T: Cantar truco
+
+Ingresá una opción`;
+		do {
+			accion=prompt(mensaje+mensaje2).toLowerCase();
+		} while (!respuestasOK.includes(accion));
+		console.log(`Mis cartas son:
+		${chicoencurso.mano.cartas.j2[0].numero} de ${chicoencurso.mano.cartas.j2[0].palo}
+		${chicoencurso.mano.cartas.j2[1].numero} de ${chicoencurso.mano.cartas.j2[1].palo}
+		${chicoencurso.mano.cartas.j2[2].numero} de ${chicoencurso.mano.cartas.j2[2].palo}
+		Tengo ${envidomanoj2.envido} para el envido.
+		`);
+		switch (accion){
+			case "1":
+			case "2":
+			case "3":
+				console.log(`Jugaste el ${chicoencurso.mano.cartas.j1[parseInt(accion)-1].numero} de ${chicoencurso.mano.cartas.j1[parseInt(accion)-1].palo}`);
+				chicoencurso.mano.vueltas[0].cartaj1 = chicoencurso.mano.cartas.j1.splice([parseInt(accion)-1],1);
+				partidoencurso.cantarenvido(chicoencurso);
+				partidoencurso.jugarcarta(chicoencurso);
+				break;
+			case "e":
+			case "r":
+			case "f":
+				partidoencurso.quererenvido(chicoencurso);
+				partidoencurso.jugarcarta(chicoencurso);
+			case "t":
+				partidoencurso.cantarenvido(chicoencurso);
+				partidoencurso.querertruco(chicoencurso);
+				partidoencurso.jugarcarta(chicoencurso);
+		}
+		vueltanum += 1;
+	}
+	*/
+	//} while (chicoencurso.puntos1>partidoencurso.puntostotal && chicoencurso.puntos2>partidoencurso.puntostotal && 1 === 10);
+	//} while (partidoencurso.chicos.length < partidoencurso.cantchicos && 1 === 0);
 	
 
 
