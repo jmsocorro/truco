@@ -23,6 +23,20 @@ body.jugadoractivo .inicio .jugadorviejo {
 body .juego {
   display: none;
 }
+body .juego .accionesjugador1 div {
+  position: relative;
+}
+body .juego .accionesjugador1 div button {
+  opacity: 0;
+  display: block;
+  transition: opacity 0.5s;
+}
+body .juego .accionesjugador1 div button:first-child {
+  opacity: 1;
+}
+body .juego .accionesjugador1 div:hover button {
+  opacity: 1;
+}
 body .juego .manojugador1 .carta,
 body .juego .manojugador2 .carta {
   height: 25vh;

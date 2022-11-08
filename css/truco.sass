@@ -22,6 +22,18 @@ body
 				display: unset
 	.juego
 		display: none
+		.accionesjugador1
+			div
+				position: relative
+				button
+					opacity: 0
+					display: block
+					transition: opacity .5s
+					&:first-child
+						opacity: 1
+				&:hover
+					button
+						opacity: 1
 		.manojugador1,
 		.manojugador2
 			.carta
