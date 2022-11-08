@@ -347,6 +347,15 @@ function Partido (objeto) {
 	}
 	// EVALUAR SI CANTAR EL ENVIDO
 	this.cantarenvido = () => {
+		const mano = this.chicos[this.chicoencurso].mano;
+		// calculo el envido y guado los datos
+		const mienvido = calcularenvido(mano.cartas.j2);
+		console.log(cantoenvido);
+		if (mienvido.flor && this.flor) {
+			cantoenvido.show();
+		} else if (mienvido.envido>23) {
+			cantoenvido.show();
+		};
 
 	}
 	// EVALUAR SI CANTAR EL TRUCO
@@ -366,10 +375,25 @@ function Partido (objeto) {
 		
 	}
 	this.actualizarestado = () => {
+
 		const mano = this.chicos[this.chicoencurso].mano;
 		console.log(this.chicos[this.chicoencurso].mano);
 		juego.setAttribute('vueltanum', mano.vueltanum);
 		juego.setAttribute('jugadorturno', mano.jugadorturno);
+		// Chequeo le toca jugar a JSAI y evalúo que hacer
+		if (mano.jugadorturno === 2 && mano.vueltanum === 0){
+			// Chequeo en que vuelta estamos			
+			switch (mano.vueltanum){
+				case 0:
+					// Chequeo si no se canto envido evaluo si cantar
+					mano.envido.cantojugador === 0 && this.cantarenvido();
+					break;
+				case 1:
+					break;
+				case 2:
+					break;
+			}
+		}
 	}
 
 }
@@ -423,7 +447,7 @@ const cargarnuevopartido = (datospartido) => {
 	const nuevopartido = new  Partido ({
 		cantchicos : datospartido.chicos,
 		puntostotal : datospartido.puntostotal,
-		flor : flor,
+		flor : datospartido.flor,
 		jugadores: [
 			{jugadornombre : datospartido.jugadornombre},
 			{jugadornombre : 'JSAI'}
@@ -477,6 +501,10 @@ const botonvale4 = document.querySelector('#vale4');
 const botonrquiero = document.querySelector('#quiero');
 const botonnoquiero = document.querySelector('#noquiero');
 const botonguardar = document.querySelector('#guardar');
+// modales de canto
+const cantoenvido = new bootstrap.Modal('#cantoenvido');
+const cantotruco = new bootstrap.Modal('#cantotruco');
+
 
 // Busco los datos guardados en localStorage y los guardo. Si no hay datos genero el objeto
 const datosguardados = localStorage.getItem('datos') === null ? { jugadores: [], jugadoractivo : false} : JSON.parse(localStorage.getItem('datos'));
@@ -505,7 +533,7 @@ cambiarjugador.onclick = (e) => {
 }
 
 
-// Carputo los datos del form e inicio el partido
+// Capturo los datos del form e inicio el partido
 formdatospartido.onsubmit = (e) => {
 	e.preventDefault();
 	const datospartido = {
@@ -538,10 +566,8 @@ formdatospartido.onsubmit = (e) => {
 	// agrego el class "jugando" al body para mostrar la mesa
 	body.classList.add("jugando");
 	console.log(partidoencurso);
-	//do {
 	// creamos un nuevo chico
 	const chicoencurso = partidoencurso.iniciarnuevochico();
-	//do{
 	// creamos una nueva mano
 	const manoencurso = partidoencurso.iniciarmano();
 	// repartimos las cartas
@@ -556,15 +582,15 @@ formdatospartido.onsubmit = (e) => {
 	}
 	console.log(manoencurso);
 	juego.classList.add("jugando");
+	// verifico en que momento del partido nos encontramosy actualizo el dom
+	partidoencurso.actualizarestado();
 	// evento para jugar las cartas a la mesa
 	cartasmanoJ1.forEach( (carta,i) =>{
 		carta.onclick = (e) => {
-			console.log(e);
 			cartasmesaJ1[manoencurso.vueltanum].appendChild(e.target);
 			manoencurso.vueltanum ++;
 		}
 	});
-	partidoencurso.actualizarestado();
 	/*
 	const envidomanoj1 = calcularenvido(chicoencurso.mano.cartas.j1);
 	const envidomanoj2 = calcularenvido(chicoencurso.mano.cartas.j2);

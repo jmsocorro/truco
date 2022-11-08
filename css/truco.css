@@ -23,6 +23,9 @@ body.jugadoractivo .inicio .jugadorviejo {
 body .juego {
   display: none;
 }
+body .juego .accionesjugador1 {
+  top: 0;
+}
 body .juego .accionesjugador1 div {
   position: relative;
 }

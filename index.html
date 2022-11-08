@@ -126,12 +126,12 @@
 	</section>
 	<section class="juego container-fluid">
 		<div class="row">
-			<div class="col-12 col-lg-6 order-1">
+			<div class="col-12 col-lg-6 order-1 position-relative pt-5">
 				<div class="tamteador">
 					<div class="puntos pj1"></div>
 					<div class="puntos pj1"></div>
 				</div>
-				<div class="accionesjugador1 row">
+				<div class="accionesjugador1 row position-absolute w-100">
 					<div class="envido pb-2 col text-center">
 						<button class="btn btn-light btn-sm mb-2 mx-auto" id="envido">Envido</button>
 						<button class="btn btn-light btn-sm mb-2 mx-auto" id="realenvido">Real envido</button>
@@ -178,6 +178,28 @@
 				</div>
 			</div>
 		</div>
+		<div class="modal" tabindex="-1" id="cantoenvido">
+			<div class="modal-dialog">
+			  <div class="modal-content">
+				<div class="modal-body">
+				  <div class="canto"></div>
+				  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				  <button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			  </div>
+			</div>
+		</div>		  
+		<div class="modal" tabindex="-1" id="cantotruco">
+			<div class="modal-dialog">
+			  <div class="modal-content">
+				<div class="modal-body">
+				  <div class="canto"></div>
+				  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				  <button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			  </div>
+			</div>
+		</div>		  
 	</section>
 	
 	<script src="./js/bootstrap.bundle.min.js"></script>
