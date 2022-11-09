@@ -350,13 +350,18 @@ function Partido (objeto) {
 		const mano = this.chicos[this.chicoencurso].mano;
 		// calculo el envido y guado los datos
 		const mienvido = calcularenvido(mano.cartas.j2);
-		console.log(cantoenvido);
+		console.log(cantoenvido._element);
 		if (mienvido.flor && this.flor) {
+			document.querySelector('#cantoenvido .canto').innerHTML = '<h1>¡Flor!<h1>';
+			document.querySelector('#cantoenvido').className = "modal flor"
 			cantoenvido.show();
-		} else if (mienvido.envido>23) {
+		} else if (mienvido.envido>0) {
+			document.querySelector('#cantoenvido .canto').innerHTML = '<h3>Envido<h3>';
+			document.querySelector('#cantoenvido').className = "modal envido"
 			cantoenvido.show();
+		} else {
+			this.jugarcarta();
 		};
-
 	}
 	// EVALUAR SI CANTAR EL TRUCO
 	this.cantartruco = () => {

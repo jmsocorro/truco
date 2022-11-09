@@ -79,7 +79,7 @@ body.jugando {
   height: 100vh;
   padding-top: 5rem;
   background: #040;
-  color: #FFF;
+  color: #000;
 }
 body.jugando .inicio {
   display: none;
