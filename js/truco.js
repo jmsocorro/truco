@@ -72,202 +72,202 @@ const mazo = [
 	{ 
 		palo: "oro",
 		numero : 1,
-		valor: "10"
+		valor: 10
 	},
 	{ 
 		palo: "oro",
 		numero : 2,
-		valor: "8"
+		valor: 8
 	},
 	{ 
 		palo: "oro",
 		numero : 3,
-		valor: "4"
+		valor: 4
 	},
 	{ 
 		palo: "oro",
 		numero : 4,
-		valor: "36"
+		valor: 36
 	},
 	{ 
 		palo: "oro",
 		numero : 5,
-		valor: "32"
+		valor: 32
 	},
 	{ 
 		palo: "oro",
 		numero : 6,
-		valor: "28"
+		valor: 28
 	},
 	{ 
 		palo: "oro",
 		numero : 7,
-		valor: "3"
+		valor: 3
 	},
 	{ 
 		palo: "oro",
 		numero : 10,
-		valor: "22"
+		valor: 22
 	},
 	{ 
 		palo: "oro",
 		numero : 11,
-		valor: "18"
+		valor: 18
 	},
 	{ 
 		palo: "oro",
 		numero : 12,
-		valor: "14"
+		valor: 14
 	},
 	{ 
 		palo: "copa",
 		numero : 1,
-		valor: "10"
+		valor: 10
 	},
 	{ 
 		palo: "copa",
 		numero : 2,
-		valor: "8"
+		valor: 8
 	},
 	{ 
 		palo: "copa",
 		numero : 3,
-		valor: "4"
+		valor: 4
 	},
 	{ 
 		palo: "copa",
 		numero : 4,
-		valor: "36"
+		valor: 36
 	},
 	{ 
 		palo: "copa",
 		numero : 5,
-		valor: "32"
+		valor: 32
 	},
 	{ 
 		palo: "copa",
 		numero : 6,
-		valor: "28"
+		valor: 28
 	},
 	{ 
 		palo: "copa",
 		numero : 7,
-		valor: "26"
+		valor: 26
 	},
 	{ 
 		palo: "copa",
 		numero : 10,
-		valor: "22"
+		valor: 22
 	},
 	{ 
 		palo: "copa",
 		numero : 11,
-		valor: "18"
+		valor: 18
 	},
 	{ 
 		palo: "copa",
 		numero : 12,
-		valor: "14"
+		valor: 14
 	},
 	{ 
 		palo: "espada",
 		numero : 1,
-		valor: "0"
+		valor: 0
 	},
 	{ 
 		palo: "espada",
 		numero : 2,
-		valor: "8"
+		valor: 8
 	},
 	{ 
 		palo: "espada",
 		numero : 3,
-		valor: "4"
+		valor: 4
 	},
 	{ 
 		palo: "espada",
 		numero : 4,
-		valor: "36"
+		valor: 36
 	},
 	{ 
 		palo: "espada",
 		numero : 5,
-		valor: "32"
+		valor: 32
 	},
 	{ 
 		palo: "espada",
 		numero : 6,
-		valor: "28"
+		valor: 28
 	},
 	{ 
 		palo: "espada",
 		numero : 7,
-		valor: "2"
+		valor: 2
 	},
 	{ 
 		palo: "espada",
 		numero : 10,
-		valor: "22"
+		valor: 22
 	},
 	{ 
 		palo: "espada",
 		numero : 11,
-		valor: "18"
+		valor: 18
 	},
 	{ 
 		palo: "espada",
 		numero : 12,
-		valor: "14"
+		valor: 14
 	},
 	{ 
 		palo: "basto",
 		numero : 1,
-		valor: "1"
+		valor: 1
 	},
 	{ 
 		palo: "basto",
 		numero : 2,
-		valor: "8"
+		valor: 8
 	},
 	{ 
 		palo: "basto",
 		numero : 3,
-		valor: "4"
+		valor: 4
 	},
 	{ 
 		palo: "basto",
 		numero : 4,
-		valor: "36"
+		valor: 36
 	},
 	{ 
 		palo: "basto",
 		numero : 5,
-		valor: "32"
+		valor: 32
 	},
 	{ 
 		palo: "basto",
 		numero : 6,
-		valor: "28"
+		valor: 28
 	},
 	{ 
 		palo: "basto",
 		numero : 7,
-		valor: "26"
+		valor: 26
 	},
 	{ 
 		palo: "basto",
 		numero : 10,
-		valor: "22"
+		valor: 22
 	},
 	{ 
 		palo: "basto",
 		numero : 11,
-		valor: "18"
+		valor: 18
 	},
 	{ 
 		palo: "basto",
 		numero : 12,
-		valor: "14"
+		valor: 14
 	}
 ]
 // COSTRUCTOR DE JUGADORES
@@ -337,6 +337,8 @@ function Partido (objeto) {
 				cartas.j1.push(this.mazo.splice(Math.floor(Math.random() * this.mazo.length),1)[0]);
 			}
 		}
+		// ordeno las cartas del jugador2 por la propiedad valor descendente
+		cartas.j2.sort((a,b) => (b.valor - a.valor));
 		this.chicos[this.chicoencurso].mano = new Mano (
 			{
 				cartas: cartas,
@@ -355,9 +357,9 @@ function Partido (objeto) {
 			document.querySelector('#cantoenvido .canto').innerHTML = '<h1>¡Flor!<h1>';
 			document.querySelector('#cantoenvido').className = "modal flor"
 			cantoenvido.show();
-		} else if (mienvido.envido>0) {
+		} else if (mienvido.envido>33) {
 			document.querySelector('#cantoenvido .canto').innerHTML = '<h3>Envido<h3>';
-			document.querySelector('#cantoenvido').className = "modal envido"
+			document.querySelector('#cantoenvido').className = "modal envido";
 			cantoenvido.show();
 		} else {
 			this.jugarcarta();
@@ -377,14 +379,72 @@ function Partido (objeto) {
 	}
 	// EVALUAR QUE CARTA JUGAR
 	this.jugarcarta = () => {
-		
+		const mano = this.chicos[this.chicoencurso].mano;
+		console.log(mano);
+		// verifico si hay una carta jugada en la vuelta
+		//if(mano.vueltas[mano.vueltanum].cartaj1?.valor === undefined){
+		if(Object.keys(mano.vueltas[mano.vueltanum].cartaj1).length === 0){
+
+		} else {
+			// asigno la primer carta para jugar por defecto
+			let jugarcarta = -1;
+			// guardo el valor de la carta jugada
+			let valorcartajugada = mano.vueltas[mano.vueltanum].cartaj1.valor;
+			// busco en las cartas la carta mas baja que le gane a la que esta en la mesa.  Sino juego una que le empate y sino la carta mas baja de todas.
+			mano.cartas.j2.map((carta, i)=>{
+				console.log(valorcartajugada,carta.valor,mano.cartas.j2[jugarcarta]?.valor);
+				if (valorcartajugada > carta.valor && (jugarcarta === -1 || carta.valor > mano.cartas.j2[jugarcarta]?.valor)){
+					jugarcarta = i;
+				} else if (valorcartajugada === carta.valor && jugarcarta === -1 ) {
+					jugarcarta = i;
+				}
+			});
+			jugarcarta = jugarcarta === -1 ? 0 : jugarcarta ;
+			console.log(jugarcarta);
+			let imagencarta = document.createElement('img');
+			imagencarta.setAttribute('src',`./jpg/cartas/${datosguardados.jugadores[datosguardados.jugadoractivo].preferencias.cartas}/${mano.cartas.j2[jugarcarta].palo}${mano.cartas.j2[jugarcarta].numero}.jpg`)
+			imagencarta.setAttribute("alt", `${mano.cartas.j2[jugarcarta].numero} de ${mano.cartas.j2[jugarcarta].palo}`);
+			imagencarta.setAttribute("index", jugarcarta);
+			cartasmesaJ2[mano.vueltanum].appendChild(imagencarta);
+			document.querySelector('#ma-j2-c'+(mano.vueltanum+1)).classList.add('d-none');
+			// copio el valor de la carta a las cartas jugadas de la mano
+			mano.vueltas[mano.vueltanum].cartaj2 = mano.cartas.j2[jugarcarta];
+			// borro la carta del las cartas en la mano
+			mano.cartas.j2.splice(jugarcarta,1);
+			// llamo a la funcion para actualizar el estado del juego
+			this.actualizarestado();
+			
+		};
+		/*
+		//creo un array con los valores de las cartas del jugador 2
+		const valores = mano.cartas.j2.map((carta) => carta.valor);
+		console.log (valores);
+		let imagencarta = document.createElement('img');
+		imagencarta.setAttribute('src',`./jpg/cartas/${datosguardados.jugadores[datosguardados.jugadoractivo].preferencias.cartas}/${carta.palo}${carta.numero}.jpg`)
+		imagencarta.setAttribute("alt", `${carta.numero} de ${carta.palo}`);
+		console.log(cartasmanoJ1)
+		cartasmesaJ2[cont].appendChild(imagencarta);
+		*/		
 	}
 	this.actualizarestado = () => {
-
 		const mano = this.chicos[this.chicoencurso].mano;
-		console.log(this.chicos[this.chicoencurso].mano);
+		// 
+		if (Object.keys(mano.vueltas[mano.vueltanum].cartaj1).length > 0 && Object.keys(mano.vueltas[mano.vueltanum].cartaj2).length === 0){
+			mano.jugadorturno = 2;
+		} else if (Object.keys(mano.vueltas[mano.vueltanum].cartaj1).length === 0 && Object.keys(mano.vueltas[mano.vueltanum].cartaj2).length > 0){
+			mano.jugadorturno = 1;
+		} else if (Object.keys(mano.vueltas[mano.vueltanum].cartaj1).length > 0 && Object.keys(mano.vueltas[mano.vueltanum].cartaj2).length > 0){
+			if (mano.vueltas[mano.vueltanum].cartaj1.valor > mano.vueltas[mano.vueltanum].cartaj2.valor){
+				mano.vueltas[mano.vueltanum].ganador = 2;
+			} else if (mano.vueltas[mano.vueltanum].cartaj1.valor < mano.vueltas[mano.vueltanum].cartaj2.valor){
+				mano.vueltas[mano.vueltanum].ganador = 1;
+			}
+			mano.vueltanum ++;
+		}
 		juego.setAttribute('vueltanum', mano.vueltanum);
 		juego.setAttribute('jugadorturno', mano.jugadorturno);
+		(mano.vueltanum === 0 && mano.jugadorturno === 2) ? this.cantarenvido() :this.jugarcarta();
+		/*
 		// Chequeo le toca jugar a JSAI y evalúo que hacer
 		if (mano.jugadorturno === 2 && mano.vueltanum === 0){
 			// Chequeo en que vuelta estamos			
@@ -399,6 +459,7 @@ function Partido (objeto) {
 					break;
 			}
 		}
+		*/
 	}
 
 }
@@ -581,7 +642,7 @@ formdatospartido.onsubmit = (e) => {
 		let imagencarta = document.createElement('img');
 		imagencarta.setAttribute('src',`./jpg/cartas/${datosguardados.jugadores[datosguardados.jugadoractivo].preferencias.cartas}/${carta.palo}${carta.numero}.jpg`)
 		imagencarta.setAttribute("alt", `${carta.numero} de ${carta.palo}`);
-		console.log(cartasmanoJ1)
+		imagencarta.setAttribute("index", cont);
 		cartasmanoJ1[cont].appendChild(imagencarta);
 		cont ++;
 	}
@@ -592,8 +653,16 @@ formdatospartido.onsubmit = (e) => {
 	// evento para jugar las cartas a la mesa
 	cartasmanoJ1.forEach( (carta,i) =>{
 		carta.onclick = (e) => {
+			const mano = chicoencurso.mano;
+			console.log(e.target);
+			// muevo la imagen de la carta a la mesa
 			cartasmesaJ1[manoencurso.vueltanum].appendChild(e.target);
-			manoencurso.vueltanum ++;
+			// copio el valor de la carta a las cartas jugadas de la mano
+			mano.vueltas[mano.vueltanum].cartaj1 = mano.cartas.j1[parseInt(e.target.getAttribute('index'))];
+			// borro la carta del las cartas en la mano
+			mano.cartas.j1[parseInt(e.target.getAttribute('index'))] = {};
+			// llamo a la funcion para actualizar el estado del juego
+			partidoencurso.actualizarestado();
 		}
 	});
 	/*
