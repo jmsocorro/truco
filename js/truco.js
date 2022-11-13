@@ -322,6 +322,16 @@ function Partido (objeto) {
 		return this.chicos[this.chicoencurso];
 	};
 	this.iniciarmano = () => {
+		// BORRO TODOS LOS ELEMENTOS DE LA MANO ANTERIOR
+		const imgcartas = document.querySelectorAll('.carta img');
+		[...imgcartas].forEach((imgcarta) => {
+			imgcarta.remove();
+		});
+		// VUELVO A MOSTRAR LAS CARTAS DE J"
+		const cartasJ2 = document.querySelectorAll('.manojugador2 .carta.d-none');
+		[...cartasJ2].forEach((cartaJ2) => {
+			cartaJ2.classList.remove('d-none');
+		});
 		// REPARTO LAS CARTAS AL AZAR
 		let cartas = {
 			j1 : [],
@@ -339,13 +349,49 @@ function Partido (objeto) {
 		}
 		// ordeno las cartas del jugador2 por la propiedad valor descendente
 		cartas.j2.sort((a,b) => (b.valor - a.valor));
+		// asigno el Jugador mano. Si es la primera mano veo quien es mano en el chico, sino cambio el jugador mano de la mano anterior
+		let jugadormano = this.chicos[this.chicoencurso].jugadormano;
+		if (this.chicos[this.chicoencurso]?.mano.jugadormano !== undefined){
+			jugadormano = this.chicos[this.chicoencurso].mano.jugadormano === 1 ? 2 : 1;
+		}
 		this.chicos[this.chicoencurso].mano = new Mano (
 			{
 				cartas: cartas,
-				jugadormano : this.chicos[this.chicoencurso].jugadormano
+				jugadormano : jugadormano
 			}
 		);
-		return this.chicos[this.chicoencurso].mano;
+		const partidoencurso = this;
+		const chicoencurso = partidoencurso.chicos.length-1;
+		const manoencurso = partidoencurso.chicos[this.chicoencurso].mano;
+		console.log(manoencurso);
+		// repartimos las cartas
+		let cont = 0;
+		for (let carta of manoencurso.cartas.j1) {
+			let imagencarta = document.createElement('img');
+			imagencarta.setAttribute('src',`./jpg/cartas/${datosguardados.jugadores[datosguardados.jugadoractivo].preferencias.cartas}/${carta.palo}${carta.numero}.jpg`)
+			imagencarta.setAttribute("alt", `${carta.numero} de ${carta.palo}`);
+			imagencarta.setAttribute("index", cont);
+			cartasmanoJ1[cont].appendChild(imagencarta);
+			cont ++;
+		}
+		juego.classList.add("jugando");
+		// verifico en que momento del partido nos encontramosy actualizo el dom
+		partidoencurso.actualizarestado();
+		// evento para jugar las cartas a la mesa
+		cartasmanoJ1.forEach( (carta,i) =>{
+			carta.onclick = (e) => {
+				console.log(e.target);
+				// muevo la imagen de la carta a la mesa
+				cartasmesaJ1[manoencurso.vueltanum].appendChild(e.target);
+				// copio el valor de la carta a las cartas jugadas de la mano
+				manoencurso.vueltas[manoencurso.vueltanum].cartaj1 = manoencurso.cartas.j1[parseInt(e.target.getAttribute('index'))];
+				// borro la carta del las cartas en la mano
+				manoencurso.cartas.j1[parseInt(e.target.getAttribute('index'))] = {};
+				// llamo a la funcion para actualizar el estado del juego
+				partidoencurso.actualizarestado();
+			}
+		});
+		//return this.chicos[this.chicoencurso].mano;
 	}
 	// EVALUAR SI CANTAR EL ENVIDO
 	this.cantarenvido = () => {
@@ -678,6 +724,7 @@ formdatospartido.onsubmit = (e) => {
 	const chicoencurso = partidoencurso.iniciarnuevochico();
 	// creamos una nueva mano
 	const manoencurso = partidoencurso.iniciarmano();
+	/*
 	// repartimos las cartas
 	let cont = 0;
 	for (let carta of manoencurso.cartas.j1) {
@@ -707,6 +754,7 @@ formdatospartido.onsubmit = (e) => {
 			partidoencurso.actualizarestado();
 		}
 	});
+	*/
 	/*
 	const envidomanoj1 = calcularenvido(chicoencurso.mano.cartas.j1);
 	const envidomanoj2 = calcularenvido(chicoencurso.mano.cartas.j2);
