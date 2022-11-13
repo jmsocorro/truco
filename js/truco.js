@@ -367,7 +367,7 @@ function Partido (objeto) {
 	}
 	// EVALUAR SI CANTAR EL TRUCO
 	this.cantartruco = () => {
-		
+		this.jugarcarta();
 	}
 	// EVALUAR SI QUERER EL ENVIDO
 	this.quererenvido = () => {
@@ -381,13 +381,14 @@ function Partido (objeto) {
 	this.jugarcarta = () => {
 		const mano = this.chicos[this.chicoencurso].mano;
 		console.log(mano);
+		// creo la variable jugarcarta con un valor fuera de rango
+		let jugarcarta = -1;
 		// verifico si hay una carta jugada en la vuelta
 		//if(mano.vueltas[mano.vueltanum].cartaj1?.valor === undefined){
 		if(Object.keys(mano.vueltas[mano.vueltanum].cartaj1).length === 0){
-
+			// juego la carta mas alta que tengo en la mano
+			jugarcarta = mano.cartas.j2.length-1;
 		} else {
-			// asigno la primer carta para jugar por defecto
-			let jugarcarta = -1;
 			// guardo el valor de la carta jugada
 			let valorcartajugada = mano.vueltas[mano.vueltanum].cartaj1.valor;
 			// busco en las cartas la carta mas baja que le gane a la que esta en la mesa.  Sino juego una que le empate y sino la carta mas baja de todas.
@@ -399,67 +400,108 @@ function Partido (objeto) {
 					jugarcarta = i;
 				}
 			});
-			jugarcarta = jugarcarta === -1 ? 0 : jugarcarta ;
-			console.log(jugarcarta);
-			let imagencarta = document.createElement('img');
-			imagencarta.setAttribute('src',`./jpg/cartas/${datosguardados.jugadores[datosguardados.jugadoractivo].preferencias.cartas}/${mano.cartas.j2[jugarcarta].palo}${mano.cartas.j2[jugarcarta].numero}.jpg`)
-			imagencarta.setAttribute("alt", `${mano.cartas.j2[jugarcarta].numero} de ${mano.cartas.j2[jugarcarta].palo}`);
-			imagencarta.setAttribute("index", jugarcarta);
-			cartasmesaJ2[mano.vueltanum].appendChild(imagencarta);
-			document.querySelector('#ma-j2-c'+(mano.vueltanum+1)).classList.add('d-none');
-			// copio el valor de la carta a las cartas jugadas de la mano
-			mano.vueltas[mano.vueltanum].cartaj2 = mano.cartas.j2[jugarcarta];
-			// borro la carta del las cartas en la mano
-			mano.cartas.j2.splice(jugarcarta,1);
-			// llamo a la funcion para actualizar el estado del juego
-			this.actualizarestado();
-			
 		};
-		/*
-		//creo un array con los valores de las cartas del jugador 2
-		const valores = mano.cartas.j2.map((carta) => carta.valor);
-		console.log (valores);
+		// si jugarcarta esta fuera de rango juego la carta mas baja
+		jugarcarta = jugarcarta === -1 ? 0 : jugarcarta ;
+		console.log(jugarcarta);
 		let imagencarta = document.createElement('img');
-		imagencarta.setAttribute('src',`./jpg/cartas/${datosguardados.jugadores[datosguardados.jugadoractivo].preferencias.cartas}/${carta.palo}${carta.numero}.jpg`)
-		imagencarta.setAttribute("alt", `${carta.numero} de ${carta.palo}`);
-		console.log(cartasmanoJ1)
-		cartasmesaJ2[cont].appendChild(imagencarta);
-		*/		
+		imagencarta.setAttribute('src',`./jpg/cartas/${datosguardados.jugadores[datosguardados.jugadoractivo].preferencias.cartas}/${mano.cartas.j2[jugarcarta].palo}${mano.cartas.j2[jugarcarta].numero}.jpg`)
+		imagencarta.setAttribute("alt", `${mano.cartas.j2[jugarcarta].numero} de ${mano.cartas.j2[jugarcarta].palo}`);
+		imagencarta.setAttribute("index", jugarcarta);
+		cartasmesaJ2[mano.vueltanum].appendChild(imagencarta);
+		document.querySelector('#ma-j2-c'+(mano.vueltanum+1)).classList.add('d-none');
+		// copio el valor de la carta a las cartas jugadas de la mano
+		mano.vueltas[mano.vueltanum].cartaj2 = mano.cartas.j2[jugarcarta];
+		// borro la carta del las cartas en la mano
+		mano.cartas.j2.splice(jugarcarta,1);
+		// llamo a la funcion para actualizar el estado del juego
+		this.actualizarestado();
 	}
 	this.actualizarestado = () => {
 		const mano = this.chicos[this.chicoencurso].mano;
-		// 
+		// Veo que cartas se jugaron en la vuelta y asigno jugadorturno
 		if (Object.keys(mano.vueltas[mano.vueltanum].cartaj1).length > 0 && Object.keys(mano.vueltas[mano.vueltanum].cartaj2).length === 0){
 			mano.jugadorturno = 2;
 		} else if (Object.keys(mano.vueltas[mano.vueltanum].cartaj1).length === 0 && Object.keys(mano.vueltas[mano.vueltanum].cartaj2).length > 0){
 			mano.jugadorturno = 1;
 		} else if (Object.keys(mano.vueltas[mano.vueltanum].cartaj1).length > 0 && Object.keys(mano.vueltas[mano.vueltanum].cartaj2).length > 0){
+			// hay dos cartas jugadas en la mesa veo quien fue el ganador de la vuelta
 			if (mano.vueltas[mano.vueltanum].cartaj1.valor > mano.vueltas[mano.vueltanum].cartaj2.valor){
 				mano.vueltas[mano.vueltanum].ganador = 2;
+				mano.jugadorturno = 2;
 			} else if (mano.vueltas[mano.vueltanum].cartaj1.valor < mano.vueltas[mano.vueltanum].cartaj2.valor){
 				mano.vueltas[mano.vueltanum].ganador = 1;
+				mano.jugadorturno = 1;
+			} else {
+				mano.jugadorturno = mano.jugadorturno === 1 ? 2 : 1;
 			}
-			mano.vueltanum ++;
-		}
-		juego.setAttribute('vueltanum', mano.vueltanum);
-		juego.setAttribute('jugadorturno', mano.jugadorturno);
-		(mano.vueltanum === 0 && mano.jugadorturno === 2) ? this.cantarenvido() :this.jugarcarta();
-		/*
-		// Chequeo le toca jugar a JSAI y evalúo que hacer
-		if (mano.jugadorturno === 2 && mano.vueltanum === 0){
-			// Chequeo en que vuelta estamos			
-			switch (mano.vueltanum){
+			// Chequeo en que vuelta estamos o si algun jugador ya gano para cerrar la mano
+			switch (mano.vueltanum) {
 				case 0:
-					// Chequeo si no se canto envido evaluo si cantar
-					mano.envido.cantojugador === 0 && this.cantarenvido();
+					// es la 1ra vuela pasamos a la vuelta siguiente
+					mano.vueltanum ++;
 					break;
 				case 1:
+					/*
+					en la 2da vuelta hay un ganador: 
+					- si el ganador de la 2da es igual al de la 1ra -> Gana el ganador de la 2da
+					- o si en la 1ra hubo empate -> Gana el ganador de la 2da
+					- o si en la segunda hubo empate -> Gana el ganador de la 1ra
+					*/
+					if (mano.vueltas[0].ganador === mano.vueltas[1].ganador){
+						mano.truco.ganador = mano.vueltas[1].ganador;
+					} else if (mano.vueltas[0].ganador === 0 && mano.vueltas[1].ganador !== 0){
+						mano.truco.ganador = mano.vueltas[1].ganador;
+					} else if (mano.vueltas[1].ganador === 0 && mano.vueltas[0].ganador !== 0){
+						mano.truco.ganador = mano.vueltas[0].ganador;
+					} else {
+						mano.vueltanum ++;
+					}
 					break;
 				case 2:
-					break;
-			}
+					/*
+					el ganador de la 3ra vuelta es el ganador, en caso de empate en la 3ra gana el ganador de la 1ra
+					*/
+					if (mano.vueltas[2].ganador === 0){
+						mano.truco.ganador = mano.vueltas[0].ganador;
+					} else {
+						mano.truco.ganador = mano.vueltas[2].ganador;
+					}
+				}
 		}
-		*/
+		console.log(mano.truco);
+		if (mano.truco.ganador===0){
+			juego.setAttribute('vueltanum', mano.vueltanum);
+			juego.setAttribute('jugadorturno', mano.jugadorturno);
+			console.log(mano.vueltanum,mano.jugadorturno);
+			// verifico es el turno de J2
+			if(mano.jugadorturno === 2) {
+				console.log("turno J2")
+				// verifico si es la primer mano
+				if  (mano.vueltanum === 0) {
+					console.log("Primera Mano")
+					// llamo a la funcion cantarenvido
+					this.cantarenvido();
+				} else {
+					console.log("Otra mano")
+					// llamo a la funcion cantartruco
+					this.cantartruco();
+				}
+			}
+		} else {
+			this.cerrarmano();
+		}
+	}
+	this.cerrarmano = () => {
+		const chico = this.chicos[this.chicoencurso];
+		const mano = chico.mano;
+		console.log(mano);
+		console.log("gano el truco "+ this.jugadores[mano.truco.ganador-1].jugadornombre);
+		console.log("gano " + mano.truco.puntos + " puntos");
+		chico["puntos"+mano.truco.ganador] += mano.truco.puntos;
+		console.log("Puntos "+this.jugadores[0].jugadornombre+": "+ chico.puntos1);
+		console.log("Puntos "+this.jugadores[1].jugadornombre+": "+ chico.puntos2);
+		this.iniciarmano();
 	}
 
 }
