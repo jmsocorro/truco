@@ -25,6 +25,7 @@ body .juego {
 }
 body .juego .accionesjugador1 {
   top: 0;
+  opacity: 0.3;
 }
 body .juego .accionesjugador1 div {
   position: relative;
@@ -35,9 +36,6 @@ body .juego .accionesjugador1 div button {
   transition: opacity 0.5s;
 }
 body .juego .accionesjugador1 div button:first-child {
-  opacity: 1;
-}
-body .juego .accionesjugador1 div:hover button {
   opacity: 1;
 }
 body .juego .manojugador1 .carta,
@@ -74,6 +72,12 @@ body .juego .mesa .carta img {
      object-fit: contain;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
   transition: all 0.5s;
+}
+body .juego[jugadorturno="1"] .accionesjugador1 {
+  opacity: 1;
+}
+body .juego[jugadorturno="1"] .accionesjugador1 div:hover button {
+  opacity: 1;
 }
 body.jugando {
   height: 100vh;

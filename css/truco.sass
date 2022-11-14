@@ -24,6 +24,7 @@ body
 		display: none
 		.accionesjugador1
 			top: 0
+			opacity: .3
 			div
 				position: relative
 				button
@@ -31,9 +32,6 @@ body
 					display: block
 					transition: opacity .5s
 					&:first-child
-						opacity: 1
-				&:hover
-					button
 						opacity: 1
 		.manojugador1,
 		.manojugador2
@@ -69,6 +67,13 @@ body
 					object-fit: contain
 					box-shadow: 5px 5px 5px rgba(#000,.4)
 					transition: all .5s
+		&[jugadorturno="1"]
+			.accionesjugador1
+				opacity: 1
+				div
+					&:hover
+						button
+							opacity: 1
 	&.jugando
 		height: 100vh
 		padding-top: 5rem

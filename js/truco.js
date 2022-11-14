@@ -525,6 +525,10 @@ function Partido (objeto) {
 		if (mano.truco.ganador===0){
 			juego.setAttribute('vueltanum', mano.vueltanum);
 			juego.setAttribute('jugadorturno', mano.jugadorturno);
+			juego.setAttribute('trucocanto', mano.truco.canto.length);
+			juego.setAttribute('trucocantojugador', mano.truco.cantojugador);
+			juego.setAttribute('envidocanto', mano.envido.canto.length);
+			juego.setAttribute('envidocantojugador', mano.cantojugador);
 			console.log(mano.vueltanum,mano.jugadorturno);
 			// verifico es el turno de J2
 			if(mano.jugadorturno === 2) {
@@ -533,6 +537,8 @@ function Partido (objeto) {
 				if  (mano.vueltanum === 0) {
 					console.log("Primera Mano")
 					// llamo a la funcion cantarenvido
+					// Agrego un pausa para simular que J2 piensa (entre .5 y 2 seg)
+					//Math.floor(Math.random() * this.mazo.cartas.length)
 					this.cantarenvido();
 				} else {
 					console.log("Otra mano")
