@@ -67,209 +67,211 @@ const calcularenvido = (cartas) => {
 	}
 		return {envido: envido , flor: tenesflor};
 };
-// MAZO DE CARTAS PARA JUGAR
-const mazo = [
-	{ 
-		palo: "oro",
-		numero : 1,
-		valor: 10
-	},
-	{ 
-		palo: "oro",
-		numero : 2,
-		valor: 8
-	},
-	{ 
-		palo: "oro",
-		numero : 3,
-		valor: 4
-	},
-	{ 
-		palo: "oro",
-		numero : 4,
-		valor: 36
-	},
-	{ 
-		palo: "oro",
-		numero : 5,
-		valor: 32
-	},
-	{ 
-		palo: "oro",
-		numero : 6,
-		valor: 28
-	},
-	{ 
-		palo: "oro",
-		numero : 7,
-		valor: 3
-	},
-	{ 
-		palo: "oro",
-		numero : 10,
-		valor: 22
-	},
-	{ 
-		palo: "oro",
-		numero : 11,
-		valor: 18
-	},
-	{ 
-		palo: "oro",
-		numero : 12,
-		valor: 14
-	},
-	{ 
-		palo: "copa",
-		numero : 1,
-		valor: 10
-	},
-	{ 
-		palo: "copa",
-		numero : 2,
-		valor: 8
-	},
-	{ 
-		palo: "copa",
-		numero : 3,
-		valor: 4
-	},
-	{ 
-		palo: "copa",
-		numero : 4,
-		valor: 36
-	},
-	{ 
-		palo: "copa",
-		numero : 5,
-		valor: 32
-	},
-	{ 
-		palo: "copa",
-		numero : 6,
-		valor: 28
-	},
-	{ 
-		palo: "copa",
-		numero : 7,
-		valor: 26
-	},
-	{ 
-		palo: "copa",
-		numero : 10,
-		valor: 22
-	},
-	{ 
-		palo: "copa",
-		numero : 11,
-		valor: 18
-	},
-	{ 
-		palo: "copa",
-		numero : 12,
-		valor: 14
-	},
-	{ 
-		palo: "espada",
-		numero : 1,
-		valor: 0
-	},
-	{ 
-		palo: "espada",
-		numero : 2,
-		valor: 8
-	},
-	{ 
-		palo: "espada",
-		numero : 3,
-		valor: 4
-	},
-	{ 
-		palo: "espada",
-		numero : 4,
-		valor: 36
-	},
-	{ 
-		palo: "espada",
-		numero : 5,
-		valor: 32
-	},
-	{ 
-		palo: "espada",
-		numero : 6,
-		valor: 28
-	},
-	{ 
-		palo: "espada",
-		numero : 7,
-		valor: 2
-	},
-	{ 
-		palo: "espada",
-		numero : 10,
-		valor: 22
-	},
-	{ 
-		palo: "espada",
-		numero : 11,
-		valor: 18
-	},
-	{ 
-		palo: "espada",
-		numero : 12,
-		valor: 14
-	},
-	{ 
-		palo: "basto",
-		numero : 1,
-		valor: 1
-	},
-	{ 
-		palo: "basto",
-		numero : 2,
-		valor: 8
-	},
-	{ 
-		palo: "basto",
-		numero : 3,
-		valor: 4
-	},
-	{ 
-		palo: "basto",
-		numero : 4,
-		valor: 36
-	},
-	{ 
-		palo: "basto",
-		numero : 5,
-		valor: 32
-	},
-	{ 
-		palo: "basto",
-		numero : 6,
-		valor: 28
-	},
-	{ 
-		palo: "basto",
-		numero : 7,
-		valor: 26
-	},
-	{ 
-		palo: "basto",
-		numero : 10,
-		valor: 22
-	},
-	{ 
-		palo: "basto",
-		numero : 11,
-		valor: 18
-	},
-	{ 
-		palo: "basto",
-		numero : 12,
-		valor: 14
-	}
-]
+// CONSTRUCTOR DE MAZO DE CARTAS PARA JUGAR
+function Mazo (){
+	this.cartas = [
+		{ 
+			palo: "oro",
+			numero : 1,
+			valor: 10
+		},
+		{ 
+			palo: "oro",
+			numero : 2,
+			valor: 8
+		},
+		{ 
+			palo: "oro",
+			numero : 3,
+			valor: 4
+		},
+		{ 
+			palo: "oro",
+			numero : 4,
+			valor: 36
+		},
+		{ 
+			palo: "oro",
+			numero : 5,
+			valor: 32
+		},
+		{ 
+			palo: "oro",
+			numero : 6,
+			valor: 28
+		},
+		{ 
+			palo: "oro",
+			numero : 7,
+			valor: 3
+		},
+		{ 
+			palo: "oro",
+			numero : 10,
+			valor: 22
+		},
+		{ 
+			palo: "oro",
+			numero : 11,
+			valor: 18
+		},
+		{ 
+			palo: "oro",
+			numero : 12,
+			valor: 14
+		},
+		{ 
+			palo: "copa",
+			numero : 1,
+			valor: 10
+		},
+		{ 
+			palo: "copa",
+			numero : 2,
+			valor: 8
+		},
+		{ 
+			palo: "copa",
+			numero : 3,
+			valor: 4
+		},
+		{ 
+			palo: "copa",
+			numero : 4,
+			valor: 36
+		},
+		{ 
+			palo: "copa",
+			numero : 5,
+			valor: 32
+		},
+		{ 
+			palo: "copa",
+			numero : 6,
+			valor: 28
+		},
+		{ 
+			palo: "copa",
+			numero : 7,
+			valor: 26
+		},
+		{ 
+			palo: "copa",
+			numero : 10,
+			valor: 22
+		},
+		{ 
+			palo: "copa",
+			numero : 11,
+			valor: 18
+		},
+		{ 
+			palo: "copa",
+			numero : 12,
+			valor: 14
+		},
+		{ 
+			palo: "espada",
+			numero : 1,
+			valor: 0
+		},
+		{ 
+			palo: "espada",
+			numero : 2,
+			valor: 8
+		},
+		{ 
+			palo: "espada",
+			numero : 3,
+			valor: 4
+		},
+		{ 
+			palo: "espada",
+			numero : 4,
+			valor: 36
+		},
+		{ 
+			palo: "espada",
+			numero : 5,
+			valor: 32
+		},
+		{ 
+			palo: "espada",
+			numero : 6,
+			valor: 28
+		},
+		{ 
+			palo: "espada",
+			numero : 7,
+			valor: 2
+		},
+		{ 
+			palo: "espada",
+			numero : 10,
+			valor: 22
+		},
+		{ 
+			palo: "espada",
+			numero : 11,
+			valor: 18
+		},
+		{ 
+			palo: "espada",
+			numero : 12,
+			valor: 14
+		},
+		{ 
+			palo: "basto",
+			numero : 1,
+			valor: 1
+		},
+		{ 
+			palo: "basto",
+			numero : 2,
+			valor: 8
+		},
+		{ 
+			palo: "basto",
+			numero : 3,
+			valor: 4
+		},
+		{ 
+			palo: "basto",
+			numero : 4,
+			valor: 36
+		},
+		{ 
+			palo: "basto",
+			numero : 5,
+			valor: 32
+		},
+		{ 
+			palo: "basto",
+			numero : 6,
+			valor: 28
+		},
+		{ 
+			palo: "basto",
+			numero : 7,
+			valor: 26
+		},
+		{ 
+			palo: "basto",
+			numero : 10,
+			valor: 22
+		},
+		{ 
+			palo: "basto",
+			numero : 11,
+			valor: 18
+		},
+		{ 
+			palo: "basto",
+			numero : 12,
+			valor: 14
+		}
+	];
+} 
 // COSTRUCTOR DE JUGADORES
 function Jugador (objeto) {
 	this.jugadornombre = objeto.jugadornombre;
@@ -301,7 +303,7 @@ function Partido (objeto) {
 	this.jugadores = objeto.jugadores;
 	this.chicos = [];
 	this.chicoencurso = 0;
-	this.mazo = mazo;
+	this.mazo = new Mazo();
 	// METODOS
 	this.iniciarnuevochico = () => {
 		this.chicos.push(
@@ -337,14 +339,15 @@ function Partido (objeto) {
 			j1 : [],
 			j2 : []
 		};
-		this.mazo = mazo;
+		this.mazo = new Mazo();
+		console.log(this.mazo.cartas);
 		for (let c = 0; c < 3; c++) {
 			if (this.chicos[this.chicoencurso].jugadormano===1){
-				cartas.j1.push(this.mazo.splice(Math.floor(Math.random() * this.mazo.length),1)[0]);
-				cartas.j2.push(this.mazo.splice(Math.floor(Math.random() * this.mazo.length),1)[0]);
+				cartas.j1.push(this.mazo.cartas.splice(Math.floor(Math.random() * this.mazo.cartas.length),1)[0]);
+				cartas.j2.push(this.mazo.cartas.splice(Math.floor(Math.random() * this.mazo.cartas.length),1)[0]);
 			} else {
-				cartas.j2.push(this.mazo.splice(Math.floor(Math.random() * this.mazo.length),1)[0]);
-				cartas.j1.push(this.mazo.splice(Math.floor(Math.random() * this.mazo.length),1)[0]);
+				cartas.j2.push(this.mazo.cartas.splice(Math.floor(Math.random() * this.mazo.cartas.length),1)[0]);
+				cartas.j1.push(this.mazo.cartas.splice(Math.floor(Math.random() * this.mazo.cartas.length),1)[0]);
 			}
 		}
 		// ordeno las cartas del jugador2 por la propiedad valor descendente
@@ -493,8 +496,9 @@ function Partido (objeto) {
 					- si el ganador de la 2da es igual al de la 1ra -> Gana el ganador de la 2da
 					- o si en la 1ra hubo empate -> Gana el ganador de la 2da
 					- o si en la segunda hubo empate -> Gana el ganador de la 1ra
+					- o si empataron en la 1ra y la 2da gana la 3ra vuelta
 					*/
-					if (mano.vueltas[0].ganador === mano.vueltas[1].ganador){
+					if (mano.vueltas[0].ganador === mano.vueltas[1].ganador && mano.vueltas[0].ganador !== 0){
 						mano.truco.ganador = mano.vueltas[1].ganador;
 					} else if (mano.vueltas[0].ganador === 0 && mano.vueltas[1].ganador !== 0){
 						mano.truco.ganador = mano.vueltas[1].ganador;
@@ -506,10 +510,12 @@ function Partido (objeto) {
 					break;
 				case 2:
 					/*
-					el ganador de la 3ra vuelta es el ganador, en caso de empate en la 3ra gana el ganador de la 1ra
+					el ganador de la 3ra vuelta es el ganador, en caso de empate en la 3ra gana el ganador de la 1ra, si empataron las 3 manos gana el jugador mano
 					*/
-					if (mano.vueltas[2].ganador === 0){
+					if (mano.vueltas[2].ganador === 0 && mano.vueltas[0].ganador !== 0){
 						mano.truco.ganador = mano.vueltas[0].ganador;
+					} else if (mano.vueltas[2].ganador === 0 && mano.vueltas[0].ganador === 0){
+						mano.truco.ganador = mano.jugadormano;
 					} else {
 						mano.truco.ganador = mano.vueltas[2].ganador;
 					}
@@ -547,7 +553,12 @@ function Partido (objeto) {
 		chico["puntos"+mano.truco.ganador] += mano.truco.puntos;
 		console.log("Puntos "+this.jugadores[0].jugadornombre+": "+ chico.puntos1);
 		console.log("Puntos "+this.jugadores[1].jugadornombre+": "+ chico.puntos2);
-		this.iniciarmano();
+		document.querySelector('#cierromano .mensaje').innerHTML = `<p>${this.jugadores[mano.truco.ganador-1].jugadornombre} ganó ${mano.truco.puntos} del truco.</p>
+<p>Puntos</p>
+<p>${this.jugadores[0].jugadornombre}: ${chico.puntos1}</p>
+<p>${this.jugadores[1].jugadornombre}: ${chico.puntos2}</p>`;
+		cierromano.show();
+		//this.iniciarmano();
 	}
 
 }
@@ -655,9 +666,11 @@ const botonvale4 = document.querySelector('#vale4');
 const botonrquiero = document.querySelector('#quiero');
 const botonnoquiero = document.querySelector('#noquiero');
 const botonguardar = document.querySelector('#guardar');
-// modales de canto
+const botonesrepartir = document.querySelectorAll('button.repartir')
+// modales
 const cantoenvido = new bootstrap.Modal('#cantoenvido');
 const cantotruco = new bootstrap.Modal('#cantotruco');
+const cierromano = new bootstrap.Modal('#cierromano');
 
 
 // Busco los datos guardados en localStorage y los guardo. Si no hay datos genero el objeto
@@ -724,6 +737,11 @@ formdatospartido.onsubmit = (e) => {
 	const chicoencurso = partidoencurso.iniciarnuevochico();
 	// creamos una nueva mano
 	const manoencurso = partidoencurso.iniciarmano();
+	// asigno accion de iniciar mano a los botones repartir
+	[...botonesrepartir].forEach((botonrepartir) => {
+		botonrepartir.onclick = (e) => partidoencurso.iniciarmano();
+	});
+
 	/*
 	// repartimos las cartas
 	let cont = 0;
