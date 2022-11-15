@@ -28,11 +28,16 @@ body
 			div
 				position: relative
 				button
-					opacity: 0
 					display: block
-					transition: opacity .5s
-					&:first-child
+					opacity: 0
+					transition: all .5s
+					&#guardar
 						opacity: 1
+					&#envido,
+					&#truco,
+					&#retruco,
+					&#vale4
+						display: none
 		.manojugador1,
 		.manojugador2
 			.carta
@@ -67,6 +72,13 @@ body
 					object-fit: contain
 					box-shadow: 5px 5px 5px rgba(#000,.4)
 					transition: all .5s
+		&[vueltanum="0"]
+			.accionesjugador1
+				div
+					button
+						&#envido
+							display: block
+							opacity: 1
 		&[jugadorturno="1"]
 			.accionesjugador1
 				opacity: 1
@@ -74,6 +86,19 @@ body
 					&:hover
 						button
 							opacity: 1
+			&[trucocanto="0"]
+				#truco
+					display: block
+					opacity: 1
+			&[trucocantojugador="2"]
+				&[trucocanto="1"]
+					#retruco
+						display: block
+						opacity: 1
+				&[trucocanto="2"]
+					#vale4
+						display: block
+						opacity: 1
 	&.jugando
 		height: 100vh
 		padding-top: 5rem

@@ -384,14 +384,16 @@ function Partido (objeto) {
 		cartasmanoJ1.forEach( (carta,i) =>{
 			carta.onclick = (e) => {
 				console.log(e.target);
-				// muevo la imagen de la carta a la mesa
-				cartasmesaJ1[manoencurso.vueltanum].appendChild(e.target);
-				// copio el valor de la carta a las cartas jugadas de la mano
-				manoencurso.vueltas[manoencurso.vueltanum].cartaj1 = manoencurso.cartas.j1[parseInt(e.target.getAttribute('index'))];
-				// borro la carta del las cartas en la mano
-				manoencurso.cartas.j1[parseInt(e.target.getAttribute('index'))] = {};
-				// llamo a la funcion para actualizar el estado del juego
-				partidoencurso.actualizarestado();
+				if (juego.getAttribute("jugadorturno")==="1"){
+					// muevo la imagen de la carta a la mesa
+					cartasmesaJ1[manoencurso.vueltanum].appendChild(e.target);
+					// copio el valor de la carta a las cartas jugadas de la mano
+					manoencurso.vueltas[manoencurso.vueltanum].cartaj1 = manoencurso.cartas.j1[parseInt(e.target.getAttribute('index'))];
+					// borro la carta del las cartas en la mano
+					manoencurso.cartas.j1[parseInt(e.target.getAttribute('index'))] = {};
+					// llamo a la funcion para actualizar el estado del juego
+					partidoencurso.actualizarestado();
+				}
 			}
 		});
 		//return this.chicos[this.chicoencurso].mano;
@@ -401,12 +403,20 @@ function Partido (objeto) {
 		const mano = this.chicos[this.chicoencurso].mano;
 		// calculo el envido y guado los datos
 		const mienvido = calcularenvido(mano.cartas.j2);
-		console.log(cantoenvido._element);
 		if (mienvido.flor && this.flor) {
 			document.querySelector('#cantoenvido .canto').innerHTML = '<h1>¡Flor!<h1>';
 			document.querySelector('#cantoenvido').className = "modal flor"
 			cantoenvido.show();
-		} else if (mienvido.envido>33) {
+		} else if (mienvido.envido>0) {
+			// canto envido
+			// sumo 2 puntos al canto
+			mano.envido.canto.push(2);
+			// sumo un punto a los puntos en juego
+			mano.envido.puntos=1;
+			// doy el canto al otro jugador
+			mano.cantojugador = 1;
+			juego.setAttribute('envidocanto', mano.envido.canto());
+			juego.setAttribute('envidocantojugador', mano.cantojugador);
 			document.querySelector('#cantoenvido .canto').innerHTML = '<h3>Envido<h3>';
 			document.querySelector('#cantoenvido').className = "modal envido";
 			cantoenvido.show();
@@ -468,12 +478,16 @@ function Partido (objeto) {
 	}
 	this.actualizarestado = () => {
 		const mano = this.chicos[this.chicoencurso].mano;
+		console.log(mano, this.chicoencurso);
 		// Veo que cartas se jugaron en la vuelta y asigno jugadorturno
-		if (Object.keys(mano.vueltas[mano.vueltanum].cartaj1).length > 0 && Object.keys(mano.vueltas[mano.vueltanum].cartaj2).length === 0){
+		//if (Object.keys(mano.vueltas[mano.vueltanum].cartaj1).length > 0 && Object.keys(mano.vueltas[mano.vueltanum].cartaj2).length === 0){
+		if (mano.vueltas[mano.vueltanum].cartaj1?.valor !== undefined && mano.vueltas[mano.vueltanum].cartaj2?.valor === undefined){
 			mano.jugadorturno = 2;
-		} else if (Object.keys(mano.vueltas[mano.vueltanum].cartaj1).length === 0 && Object.keys(mano.vueltas[mano.vueltanum].cartaj2).length > 0){
+		//} else if (Object.keys(mano.vueltas[mano.vueltanum].cartaj1).length === 0 && Object.keys(mano.vueltas[mano.vueltanum].cartaj2).length > 0){
+		} else if (mano.vueltas[mano.vueltanum].cartaj1?.valor === undefined && mano.vueltas[mano.vueltanum].cartaj2?.valor !== undefined){
 			mano.jugadorturno = 1;
-		} else if (Object.keys(mano.vueltas[mano.vueltanum].cartaj1).length > 0 && Object.keys(mano.vueltas[mano.vueltanum].cartaj2).length > 0){
+		//} else if (Object.keys(mano.vueltas[mano.vueltanum].cartaj1).length > 0 && Object.keys(mano.vueltas[mano.vueltanum].cartaj2).length > 0){
+		} else if (mano.vueltas[mano.vueltanum].cartaj1?.valor !== undefined && mano.vueltas[mano.vueltanum].cartaj2?.valor !== undefined){
 			// hay dos cartas jugadas en la mesa veo quien fue el ganador de la vuelta
 			if (mano.vueltas[mano.vueltanum].cartaj1.valor > mano.vueltas[mano.vueltanum].cartaj2.valor){
 				mano.vueltas[mano.vueltanum].ganador = 2;
@@ -538,12 +552,14 @@ function Partido (objeto) {
 					console.log("Primera Mano")
 					// llamo a la funcion cantarenvido
 					// Agrego un pausa para simular que J2 piensa (entre .5 y 2 seg)
-					//Math.floor(Math.random() * this.mazo.cartas.length)
-					this.cantarenvido();
+					setTimeout(() => this.cantarenvido(), 2000);
+					//this.cantarenvido();
 				} else {
 					console.log("Otra mano")
 					// llamo a la funcion cantartruco
-					this.cantartruco();
+					// Agrego un pausa para simular que J2 piensa (entre .5 y 2 seg)
+					setTimeout(() => this.cantartruco(), 2000);
+					//this.cantartruco();
 				}
 			}
 		} else {

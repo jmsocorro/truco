@@ -31,12 +31,15 @@ body .juego .accionesjugador1 div {
   position: relative;
 }
 body .juego .accionesjugador1 div button {
-  opacity: 0;
   display: block;
-  transition: opacity 0.5s;
+  opacity: 0;
+  transition: all 0.5s;
 }
-body .juego .accionesjugador1 div button:first-child {
+body .juego .accionesjugador1 div button#guardar {
   opacity: 1;
+}
+body .juego .accionesjugador1 div button#envido, body .juego .accionesjugador1 div button#truco, body .juego .accionesjugador1 div button#retruco, body .juego .accionesjugador1 div button#vale4 {
+  display: none;
 }
 body .juego .manojugador1 .carta,
 body .juego .manojugador2 .carta {
@@ -73,10 +76,26 @@ body .juego .mesa .carta img {
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
   transition: all 0.5s;
 }
+body .juego[vueltanum="0"] .accionesjugador1 div button#envido {
+  display: block;
+  opacity: 1;
+}
 body .juego[jugadorturno="1"] .accionesjugador1 {
   opacity: 1;
 }
 body .juego[jugadorturno="1"] .accionesjugador1 div:hover button {
+  opacity: 1;
+}
+body .juego[jugadorturno="1"][trucocanto="0"] #truco {
+  display: block;
+  opacity: 1;
+}
+body .juego[jugadorturno="1"][trucocantojugador="2"][trucocanto="1"] #retruco {
+  display: block;
+  opacity: 1;
+}
+body .juego[jugadorturno="1"][trucocantojugador="2"][trucocanto="2"] #vale4 {
+  display: block;
   opacity: 1;
 }
 body.jugando {
