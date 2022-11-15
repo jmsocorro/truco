@@ -398,6 +398,7 @@ function Partido (objeto) {
 		});
 		//return this.chicos[this.chicoencurso].mano;
 	}
+	// METODOS PARA QUE JUEGUE J2
 	// EVALUAR SI CANTAR EL ENVIDO
 	this.cantarenvido = () => {
 		const mano = this.chicos[this.chicoencurso].mano;
@@ -415,7 +416,7 @@ function Partido (objeto) {
 			mano.envido.puntos=1;
 			// doy el canto al otro jugador
 			mano.cantojugador = 1;
-			juego.setAttribute('envidocanto', mano.envido.canto());
+			juego.setAttribute('envidocanto', mano.envido.canto.reduce((total,num) => total+num ,0));
 			juego.setAttribute('envidocantojugador', mano.cantojugador);
 			document.querySelector('#cantoenvido .canto').innerHTML = '<h3>Envido<h3>';
 			document.querySelector('#cantoenvido').className = "modal envido";
@@ -476,6 +477,23 @@ function Partido (objeto) {
 		// llamo a la funcion para actualizar el estado del juego
 		this.actualizarestado();
 	}
+	// METODOS PARA QUE JUEGUE J1
+	this.cantarenvidoJ1 = (accion) => {
+		console.log(accion);
+		switch (accion) {
+			case "quiero":
+				break;
+			case "noquiero":
+				break;
+			case "envido":
+				break;
+			case "realenvido":
+				break;
+			case "faltaenvido":
+				break;
+		}
+	}
+	// ACTUALIZAR EL ESTADO DEL JUEGO
 	this.actualizarestado = () => {
 		const mano = this.chicos[this.chicoencurso].mano;
 		console.log(mano, this.chicoencurso);
@@ -566,6 +584,7 @@ function Partido (objeto) {
 			this.cerrarmano();
 		}
 	}
+	// CERRAR LA MANO
 	this.cerrarmano = () => {
 		const chico = this.chicos[this.chicoencurso];
 		const mano = chico.mano;
@@ -693,7 +712,14 @@ const botonesrepartir = document.querySelectorAll('button.repartir')
 const cantoenvido = new bootstrap.Modal('#cantoenvido');
 const cantotruco = new bootstrap.Modal('#cantotruco');
 const cierromano = new bootstrap.Modal('#cierromano');
-
+const botonesenvidoaccion = document.querySelectorAll('#cantoenvido button.botonaccion')
+/*
+const modalquieroenvido = document.querySelector("#modalquieroenvido"):
+const modalnoquieroenvido = document.querySelector("#modalnoquieroenvido"):
+const modalenvido = document.querySelector("#modalenvido"):
+const modalrealenvido = document.querySelector("#modalrealenvido"):
+const modalfaltaenvido = document.querySelector("#modalfaltaenvido"):
+*/
 
 // Busco los datos guardados en localStorage y los guardo. Si no hay datos genero el objeto
 const datosguardados = localStorage.getItem('datos') === null ? { jugadores: [], jugadoractivo : false} : JSON.parse(localStorage.getItem('datos'));
@@ -762,6 +788,10 @@ formdatospartido.onsubmit = (e) => {
 	// asigno accion de iniciar mano a los botones repartir
 	[...botonesrepartir].forEach((botonrepartir) => {
 		botonrepartir.onclick = (e) => partidoencurso.iniciarmano();
+	});
+	// asigno accion de llamar a cantarenvidoJ1 a los botones de acciones del envido
+	[...botonesenvidoaccion].forEach((botonenvidoaccion) => {
+		botonenvidoaccion.onclick = (e) => partidoencurso.cantarenvidoJ1(botonenvidoaccion.innerText.toLowerCase().replace(/\s+/g, ''));
 	});
 
 	/*
