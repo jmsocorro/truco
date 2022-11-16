@@ -76,7 +76,9 @@ body .juego .mesa .carta img {
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
   transition: all 0.5s;
 }
-body .juego #cantoenvido .envidoJ1 {
+body .juego #cantoenvido .envidoJ1,
+body .juego #cantoenvido .envidoJ2,
+body .juego #cantoenvido #modalcerrarenvido {
   display: none;
 }
 body .juego[envidoquerido="1"] #cantoenvido .envidoJ1 {
@@ -86,7 +88,7 @@ body .juego[envidoquerido="1"] #cantoenvido .envidoJ1 input {
   border: none;
   font-size: 1.5rem;
   border-bottom: 1px solid #000;
-  padding-bottom: 0.2 rem;
+  padding-bottom: 0.2rem;
   text-align: center;
 }
 body .juego[envidoquerido="1"] #cantoenvido .envidoJ1.error::after {
@@ -97,6 +99,39 @@ body .juego[envidoquerido="1"] #cantoenvido .envidoJ1.error::after {
 }
 body .juego[envidoquerido="1"] #cantoenvido .botones {
   display: none;
+  order: 2;
+}
+body .juego[envidoquerido="1"][jugadormano="1"] #cantoenvido .envidoJ1 {
+  order: 0;
+}
+body .juego[envidoquerido="1"][jugadormano="1"] #cantoenvido .envidoJ2 {
+  order: 1;
+  display: none;
+}
+body .juego[envidoquerido="1"][jugadormano="1"] #cantoenvido #modalenvidosonbuenas {
+  display: none;
+}
+body .juego[envidoquerido="1"][jugadormano="2"] .envidoJ1 {
+  order: 1;
+}
+body .juego[envidoquerido="1"][jugadormano="2"] .envidoJ2 {
+  order: 0;
+  display: block !important;
+}
+body .juego[envidoquerido="1"][jugadormano="2"] #modalenvidosonbuenas {
+  display: inline-block;
+}
+body .juego[envidoquerido="1"][envidoganador="1"] #cantoenvido .envidoJ2, body .juego[envidoquerido="1"][envidoganador="2"] #cantoenvido .envidoJ2 {
+  display: block;
+}
+body .juego[envidoquerido="1"][envidoganador="1"] #cantoenvido .botones, body .juego[envidoquerido="1"][envidoganador="2"] #cantoenvido .botones {
+  display: block;
+}
+body .juego[envidoquerido="1"][envidoganador="1"] #cantoenvido .botonaccion, body .juego[envidoquerido="1"][envidoganador="2"] #cantoenvido .botonaccion {
+  display: none;
+}
+body .juego[envidoquerido="1"][envidoganador="1"] #cantoenvido #modalcerrarenvido, body .juego[envidoquerido="1"][envidoganador="2"] #cantoenvido #modalcerrarenvido {
+  display: inline-block;
 }
 body .juego[vueltanum="0"] .accionesjugador1 div button#envido {
   display: block;

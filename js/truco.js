@@ -415,9 +415,9 @@ function Partido (objeto) {
 			// sumo un punto a los puntos en juego
 			mano.envido.puntos=1;
 			// doy el canto al otro jugador
-			mano.cantojugador = 1;
+			mano.envido.cantojugador = 1;
 			juego.setAttribute('envidocanto', mano.envido.canto.reduce((total,num) => total+num ,0));
-			juego.setAttribute('envidocantojugador', mano.cantojugador);
+			juego.setAttribute('envidocantojugador', mano.envido.cantojugador);
 			document.querySelector('#cantoenvido .canto').innerHTML = '<h3>Envido<h3>';
 			document.querySelector('#cantoenvido').className = "modal envido";
 			cantoenvido.show();
@@ -483,12 +483,17 @@ function Partido (objeto) {
 		switch (accion) {
 			case "quiero":
 				mano.envido.querido = 1;
+				mano.envido.puntos = mano.envido.canto.reduce((total,num) => total+num ,0);
 				document.querySelector('#envidoJ1').setAttribute('value',mano.envido.envidoJ1.envido);
 				juego.setAttribute("envidoquerido","1");
 				console.log(mano);
+				if(mano.jugadormano===2){
+					document.querySelector('#cantoenvido .envidoJ2').innerHTML =`<h3>Tengo ${mano.envido.envidoJ2.envido}</h3>`;
+				}
 				break;
 			case "noquiero":
-				this.cerrarenvido(accion)
+			case "sonbuenas":
+					this.cerrarenvido(accion,false)
 				break;
 			case "envido":
 				break;
@@ -506,8 +511,16 @@ function Partido (objeto) {
 					console.log('ERROR')
 					document.querySelector('#cantoenvido .envidoJ1').classList.add('error');
 				}
+				if(mano.jugadormano===1){
+					document.querySelector('#cantoenvido .envidoJ2').innerHTML = envidoJ1 >= mano.envido.envidoJ2.envido ? "<h3>Son buenas</h3>" : `<h3>${mano.envido.envidoJ2.envido} son mejores</h3>`;
+				}
+				this.cerrarenvido(accion,envidoJ1)
 				break;
-		}
+			case "cerrar":
+				cantoenvido.hide();
+				this.actualizarestado();
+				break;
+			}
 	}
 	// ACTUALIZAR EL ESTADO DEL JUEGO
 	this.actualizarestado = () => {
@@ -572,19 +585,22 @@ function Partido (objeto) {
 		console.log(mano.truco);
 		if (mano.truco.ganador===0){
 			juego.setAttribute('vueltanum', mano.vueltanum);
+			juego.setAttribute('jugadormano', mano.jugadormano);
 			juego.setAttribute('jugadorturno', mano.jugadorturno);
 			juego.setAttribute('trucocanto', mano.truco.canto.length);
 			juego.setAttribute('trucocantojugador', mano.truco.cantojugador);
 			juego.setAttribute('trucoquerido', mano.truco.querido);
+			juego.setAttribute('trucoganador', mano.truco.ganador);
 			juego.setAttribute('envidocanto', mano.envido.canto.length);
 			juego.setAttribute('envidocantojugador', mano.envido.cantojugador);
 			juego.setAttribute('envidoquerido', mano.envido.querido);
+			juego.setAttribute('envidoganador', mano.envido.ganador);
 			console.log(mano.vueltanum,mano.jugadorturno);
 			// verifico es el turno de J2
 			if(mano.jugadorturno === 2) {
 				console.log("turno J2")
-				// verifico si es la primer mano
-				if  (mano.vueltanum === 0) {
+				// verifico si es la primer mano y no se canto el envido
+				if  (mano.vueltanum === 0 && mano.envido.cantojugador === 0) {
 					console.log("Primera Mano")
 					// llamo a la funcion cantarenvido
 					// Agrego un pausa para simular que J2 piensa (entre .5 y 2 seg)
@@ -603,13 +619,23 @@ function Partido (objeto) {
 		}
 	}
 	// CERRAR EL ENVIDO
-	this.cerrarenvido = (sequiso,canto) => {
+	this.cerrarenvido = (accion,cantoJ1) => {
 		const mano = this.chicos[this.chicoencurso].mano;
 		console.log(mano)
-		if(sequiso === "quiero"){
-
+		if(accion === "noquiero" || accion === "sonbuenas"){
+			mano.envido.ganador = mano.envido.cantojugador === 1 ? 2 : 1;
+			cantoenvido.hide();
+			this.actualizarestado();
 		} else {
-
+			// guando el envido cantado para verificar al cerrar la mano que canto bien
+			mano.envido.cantojugador = cantoJ1; 
+			// asigno el ganador de acuerdo al que tenga mas envido o en caso de empate el que sea mano
+			mano.envido.ganador = (mano.envido.envidoJ2.envido>cantoJ1 || (mano.envido.envidoJ2.enviso === cantoJ1 && mano.jugadormano === 2)) ? 2 : 1;
+			juego.setAttribute('envidoganador', mano.envido.ganador);
+			if (mano.jugadormano === 2) {
+				cantoenvido.hide();
+				this.actualizarestado();
+			}
 		}
 		/*
 		const chico = this.chicos[this.chicoencurso];
@@ -635,10 +661,12 @@ function Partido (objeto) {
 		console.log(mano);
 		console.log("gano el truco "+ this.jugadores[mano.truco.ganador-1].jugadornombre);
 		console.log("gano " + mano.truco.puntos + " puntos");
+		chico["puntos"+mano.envido.ganador] += mano.envido.puntos;
 		chico["puntos"+mano.truco.ganador] += mano.truco.puntos;
 		console.log("Puntos "+this.jugadores[0].jugadornombre+": "+ chico.puntos1);
 		console.log("Puntos "+this.jugadores[1].jugadornombre+": "+ chico.puntos2);
-		document.querySelector('#cierromano .mensaje').innerHTML = `<p>${this.jugadores[mano.truco.ganador-1].jugadornombre} ganó ${mano.truco.puntos} del truco.</p>
+		document.querySelector('#cierromano .mensaje').innerHTML = mano.envido.ganador === 0 ? "" : `<p>${this.jugadores[mano.envido.ganador-1].jugadornombre} ganó ${mano.envido.puntos} del envido.</p>`
+		document.querySelector('#cierromano .mensaje').innerHTML += `<p>${this.jugadores[mano.truco.ganador-1].jugadornombre} ganó ${mano.truco.puntos} del truco.</p>
 <p>Puntos</p>
 <p>${this.jugadores[0].jugadornombre}: ${chico.puntos1}</p>
 <p>${this.jugadores[1].jugadornombre}: ${chico.puntos2}</p>`;

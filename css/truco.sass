@@ -73,7 +73,9 @@ body
 					box-shadow: 5px 5px 5px rgba(#000,.4)
 					transition: all .5s
 		#cantoenvido
-			.envidoJ1 
+			.envidoJ1, 
+			.envidoJ2,
+			#modalcerrarenvido
 				display: none
 		&[envidoquerido="1"]
 			#cantoenvido
@@ -83,7 +85,7 @@ body
 						border: none
 						font-size: 1.5rem
 						border-bottom: 1px solid #000
-						padding-bottom: .2 rem
+						padding-bottom: .2rem
 						text-align: center
 					&.error
 						&::after
@@ -93,6 +95,35 @@ body
 							padding-top: .2rem
 				.botones
 					display: none
+					order: 2
+			&[jugadormano="1"]
+				#cantoenvido
+					.envidoJ1
+						order: 0
+					.envidoJ2
+						order: 1
+						display: none
+					#modalenvidosonbuenas
+						display: none
+			&[jugadormano="2"]
+					.envidoJ1
+						order: 1
+					.envidoJ2
+						order: 0
+						display: block !important
+					#modalenvidosonbuenas
+						display: inline-block
+			&[envidoganador="1"],
+			&[envidoganador="2"]
+				#cantoenvido
+					.envidoJ2
+						display: block
+					.botones
+						display: block
+					.botonaccion
+						display: none
+					#modalcerrarenvido
+						display: inline-block
 		&[vueltanum="0"]
 			.accionesjugador1
 				div
