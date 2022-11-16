@@ -76,6 +76,28 @@ body .juego .mesa .carta img {
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
   transition: all 0.5s;
 }
+body .juego #cantoenvido .envidoJ1 {
+  display: none;
+}
+body .juego[envidoquerido="1"] #cantoenvido .envidoJ1 {
+  display: block;
+}
+body .juego[envidoquerido="1"] #cantoenvido .envidoJ1 input {
+  border: none;
+  font-size: 1.5rem;
+  border-bottom: 1px solid #000;
+  padding-bottom: 0.2 rem;
+  text-align: center;
+}
+body .juego[envidoquerido="1"] #cantoenvido .envidoJ1.error::after {
+  display: block;
+  content: attr(data-error);
+  text-align: center;
+  padding-top: 0.2rem;
+}
+body .juego[envidoquerido="1"] #cantoenvido .botones {
+  display: none;
+}
 body .juego[vueltanum="0"] .accionesjugador1 div button#envido {
   display: block;
   opacity: 1;

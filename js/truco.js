@@ -329,7 +329,7 @@ function Partido (objeto) {
 		[...imgcartas].forEach((imgcarta) => {
 			imgcarta.remove();
 		});
-		// VUELVO A MOSTRAR LAS CARTAS DE J"
+		// VUELVO A MOSTRAR LAS CARTAS DE J2
 		const cartasJ2 = document.querySelectorAll('.manojugador2 .carta.d-none');
 		[...cartasJ2].forEach((cartaJ2) => {
 			cartaJ2.classList.remove('d-none');
@@ -479,17 +479,33 @@ function Partido (objeto) {
 	}
 	// METODOS PARA QUE JUEGUE J1
 	this.cantarenvidoJ1 = (accion) => {
-		console.log(accion);
+		const mano = this.chicos[this.chicoencurso].mano;
 		switch (accion) {
 			case "quiero":
+				mano.envido.querido = 1;
+				document.querySelector('#envidoJ1').setAttribute('value',mano.envido.envidoJ1.envido);
+				juego.setAttribute("envidoquerido","1");
+				console.log(mano);
 				break;
 			case "noquiero":
+				this.cerrarenvido(accion)
 				break;
 			case "envido":
 				break;
 			case "realenvido":
 				break;
 			case "faltaenvido":
+				break;
+			case "cantar":
+				const envidoJ1 = parseInt(document.querySelector('#envidoJ1').value);
+				// Valido la entrada de envidoJ1
+				if((envidoJ1 >= 0 && envidoJ1 <= 7) || (envidoJ1 >= 20 && envidoJ1 <= 33)) {
+					console.log('OK')
+					document.querySelector('#cantoenvido .envidoJ1').classList.remove('error');
+				} else {
+					console.log('ERROR')
+					document.querySelector('#cantoenvido .envidoJ1').classList.add('error');
+				}
 				break;
 		}
 	}
@@ -559,8 +575,10 @@ function Partido (objeto) {
 			juego.setAttribute('jugadorturno', mano.jugadorturno);
 			juego.setAttribute('trucocanto', mano.truco.canto.length);
 			juego.setAttribute('trucocantojugador', mano.truco.cantojugador);
+			juego.setAttribute('trucoquerido', mano.truco.querido);
 			juego.setAttribute('envidocanto', mano.envido.canto.length);
-			juego.setAttribute('envidocantojugador', mano.cantojugador);
+			juego.setAttribute('envidocantojugador', mano.envido.cantojugador);
+			juego.setAttribute('envidoquerido', mano.envido.querido);
 			console.log(mano.vueltanum,mano.jugadorturno);
 			// verifico es el turno de J2
 			if(mano.jugadorturno === 2) {
@@ -583,6 +601,32 @@ function Partido (objeto) {
 		} else {
 			this.cerrarmano();
 		}
+	}
+	// CERRAR EL ENVIDO
+	this.cerrarenvido = (sequiso,canto) => {
+		const mano = this.chicos[this.chicoencurso].mano;
+		console.log(mano)
+		if(sequiso === "quiero"){
+
+		} else {
+
+		}
+		/*
+		const chico = this.chicos[this.chicoencurso];
+		const mano = chico.mano;
+		console.log(mano);
+		console.log("gano el truco "+ this.jugadores[mano.truco.ganador-1].jugadornombre);
+		console.log("gano " + mano.truco.puntos + " puntos");
+		chico["puntos"+mano.truco.ganador] += mano.truco.puntos;
+		console.log("Puntos "+this.jugadores[0].jugadornombre+": "+ chico.puntos1);
+		console.log("Puntos "+this.jugadores[1].jugadornombre+": "+ chico.puntos2);
+		document.querySelector('#cierromano .mensaje').innerHTML = `<p>${this.jugadores[mano.truco.ganador-1].jugadornombre} ganó ${mano.truco.puntos} del truco.</p>
+<p>Puntos</p>
+<p>${this.jugadores[0].jugadornombre}: ${chico.puntos1}</p>
+<p>${this.jugadores[1].jugadornombre}: ${chico.puntos2}</p>`;
+		cierromano.show();
+		*/
+		//this.iniciarmano();
 	}
 	// CERRAR LA MANO
 	this.cerrarmano = () => {
@@ -637,12 +681,16 @@ function Mano (objeto) {
 	this.envido = {
 		canto: [],
 		cantojugador: 0,
+		querido: 0,
 		puntos: 0,
-		ganador: 0
+		ganador: 0,
+		envidoJ1: calcularenvido(objeto.cartas.j1),
+		envidoJ2: calcularenvido(objeto.cartas.j2)
 	};
 	this.truco = {
 		canto: [],
 		cantojugador: 0,
+		querido: 0,
 		puntos: 1,
 		ganador: 0
 	}
