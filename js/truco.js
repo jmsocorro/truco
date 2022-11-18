@@ -505,7 +505,27 @@ function Partido (objeto) {
 	}
 	// EVALUAR SI QUERER EL TRUCO
 	this.querertruco = () => {
-		
+		console.log('querertruco');
+		const mano = this.chicos[this.chicoencurso].mano;
+		// reviso en que vuelta estamos
+		switch (mano.vueltanum) {
+			case 0:
+				// guardo el valor combinado de las 3 cartas
+				let val3cartas = mano.cartas.j2[0].valor + mano.cartas.j2[1].valor + mano.cartas.j2[2].valor;
+				// guardo el valor combinado de las 2 mejores cartas
+				let val2cartas = mano.cartas.j2[1].valor + mano.cartas.j2[2].valor;
+				// si no se canto envido reviso s1 cantar
+				if (mano.envido.cantojugador===0){
+					quererenvido();
+				} else if (val3cartas<43) {
+
+				}
+				break;
+			case 1:
+				break;
+			case 2:
+				break;
+		}
 	}
 	// EVALUAR QUE CARTA JUGAR
 	this.jugarcarta = () => {
