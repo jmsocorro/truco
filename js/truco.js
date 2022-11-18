@@ -507,6 +507,8 @@ function Partido (objeto) {
 	this.querertruco = () => {
 		console.log('querertruco');
 		const mano = this.chicos[this.chicoencurso].mano;
+		// guardo los puntos en juego antes de querer o revirar
+		const trucopuntos = mano.truco.canto.reduce((total,num) => total+num ,0);
 		// reviso en que vuelta estamos
 		switch (mano.vueltanum) {
 			case 0:
@@ -518,7 +520,12 @@ function Partido (objeto) {
 				if (mano.envido.cantojugador===0){
 					quererenvido();
 				} else if (val3cartas<43) {
-
+					//--console.log("quiero el truco");
+					mano.truco.querido = 1;
+					mano.truco.puntos = trucopuntos;
+					juego.setAttribute("trucoquerido","1");
+					document.querySelector('#cantotruco .canto').innerHTML =`<h3>Quiero</h3>`;
+					cantotruco.show();
 				}
 				break;
 			case 1:
