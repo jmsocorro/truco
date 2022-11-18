@@ -22,6 +22,49 @@ body
 				display: unset
 	.juego
 		display: none
+		.tanteador
+			position: absolute
+			bottom: 0
+			width: 100%
+			.chicos
+				color: #FFF
+				position: relative
+				padding-top: 2rem
+				display: flex
+				justify-content: center
+				align-items: flex-end
+				text-transform: uppercase
+				font-weight: bold
+				&::before
+					position: absolute
+					top: 0
+					left: 0
+					right: 0
+					text-align: center
+					content: attr(data-text)
+					font-size: .8rem
+				.puntochico
+					width: 1rem
+					height: 1rem
+					border-radius: .5rem
+					background: #FFF
+					margin: 0 .5rem
+			.puntos
+				color: #FFF
+				position: relative
+				padding: 1rem
+				font-size: 1.2rem
+				font-weight: bold
+				text-transform: uppercase
+				text-align: center
+				&::before
+					position: absolute
+					top: 0
+					left: 0
+					right: 0
+					text-align: center
+					content: attr(data-text)
+					font-size: .8rem
 		.accionesjugador1
 			top: 0
 			opacity: .3
@@ -40,6 +83,18 @@ body
 						display: none
 		.manojugador1,
 		.manojugador2
+			position: relative
+			&::before
+				position: absolute
+				content: ''
+				width: 10px
+				height: 10px
+				border-radius: 5px
+				background: #fff
+				top: 50%
+				margin-top: -5px
+				opacity: 0
+				transition: all .5s
 			.carta
 				height: 25vh
 				margin-bottom: 1rem
@@ -49,18 +104,30 @@ body
 					box-shadow: 5px 5px 5px rgba(#000,.4)
 					transition: all .5s
 		.manojugador2
+			&::before
+				right: 1rem
 			.carta
 				background-image: url("../jpg/cartas/0/dorso.jpg")
 				background-position: center
 				background-size: contain
 				background-repeat: no-repeat
 		.manojugador1
+			&::before
+				left: 1rem
 			.carta
 				&:hover
 					img
 						cursor: pointer
 						box-shadow: 15px 15px 15px rgba(#000,.4)
 						transform: matrix(1.02, 0, 0, 1.02, 0, 0)
+		&[jugadorturno="1"]
+			.manojugador1
+				&::before
+					opacity: 1
+		&[jugadorturno="2"]
+			.manojugador2
+				&::before
+					opacity: 1
 		.mesa
 			.cartasjugador1
 			.cartasjugador2
@@ -77,6 +144,11 @@ body
 			.envidoJ2,
 			#modalcerrarenvido
 				display: none
+			.puntos
+				font-size: 1.2rem
+				&::before
+					content: "PUNTOS EN JUEGO "
+					font-size: .8rem
 		&[envidoquerido="1"]
 			#cantoenvido
 				.envidoJ1
@@ -123,7 +195,23 @@ body
 					.botonaccion
 						display: none
 					#modalcerrarenvido
-						display: inline-block
+						display: inline-block !important
+		&[envidocantojugador="2"]
+			#cantoenvido
+				.envidoJ2
+					display: block
+				.botones
+					display: block
+				.botonaccion
+					display: none
+				#modalcerrarenvido
+					display: inline-block
+			&[envidoquerido="1"]
+				#modalenvidocantar
+					display: inline-block
+				#modalcerrarenvido
+					display: none !important
+		&[envidoquerido="1"]
 		&[vueltanum="0"]
 			.accionesjugador1
 				div
@@ -151,6 +239,15 @@ body
 					#vale4
 						display: block
 						opacity: 1
+		#cierromano
+			.cerrarpartido
+				display: none
+			&.ganador
+				.cerrarpartido
+					display: inline-block
+				.repartir
+					display: none
+
 	&.jugando
 		height: 100vh
 		padding-top: 5rem

@@ -23,6 +23,55 @@ body.jugadoractivo .inicio .jugadorviejo {
 body .juego {
   display: none;
 }
+body .juego .tanteador {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+body .juego .tanteador .chicos {
+  color: #FFF;
+  position: relative;
+  padding-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+body .juego .tanteador .chicos::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  content: attr(data-text);
+  font-size: 0.8rem;
+}
+body .juego .tanteador .chicos .puntochico {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 0.5rem;
+  background: #FFF;
+  margin: 0 0.5rem;
+}
+body .juego .tanteador .puntos {
+  color: #FFF;
+  position: relative;
+  padding: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+}
+body .juego .tanteador .puntos::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  content: attr(data-text);
+  font-size: 0.8rem;
+}
 body .juego .accionesjugador1 {
   top: 0;
   opacity: 0.3;
@@ -41,6 +90,23 @@ body .juego .accionesjugador1 div button#guardar {
 body .juego .accionesjugador1 div button#envido, body .juego .accionesjugador1 div button#truco, body .juego .accionesjugador1 div button#retruco, body .juego .accionesjugador1 div button#vale4 {
   display: none;
 }
+body .juego .manojugador1,
+body .juego .manojugador2 {
+  position: relative;
+}
+body .juego .manojugador1::before,
+body .juego .manojugador2::before {
+  position: absolute;
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background: #fff;
+  top: 50%;
+  margin-top: -5px;
+  opacity: 0;
+  transition: all 0.5s;
+}
 body .juego .manojugador1 .carta,
 body .juego .manojugador2 .carta {
   height: 25vh;
@@ -54,16 +120,28 @@ body .juego .manojugador2 .carta img {
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
   transition: all 0.5s;
 }
+body .juego .manojugador2::before {
+  right: 1rem;
+}
 body .juego .manojugador2 .carta {
   background-image: url("../jpg/cartas/0/dorso.jpg");
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
 }
+body .juego .manojugador1::before {
+  left: 1rem;
+}
 body .juego .manojugador1 .carta:hover img {
   cursor: pointer;
   box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.4);
   transform: matrix(1.02, 0, 0, 1.02, 0, 0);
+}
+body .juego[jugadorturno="1"] .manojugador1::before {
+  opacity: 1;
+}
+body .juego[jugadorturno="2"] .manojugador2::before {
+  opacity: 1;
 }
 body .juego .mesa .carta {
   height: 20vh;
@@ -80,6 +158,13 @@ body .juego #cantoenvido .envidoJ1,
 body .juego #cantoenvido .envidoJ2,
 body .juego #cantoenvido #modalcerrarenvido {
   display: none;
+}
+body .juego #cantoenvido .puntos {
+  font-size: 1.2rem;
+}
+body .juego #cantoenvido .puntos::before {
+  content: "PUNTOS EN JUEGO ";
+  font-size: 0.8rem;
 }
 body .juego[envidoquerido="1"] #cantoenvido .envidoJ1 {
   display: block;
@@ -131,7 +216,25 @@ body .juego[envidoquerido="1"][envidoganador="1"] #cantoenvido .botonaccion, bod
   display: none;
 }
 body .juego[envidoquerido="1"][envidoganador="1"] #cantoenvido #modalcerrarenvido, body .juego[envidoquerido="1"][envidoganador="2"] #cantoenvido #modalcerrarenvido {
+  display: inline-block !important;
+}
+body .juego[envidocantojugador="2"] #cantoenvido .envidoJ2 {
+  display: block;
+}
+body .juego[envidocantojugador="2"] #cantoenvido .botones {
+  display: block;
+}
+body .juego[envidocantojugador="2"] #cantoenvido .botonaccion {
+  display: none;
+}
+body .juego[envidocantojugador="2"] #cantoenvido #modalcerrarenvido {
   display: inline-block;
+}
+body .juego[envidocantojugador="2"][envidoquerido="1"] #modalenvidocantar {
+  display: inline-block;
+}
+body .juego[envidocantojugador="2"][envidoquerido="1"] #modalcerrarenvido {
+  display: none !important;
 }
 body .juego[vueltanum="0"] .accionesjugador1 div button#envido {
   display: block;
@@ -154,6 +257,15 @@ body .juego[jugadorturno="1"][trucocantojugador="2"][trucocanto="1"] #retruco {
 body .juego[jugadorturno="1"][trucocantojugador="2"][trucocanto="2"] #vale4 {
   display: block;
   opacity: 1;
+}
+body .juego #cierromano .cerrarpartido {
+  display: none;
+}
+body .juego #cierromano.ganador .cerrarpartido {
+  display: inline-block;
+}
+body .juego #cierromano.ganador .repartir {
+  display: none;
 }
 body.jugando {
   height: 100vh;

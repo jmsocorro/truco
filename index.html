@@ -127,20 +127,22 @@
 	<section class="juego container-fluid">
 		<div class="row">
 			<div class="col-12 col-lg-6 order-1 position-relative pt-5">
-				<div class="tamteador">
-					<div class="puntos pj1"></div>
-					<div class="puntos pj1"></div>
+				<div class="tanteador row">
+					<div class="chicos pj1 col-2 order-4" data-text="Chicos J1"></div>
+					<div class="puntos pj1 col-4 order-3" data-text="PUNTOS J1"></div>
+					<div class="puntos pj2 col-4 order-2" data-text="PUNTOS JSAI"></div>
+					<div class="chicos pj2 col-2 order-1" data-text="Chicos JSAI"></div>
 				</div>
 				<div class="accionesjugador1 row position-absolute w-100">
 					<div class="envido pb-2 col text-center">
-						<button class="btn btn-light btn-sm mb-2 mx-auto" id="envido">Envido</button>
-						<button class="btn btn-light btn-sm mb-2 mx-auto" id="realenvido">Real envido</button>
-						<button class="btn btn-light btn-sm mb-2 mx-auto" id="faltaenvido">Falta envido</button>
+						<button class="btn btn-light btn-sm mb-2 mx-auto botonaccion" id="envido">Envido</button>
+						<button class="btn btn-light btn-sm mb-2 mx-auto botonaccion" id="realenvido">Real envido</button>
+						<button class="btn btn-light btn-sm mb-2 mx-auto botonaccion" id="faltaenvido">Falta envido</button>
 					</div>
 					<div class="truco pb-2 col text-center">
-						<button class="btn btn-light btn-sm mb-2 mx-auto" id="truco">Truco</button>
-						<button class="btn btn-light btn-sm mb-2 mx-auto" id="retruco">Retruco</button>
-						<button class="btn btn-light btn-sm mb-2 mx-auto" id="vale4">Vale cuatro</button>
+						<button class="btn btn-light btn-sm mb-2 mx-auto botonaccion" id="truco">Truco</button>
+						<button class="btn btn-light btn-sm mb-2 mx-auto botonaccion" id="retruco">Retruco</button>
+						<button class="btn btn-light btn-sm mb-2 mx-auto botonaccion" id="vale4">Vale cuatro</button>
 					</div>
 					<div class="salir pb-4 col text-center">
 						<button class="btn btn-danger btn-sm mb-2 mx-auto" id="guardar">Guardar y salir</button>
@@ -179,6 +181,7 @@
 			  <div class="modal-content">
 				<div class="modal-body text-center row">
 					<div class="canto mb-4 col-12"></div>
+					<div class="puntos mb-4 col-12"></div>
 					<div class="envidoJ1 mb-2 col-12" data-error="¡¡¡Cantaste cualquiera, no te hagas el vivo!!!" >
 						<input type="number" id="envidoJ1">
 						<button type="button" class="btn btn-secondary botonaccion" id="modalenvidocantar">Cantar</button>
@@ -215,9 +218,10 @@
 		<div class="modal" tabindex="-1" id="cierromano" data-bs-backdrop="static">
 			<div class="modal-dialog">
 			  <div class="modal-content">
-				<div class="modal-body">
+				<div class="modal-body text-center">
 				  <div class="mensaje"></div>
 				  <button type="button" class="btn btn-sm btn-primary repartir" data-bs-dismiss="modal">Repartir</button>
+				  <button type="button" class="btn btn-sm btn-primary cerrarpartido" id="cerrarpartido" data-bs-dismiss="modal">Cerrar</button>
 				</div>
 			  </div>
 			</div>
