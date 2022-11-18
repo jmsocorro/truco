@@ -139,7 +139,8 @@ body
 					object-fit: contain
 					box-shadow: 5px 5px 5px rgba(#000,.4)
 					transition: all .5s
-		#cantoenvido
+		#cantoenvido,
+		#cantotruco
 			.envidoJ1, 
 			.envidoJ2,
 			#modalcerrarenvido
@@ -149,6 +150,33 @@ body
 				&::before
 					content: "PUNTOS EN JUEGO "
 					font-size: .8rem
+		#cantotruco
+			.botonaccion
+				display: none
+		&[trucocantojugador="2"]
+			#cantotruco
+				#modalcerrartruco
+					display: inline-block
+
+		&[trucocantojugador="1"]
+			&[trucocanto="2"]
+				#cantotruco
+					#retruco,
+					#modalquierotruco,
+					#modalnoquierotruco
+						display: inline-block
+						opacity: 1
+					&#modalcerrartruco
+						display: none
+			&[trucocanto="3"]
+					#vale4,
+					#modalquierotruco,
+					#modalnoquierotruco
+						display: inline-block
+						opacity: 1
+					&#modalcerrartruco
+						display: none
+					
 		&[envidoquerido="1"]
 			#cantoenvido
 				.envidoJ1
@@ -230,12 +258,12 @@ body
 				#truco
 					display: block
 					opacity: 1
-			&[trucocantojugador="2"]
-				&[trucocanto="1"]
+			&[trucocantojugador="1"]
+				&[trucocanto="2"]
 					#retruco
 						display: block
 						opacity: 1
-				&[trucocanto="2"]
+				&[trucocanto="3"]
 					#vale4
 						display: block
 						opacity: 1

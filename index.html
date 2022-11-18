@@ -207,11 +207,21 @@
 		<div class="modal" tabindex="-1" id="cantotruco" data-bs-backdrop="static">
 			<div class="modal-dialog">
 			  <div class="modal-content">
-				<div class="modal-body">
-				  <div class="canto"></div>
-				  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-				  <button type="button" class="btn btn-primary">Save changes</button>
+				<div class="modal-body text-center row">
+				  <div class="canto mb-4 col-12"></div>
+				  <div class="puntos mb-4 col-12"></div>
+				  <div class="botones col-12">
+					<div class="mb-2 ">
+						<button type="button" class="btn btn-secondary botonaccion" id="modalretruco">Retruco</button>
+						<button type="button" class="btn btn-secondary botonaccion" id="modalvale4">Vale cuatro</button>
+					</div>
+					<div>
+						<button type="button" class="btn btn-primary botonaccion" id="modalquierotruco">Quiero</button>
+						<button type="button" class="btn btn-primary botonaccion" id="modalnoquierotruco">No quiero</button>
+						<button type="button" class="btn btn-primary botonaccion" id="modalcerrartruco">Cerrar</button>
+					</div>
 				</div>
+			</div>
 			  </div>
 			</div>
 		</div>		  

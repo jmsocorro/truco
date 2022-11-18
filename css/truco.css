@@ -156,15 +156,44 @@ body .juego .mesa .carta img {
 }
 body .juego #cantoenvido .envidoJ1,
 body .juego #cantoenvido .envidoJ2,
-body .juego #cantoenvido #modalcerrarenvido {
+body .juego #cantoenvido #modalcerrarenvido,
+body .juego #cantotruco .envidoJ1,
+body .juego #cantotruco .envidoJ2,
+body .juego #cantotruco #modalcerrarenvido {
   display: none;
 }
-body .juego #cantoenvido .puntos {
+body .juego #cantoenvido .puntos,
+body .juego #cantotruco .puntos {
   font-size: 1.2rem;
 }
-body .juego #cantoenvido .puntos::before {
+body .juego #cantoenvido .puntos::before,
+body .juego #cantotruco .puntos::before {
   content: "PUNTOS EN JUEGO ";
   font-size: 0.8rem;
+}
+body .juego #cantotruco .botonaccion {
+  display: none;
+}
+body .juego[trucocantojugador="2"] #cantotruco #modalcerrartruco {
+  display: inline-block;
+}
+body .juego[trucocantojugador="1"][trucocanto="2"] #cantotruco #retruco,
+body .juego[trucocantojugador="1"][trucocanto="2"] #cantotruco #modalquierotruco,
+body .juego[trucocantojugador="1"][trucocanto="2"] #cantotruco #modalnoquierotruco {
+  display: inline-block;
+  opacity: 1;
+}
+body .juego[trucocantojugador="1"][trucocanto="2"] #cantotruco#modalcerrartruco {
+  display: none;
+}
+body .juego[trucocantojugador="1"][trucocanto="3"] #vale4,
+body .juego[trucocantojugador="1"][trucocanto="3"] #modalquierotruco,
+body .juego[trucocantojugador="1"][trucocanto="3"] #modalnoquierotruco {
+  display: inline-block;
+  opacity: 1;
+}
+body .juego[trucocantojugador="1"][trucocanto="3"]#modalcerrartruco {
+  display: none;
 }
 body .juego[envidoquerido="1"] #cantoenvido .envidoJ1 {
   display: block;
@@ -250,11 +279,11 @@ body .juego[jugadorturno="1"][trucocanto="0"] #truco {
   display: block;
   opacity: 1;
 }
-body .juego[jugadorturno="1"][trucocantojugador="2"][trucocanto="1"] #retruco {
+body .juego[jugadorturno="1"][trucocantojugador="1"][trucocanto="2"] #retruco {
   display: block;
   opacity: 1;
 }
-body .juego[jugadorturno="1"][trucocantojugador="2"][trucocanto="2"] #vale4 {
+body .juego[jugadorturno="1"][trucocantojugador="1"][trucocanto="3"] #vale4 {
   display: block;
   opacity: 1;
 }

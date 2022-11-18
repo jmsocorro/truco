@@ -304,6 +304,10 @@ function Partido (objeto) {
 	this.chicos = [];
 	this.chicoencurso = 0;
 	this.mazo = new Mazo();
+	this.valcartasJ2 = {
+		val3: 120,
+		val2: 120
+	}
 	// METODOS
 	this.iniciarnuevochico = () => {
 		this.chicos.push(
@@ -353,6 +357,11 @@ function Partido (objeto) {
 		}
 		// ordeno las cartas del jugador2 por la propiedad valor descendente
 		cartas.j2.sort((a,b) => (b.valor - a.valor));
+		// guardo el valor combinado de las 3 cartas de J2
+		this.valcartasJ2.val3 = cartas.j2[0].valor + cartas.j2[1].valor + cartas.j2[2].valor;
+		// guardo el valor combinado de las 2 mejores cartas
+		this.valcartasJ2.val2 = cartas.j2[0].valor + cartas.j2[1].valor;
+		// si no se canto envido reviso s1 cantar
 		// asigno el Jugador mano. Si es la primera mano veo quien es mano en el chico, sino cambio el jugador mano de la mano anterior
 		let jugadormano = this.chicos[this.chicoencurso].jugadormano;
 		if (this.chicos[this.chicoencurso]?.mano.jugadormano !== undefined){
@@ -432,13 +441,136 @@ function Partido (objeto) {
 			document.querySelector('#cantoenvido').className = "modal envido";
 			document.querySelector('#cantoenvido .puntos').innerHTML = mano.envido.canto.reduce((total,num) => total+num ,0);
 			cantoenvido.show();
+		} else if (mano.truco.cantojugador === 2){ // si el J1 canto truco antes de que J2 cantara envido llamo a querertruco
+			mano.envido.cantojugador = 2; // El envido pasa a un estado de "cantado"
+			this.querertruco();
 		} else {
 			this.jugarcarta();
 		};
 	}
 	// EVALUAR SI CANTAR EL TRUCO
 	this.cantartruco = () => {
-		this.jugarcarta();
+		console.log('cantartruco');
+		const mano = this.chicos[this.chicoencurso].mano;
+		// si J2 tiene el canto y no se canto vale 4 evaluo si cantar
+		if (mano.truco.cantojugador!==1 && mano.truco.puntos<4) {
+			// guardo los puntos en juego antes de querer o revirar
+			const trucopuntos = mano.truco.canto.reduce((total,num) => total+num ,0);
+			let cantotexto = "TRUCO";
+			let sumopuntos = 2;
+			// reviso en que vuelta estamos
+			switch (mano.vueltanum) {
+				case 0:
+					// en la 1ra no canto
+					this.jugarcarta();
+					break;
+				case 1:
+					// si la mejor carta de J2 es un 2 o mas canto
+					if (mano.cartas.j2[1].valor<9) {
+						switch (mano.truco.puntos){
+							case 2:
+								cantotexto = "Retruco";
+								sumopuntos = 1;
+								break;
+							case 3:
+								cantotexto = "Vale cuatro";
+								sumopuntos = 1;
+								break;
+						}
+						// sumo sumopuntos al canto
+						mano.truco.canto.push(sumopuntos);
+						// doy el canto al otro jugador
+						mano.truco.cantojugador = 1;
+						juego.setAttribute('trucocanto', mano.truco.canto.reduce((total,num) => total+num ,0));
+						juego.setAttribute('trucocantojugador', mano.truco.cantojugador);
+						document.querySelector('#cantotruco .canto').innerHTML = `<h3>${cantotexto}<h3>`;
+						document.querySelector('#cantotruco .puntos').innerHTML = mano.truco.canto.reduce((total,num) => total+num ,0);
+						//--console.log("no quiero el truco");
+						cantotruco.show();
+					} else {
+						this.jugarcarta();
+					}
+					break;
+				case 2:
+					// veo si J1 ya jugo o no
+					if (mano.vueltas[2].cartaj1?.valor !== undefined) {
+						/* CANTO 
+						- si J2 gana el truco
+						- si la carta de J1 es 12 o menos 
+						*/
+						if (
+							mano.vueltas[2].cartaj1.valor > mano.cartas.j2[0].valor || // la carta de J2 es mejor
+							(mano.vueltas[2].cartaj1.valor === mano.cartas.j2[0].valor && mano.vueltas[0].ganador === 2) || // la carta de J2 es igual pero gane la primera
+							(mano.vueltas[2].cartaj1.valor === mano.cartas.j2[0].valor && mano.vueltas[0].ganador === 0 && mano.vueltas[1].ganador === 0 && mano.vueltas[0].jugadormano === 1) ||  // la carta de J2 es igual, empatamos la 1ra y segunda pero J2 es mano
+							mano.vueltas[2].cartaj1.valor > 13
+						) {
+							switch (mano.truco.puntos){
+								case 2:
+									canto = "Retruco";
+									sumopuntos = 1;
+									// arrastro los puntos sumados a los puntos en juego
+									mano.truco.puntos=trucopuntos;
+									break;
+								case 3:
+									canto = "Vale cuatro";
+									sumopuntos = 1;
+									// arrastro los puntos sumados a los puntos en juego
+									mano.truco.puntos=trucopuntos;
+									break;
+							}
+							// sumo sumopuntos al canto
+							mano.truco.canto.push(sumopuntos);
+							// doy el canto al otro jugador
+							mano.truco.cantojugador = 1;
+							juego.setAttribute('trucocanto', mano.truco.canto.reduce((total,num) => total+num ,0));
+							juego.setAttribute('trucocantojugador', mano.truco.cantojugador);
+							document.querySelector('#cantotruco .canto').innerHTML = `<h3>${cantotexto}<h3>`;
+							document.querySelector('#cantotruco .puntos').innerHTML = mano.truco.canto.reduce((total,num) => total+num ,0);
+							//--console.log("no quiero el truco");
+							cantotruco.show();
+						} else {
+							this.jugarcarta();	
+						}
+
+					} else {
+						/* CANTO 
+						- si la carta de J2 es 2 o mejor 
+						*/
+						if (mano.cartas.j2[0].valor < 9) {
+							switch (mano.truco.puntos){
+								case 2:
+									canto = "Retruco";
+									sumopuntos = 1;
+									// arrastro los puntos sumados a los puntos en juego
+									mano.truco.puntos=trucopuntos;
+									break;
+								case 3:
+									canto = "Vale cuatro";
+									sumopuntos = 1;
+									// arrastro los puntos sumados a los puntos en juego
+									mano.truco.puntos=trucopuntos;
+									break;
+							}
+							// sumo sumopuntos al canto
+							mano.truco.canto.push(sumopuntos);
+							// doy el canto al otro jugador
+							mano.truco.cantojugador = 1;
+							juego.setAttribute('trucocanto', mano.truco.canto.reduce((total,num) => total+num ,0));
+							juego.setAttribute('trucocantojugador', mano.truco.cantojugador);
+							document.querySelector('#cantotruco .canto').innerHTML = `<h3>${cantotexto}<h3>`;
+							document.querySelector('#cantotruco .puntos').innerHTML = mano.truco.canto.reduce((total,num) => total+num ,0);
+							//--console.log("no quiero el truco");
+							cantotruco.show();
+						} else {
+							this.jugarcarta();	
+						}
+					}
+					break;
+			}
+		} else {
+			this.jugarcarta();
+		}
+
 	}
 	// EVALUAR SI QUERER EL ENVIDO
 	this.quererenvido = () => {
@@ -448,7 +580,8 @@ function Partido (objeto) {
 		const mienvido = mano.envido.envidoJ2;
 		// guardo los puntos en juego antes de querer o revirar
 		const envidopuntos = mano.envido.canto.reduce((total,num) => total+num ,0);
-		//const ultimocanto = envido.canto[envido.canto.length-1];
+		// veo cuantos puntos le faltan al que va ganando para llegar a 30
+		let faltapuntos = this.chicos[this.chicoencurso].puntos1 > this.chicos[this.chicoencurso].puntos2 ? this.puntostotal-this.chicos[this.chicoencurso].puntos1 :this.puntostotal-this.chicos[this.chicoencurso].puntos2;
 		/*
 		*/
 		// veo si jugamos con flor, si tengo flor y si no soy mano
@@ -456,8 +589,11 @@ function Partido (objeto) {
 			document.querySelector('#cantoenvido .canto').innerHTML = '<h1>¡Flor!<h1>';
 			document.querySelector('#cantoenvido').className = "modal flor"
 			cantoenvido.show();
-		} else if (mienvido.envido>22 && mienvido.envido<27) { // si mi envido es mayor a 22 quiero
-		//--console.log("quiero el envido");
+		} else if ((mienvido.envido>22 && mienvido.envido<27) || (mienvido.envido>22 && envidopuntos>=faltapuntos)) { 
+			/* QUIERO EL ENVIDO:
+			- si mi envido es mayor a 22  y menor a 27
+			- si mi envido es mayor a 22  y los puntos en juego alcanzan para cerrar el chico.
+			*/
 			mano.envido.querido = 1;
 			mano.envido.puntos = envidopuntos;
 			document.querySelector('#envidoJ1').setAttribute('value',mano.envido.envidoJ1.envido);
@@ -467,9 +603,11 @@ function Partido (objeto) {
 				document.querySelector('#cantoenvido .envidoJ2').innerHTML =`<h3>Tengo ${mano.envido.envidoJ2.envido}</h3>`;
 			}
 			cantoenvido.show();
-		} else if (mienvido.envido>26 && mienvido.envido<30) {
-		//--console.log("reviro el envido");
-			// reviro el envido
+		} else if ((mienvido.envido>26 && mienvido.envido<30) || (mienvido.envido>26 && envidopuntos+2>=faltapuntos)) {
+			/* REVIDO CON ENVIDO:
+			- si mi envido es mayor a 26 y menor a 30 
+			- si mi envido es mayor a 26 los puntos en juego +2 alcanzan para cerrar el chico
+			*/
 			// guardo los puntos en juego hasta el momento
 			mano.envido.puntos = envidopuntos;
 			// sumo 2 puntos al canto
@@ -482,8 +620,9 @@ function Partido (objeto) {
 			document.querySelector('#cantoenvido .puntos').innerHTML = mano.envido.canto.reduce((total,num) => total+num ,0);
 			cantoenvido.show();
 		} else if (mienvido.envido>29) {
-		//--console.log("reviro real envido");
-			// reviro real envido
+			/* REVIDO CON ENVIDO:
+			- si mi envido es mayor a 29 y faltan menos puntos para cerrar el chico que los puntos en juego
+			*/
 			// guardo los puntos en juego hasta el momento
 			mano.envido.puntos = envidopuntos;
 			// sumo 3 puntos al canto
@@ -512,25 +651,62 @@ function Partido (objeto) {
 		// reviso en que vuelta estamos
 		switch (mano.vueltanum) {
 			case 0:
-				// guardo el valor combinado de las 3 cartas
-				let val3cartas = mano.cartas.j2[0].valor + mano.cartas.j2[1].valor + mano.cartas.j2[2].valor;
-				// guardo el valor combinado de las 2 mejores cartas
-				let val2cartas = mano.cartas.j2[1].valor + mano.cartas.j2[2].valor;
 				// si no se canto envido reviso s1 cantar
 				if (mano.envido.cantojugador===0){
-					quererenvido();
-				} else if (val3cartas<43) {
+					this.cantarenvido();
+				} else if (this.valcartasJ2.val3<43 || this.valcartasJ2.val2<17) {
 					//--console.log("quiero el truco");
 					mano.truco.querido = 1;
 					mano.truco.puntos = trucopuntos;
 					juego.setAttribute("trucoquerido","1");
 					document.querySelector('#cantotruco .canto').innerHTML =`<h3>Quiero</h3>`;
 					cantotruco.show();
+				} else {
+					//--console.log("no quiero el truco");
+ 					document.querySelector('#cantotruco .canto').innerHTML =`<h3>No Quiero</h3>`;
+					mano.truco.ganador = 1;
+					cantotruco.show();
 				}
 				break;
 			case 1:
+				// si J2 gano o empato la primera mano verifico el valor de la carta mejor que queda, sino evaluo el valor de las 2 cartas que quedan
+				// valor de la carta en la mano
+				let valcartaJ21 = mano.cartas.j2[0].valor;
+				// veo si ya jugue la carta de la 2da mano y asigno el valor
+				let valcartaJ22 = mano.cartas.j2.length === 2 ? mano.cartas.j2[1].valor : mano.vueltas[1].cartaj2.valor;
+				let sumavalores = valcartaJ21 + valcartaJ22;
+				let mejorcarta = valcartaJ21 < valcartaJ22 ? valcartaJ21 : valcartaJ22;
+				if ((mano.vueltas[0].ganador !== 1 && mejorcarta<15) || sumavalores<21){
+					//--console.log("quiero el truco");
+					mano.truco.querido = 1;
+					mano.truco.puntos = trucopuntos;
+					juego.setAttribute("trucoquerido","1");
+					document.querySelector('#cantotruco .canto').innerHTML =`<h3>Quiero</h3>`;
+					cantotruco.show();
+				} else {
+					//--console.log("no quiero el truco");
+ 					document.querySelector('#cantotruco .canto').innerHTML =`<h3>No Quiero</h3>`;
+					mano.truco.ganador = 1;
+					cantotruco.show();
+				}
 				break;
 			case 2:
+				// valuo el valor de la cartas que queda
+				// veo si ya jugue la carta de la 2da mano y asigno el valor
+				let valcartaJ23 = mano.cartas.j2.length === 1 ? mano.cartas.j2[0].valor : mano.vueltas[2].cartaj2.valor;
+				if (valcartaJ23<19){
+					//--console.log("quiero el truco");
+					mano.truco.querido = 1;
+					mano.truco.puntos = trucopuntos;
+					juego.setAttribute("trucoquerido","1");
+					document.querySelector('#cantotruco .canto').innerHTML =`<h3>Quiero</h3>`;
+					cantotruco.show();
+				} else {
+					//--console.log("no quiero el truco");
+ 					document.querySelector('#cantotruco .canto').innerHTML =`<h3>No Quiero</h3>`;
+					mano.truco.ganador = 1;
+					cantotruco.show();
+				}
 				break;
 		}
 	}
@@ -581,7 +757,7 @@ function Partido (objeto) {
 		// llamo a la funcion para actualizar el estado del juego
 		this.actualizarestado();
 	}
-	// METODOS PARA QUE JUEGUE J1
+	// METODOS PARA QUE JUEGUE J1 ENVIDO
 	this.cantarenvidoJ1 = (accion) => {
 		const mano = this.chicos[this.chicoencurso].mano;
 		// tiempo para "pensar"
@@ -650,7 +826,6 @@ function Partido (objeto) {
 				// verifico si no se canto envido
 				// veo cuantos puntos le faltan al que va ganando para llegar a 30
 				let faltapuntos = this.chicos[this.chicoencurso].puntos1 > this.chicos[this.chicoencurso].puntos2 ? this.puntostotal-this.chicos[this.chicoencurso].puntos1 :this.puntostotal-this.chicos[this.chicoencurso].puntos2;
-				console.log(faltapuntos);
 				if (mano.envido.cantojugador===0){
 					// sumo los puntos que le falta al que va ganando para llegar a 30 al canto
 					mano.envido.canto = [faltapuntos];
@@ -694,17 +869,28 @@ function Partido (objeto) {
 				break;
 			}
 	}
-	// EVALUAR SI CANTAR EL TRUCO
 	// METODOS PARA QUE JUEGUE J1 TRUCO
 	this.cantartrucoJ1 = (accion) => {
+		console.log(accion);
 		const mano = this.chicos[this.chicoencurso].mano;
+		// guardo los puntos en juego antes de querer o revirar
+		const trucopuntos = mano.truco.canto.reduce((total,num) => total+num ,0);
 		// tiempo para "pensar"
 		let pausa = Math.floor(Math.random() * 1500) + 500;
 		switch (accion) {
 			case "quiero":
+				mano.truco.querido = 1;
+				mano.truco.puntos = trucopuntos;
+				juego.setAttribute("trucoquerido","1");
+				cantotruco.hide();
+				this.actualizarestado();
 				break;
 			case "noquiero":
 			case "mevoyalmazo":
+				mano.truco.ganador = 2;
+				juego.setAttribute("trucoganador","2");
+				cantotruco.hide();
+				this.actualizarestado();
 				break;
 			case "truco":
 				// sumo 2 puntos al canto
@@ -713,11 +899,12 @@ function Partido (objeto) {
 				mano.truco.cantojugador = 2;
 				juego.setAttribute('trucocanto', mano.truco.canto.reduce((total,num) => total+num ,0));
 				juego.setAttribute('trucocantojugador', mano.truco.cantojugador);
+				document.querySelector('#cantotruco .puntos').innerHTML = mano.truco.canto.reduce((total,num) => total+num ,0);
 				setTimeout(() => this.querertruco(), pausa);
 				break;
 			case "retruco":
 			case "valecuatro":
-					// arrastro los puntos sumados a los puntos en juego
+				// arrastro los puntos sumados a los puntos en juego
 				mano.truco.puntos=mano.truco.canto.reduce((total,num) => total+num ,0);
 				// sumo 1 punto al canto
 				mano.truco.canto.push(1);
@@ -727,7 +914,11 @@ function Partido (objeto) {
 				juego.setAttribute('trucocantojugador', mano.truco.cantojugador);
 				setTimeout(() => this.querertruco(), pausa);
 				break;
-		}
+			case "cerrar":
+				cantotruco.hide();
+				this.actualizarestado();
+				break;
+			}
 	}
 	// ACTUALIZAR EL ESTADO DEL JUEGO
 	this.actualizarestado = () => {
@@ -787,9 +978,16 @@ function Partido (objeto) {
 						mano.truco.ganador = mano.vueltas[2].ganador;
 					}
 				}
+		} else if (mano.vueltas[mano.vueltanum].cartaj1?.valor === undefined && mano.vueltas[mano.vueltanum].cartaj2?.valor === undefined && mano.truco.cantojugador === 2 && mano.truco.ganador===0 && mano.truco.querido===0 ){ // si el J1 canto truco antes de que J2 cantara envido llamo a querertruco
+			this.querertruco();
 		}
 	//--console.log(mano.truco);
-		if (mano.truco.ganador===0){
+		// si el ganador del envido ya suma puntos para cerrar el chico cierro la mano
+		const puntosganadorenvido = this.chicos[this.chicoencurso]["puntos"+mano.envido.ganador]+mano.envido.puntos;
+		console.log(puntosganadorenvido);
+		if (puntosganadorenvido>=this.puntostotal){
+			this.cerrarmano();
+		} else if (mano.truco.ganador===0){
 			juego.setAttribute('vueltanum', mano.vueltanum);
 			juego.setAttribute('jugadormano', mano.jugadormano);
 			juego.setAttribute('jugadorturno', mano.jugadorturno);
@@ -825,6 +1023,7 @@ function Partido (objeto) {
 		} else {
 			this.cerrarmano();
 		}
+		
 		console.log(mano);
 	}
 	// CERRAR EL ENVIDO
@@ -840,7 +1039,7 @@ function Partido (objeto) {
 			// guando el envido cantado para verificar al cerrar la mano que canto bien
 			mano.envido.cantojugador = cantoJ1; 
 			// asigno el ganador de acuerdo al que tenga mas envido o en caso de empate el que sea mano
-			mano.envido.ganador = (mano.envido.envidoJ2.envido>cantoJ1 || (mano.envido.envidoJ2.enviso === cantoJ1 && mano.jugadormano === 2)) ? 2 : 1;
+			mano.envido.ganador = (mano.envido.envidoJ2.envido>cantoJ1 || (mano.envido.envidoJ2.envido === cantoJ1 && mano.jugadormano === 2)) ? 2 : 1;
 			juego.setAttribute('envidoganador', mano.envido.ganador);
 			if (mano.jugadormano === 2) {
 				cantoenvido.hide();
@@ -856,7 +1055,7 @@ function Partido (objeto) {
 		chico["puntos"+mano.envido.ganador] += mano.envido.puntos;
 		chico["puntos"+mano.truco.ganador] += mano.truco.puntos;
 		document.querySelector('#cierromano .mensaje').innerHTML = mano.envido.ganador === 0 ? "" : `<p>${this.jugadores[mano.envido.ganador-1].jugadornombre} ganó ${mano.envido.puntos} del envido.</p>`
-		document.querySelector('#cierromano .mensaje').innerHTML += `<p>${this.jugadores[mano.truco.ganador-1].jugadornombre} ganó ${mano.truco.puntos} del truco.</p>
+		document.querySelector('#cierromano .mensaje').innerHTML += mano.truco.ganador === 0 ? "" : `<p>${this.jugadores[mano.truco.ganador-1].jugadornombre} ganó ${mano.truco.puntos} del truco.</p>
 <p>Puntos</p>
 <p>${this.jugadores[0].jugadornombre}: ${chico.puntos1}</p>
 <p>${this.jugadores[1].jugadornombre}: ${chico.puntos2}</p>`;
@@ -1061,6 +1260,10 @@ cambiarjugador.onclick = (e) => {
 botoncerrarpartido.onclick = (e) => {
 	body.classList.remove("jugando");
 	document.querySelector('#cierromano').className = `modal`;
+	document.querySelector(',tanteador .chicos.pj1').innerHTML = "";
+	document.querySelector(',tanteador .chicos.pj2').innerHTML = "";
+	document.querySelector(',tanteador .puntos.pj2').innerHTML = "";
+	document.querySelector(',tanteador .puntos.pj2').innerHTML = "";
 }
 
 
