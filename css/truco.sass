@@ -8,6 +8,8 @@ body
 		height: 100vh
 		background: #060   
 		color: #FFF
+		#conflor
+			color: #000
 	&.sindatos
 		.inicio
 			.jugadornuevo
@@ -26,6 +28,22 @@ body
 			position: absolute
 			bottom: 0
 			width: 100%
+			.tiempo
+				color: #FFF
+				position: relative
+				padding: 1rem
+				font-size: 1.2rem
+				font-style: italic
+				text-transform: uppercase
+				text-align: center
+				&::before
+					position: absolute
+					top: 0
+					left: 0
+					right: 0
+					text-align: center
+					content: attr(data-text)
+					font-size: .8rem
 			.chicos
 				color: #FFF
 				position: relative

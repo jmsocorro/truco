@@ -103,8 +103,8 @@
 							<div class="row">
 								<div class="col-6">
 									<div class="form-check form-switch">
-										<input class="form-check-input" type="checkbox" role="switch" id="flor" >
-										<label class="form-check-label" for="flor">¿Jugamos con flor?</label>
+										<input class="form-check-input disabled" disabled type="checkbox" role="switch" id="flor" >
+										<label class="form-check-label" for="flor" id="labelflor">¿Jugamos con flor?</label>
 									</div>
 								</div>
 								<div class="col-6">
@@ -123,14 +123,30 @@
 				</div>
 			</div>
 		  </div>
+		  <div class="modal" tabindex="-1" id="conflor" data-bs-backdrop="static">
+			<div class="modal-dialog">
+			  <div class="modal-content">
+				<div class="modal-body text-center row">
+					<div class="canto mb-4 col-12"><h3>¿Queres jugar con flor?</h3></div>
+					<div class="puntos mb-4 col-12"><h4>Eso es para los que no saben jugar al truco</h4></div>
+					<div class="botones col-12">
+						<div class="mb-2 ">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Cerrar</button>
+						</div>
+					</div>
+				</div>
+			  </div>
+			</div>
+		</div>		  
 	</section>
 	<section class="juego container-fluid">
 		<div class="row">
 			<div class="col-12 col-lg-6 order-1 position-relative pt-5">
 				<div class="tanteador row">
-					<div class="chicos pj1 col-2 order-4" data-text="Chicos J1"></div>
-					<div class="puntos pj1 col-4 order-3" data-text="PUNTOS J1"></div>
-					<div class="puntos pj2 col-4 order-2" data-text="PUNTOS JSAI"></div>
+					<div class="chicos pj1 col-2 order-5" data-text="Chicos J1"></div>
+					<div class="puntos pj1 col-3 order-4" data-text="PUNTOS J1"></div>
+					<div class="tiempo col-2 order-3" data-text="Minutos Jugados"></div>
+					<div class="puntos pj2 col-3 order-2" data-text="PUNTOS JSAI"></div>
 					<div class="chicos pj2 col-2 order-1" data-text="Chicos JSAI"></div>
 				</div>
 				<div class="accionesjugador1 row position-absolute w-100">
@@ -237,7 +253,7 @@
 			</div>
 		</div>		  
 	</section>
-	
+	<script src="./js/luxon.min.js"></script>	
 	<script src="./js/bootstrap.bundle.min.js"></script>
 	<script language="javascript" type="text/javascript" src="./js/truco.js"></script>
 	</body>

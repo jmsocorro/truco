@@ -303,6 +303,7 @@ function Partido (objeto) {
 	this.jugadores = objeto.jugadores;
 	this.chicos = [];
 	this.chicoencurso = 0;
+	this.horainicio = DateTime.now();
 	this.mazo = new Mazo();
 	this.valcartasJ2 = {
 		val3: 120,
@@ -923,6 +924,12 @@ function Partido (objeto) {
 	// ACTUALIZAR EL ESTADO DEL JUEGO
 	this.actualizarestado = () => {
 		console.log('actualizarestado');
+		// actualizo el tiempo transcurrido de la partida
+		const intervalos = luxon.Interval;
+		const fechaactualizacion = DateTime.now();
+		const tiempodejuego = intervalos.fromDateTimes(this.horainicio, fechaactualizacion);
+		document.querySelector('.tanteador .tiempo').innerHTML = parseInt(tiempodejuego.length('minutes'));
+
 		const mano = this.chicos[this.chicoencurso].mano;
 	//--console.log(mano, this.chicoencurso);
 		// Veo que cartas se jugaron en la vuelta y asigno jugadorturno
@@ -1178,6 +1185,8 @@ const cargarnuevopartido = (datospartido) => {
 	});
 	return nuevopartido;
 }
+// inicializo la variable de luxon
+const DateTime = luxon.DateTime;
 
 // asigno los elementos html a las variables
 // espacios
@@ -1194,6 +1203,7 @@ let inputpuntostotal = document.querySelector('[name="puntostotal"]:checked');
 let inputchicos = document.querySelector('[name="chicos"]:checked'); 
 let inputflor = document.querySelector('#flor');
 let inputjugadormano = document.querySelector('#jugadormano');
+let labelflor = document.querySelector('#labelflor');
 // elementos de la mesa
 // cartas en la mesa
 // jugador 1
@@ -1221,6 +1231,7 @@ const botonesrepartir = document.querySelectorAll('button.repartir')
 const cantoenvido = new bootstrap.Modal('#cantoenvido');
 const cantotruco = new bootstrap.Modal('#cantotruco');
 const cierromano = new bootstrap.Modal('#cierromano');
+const conflor = new bootstrap.Modal('#conflor');
 const botonesenvidoaccion = document.querySelectorAll('#cantoenvido button.botonaccion, .accionesjugador1 .envido button.botonaccion');
 const botonestrucoaccion = document.querySelectorAll('#cantotruco button.botonaccion, .accionesjugador1 .truco button.botonaccion');
 /*
@@ -1233,9 +1244,11 @@ const modalfaltaenvido = document.querySelector("#modalfaltaenvido"):
 
 // Busco los datos guardados en localStorage y los guardo. Si no hay datos genero el objeto
 const datosguardados = localStorage.getItem('datos') === null ? { jugadores: [], jugadoractivo : false} : JSON.parse(localStorage.getItem('datos'));
+let jugadoresbbdd;
 if (datosguardados.jugadoractivo === false) {
 	// Agrego una class al body para marcar que NO HAY datos
 	body.className = "sindatos";
+	
 } else {
 	// Agrego una class al body para marcar que HAY datos y los copleto
 	body.className = "jugadoractivo";
@@ -1265,7 +1278,10 @@ botoncerrarpartido.onclick = (e) => {
 	document.querySelector(',tanteador .puntos.pj2').innerHTML = "";
 	document.querySelector(',tanteador .puntos.pj2').innerHTML = "";
 }
-
+// jugar con flor
+labelflor.onclick = () => {
+	conflor.show();
+}
 
 // Capturo los datos del form e inicio el partido
 formdatospartido.onsubmit = (e) => {
@@ -1301,6 +1317,38 @@ formdatospartido.onsubmit = (e) => {
 		// cambio el class del body a "jugadoractivo"
 		body.classList.remove("sindatos");
 		body.classList.add("jugadoractivo");
+		// busco el mail del jugador en los jugador en los jugadores de la BBDD
+		let jugadorguardado = false;
+		// busco usuarios en la base de datos
+		fetch('https://api.jsonstorage.net/v1/json/7e2093a7-3b66-461c-a119-c86d353146b1/b54647b1-2752-4b1d-9193-c7ed5d86e700')
+			.then((response) => response.json())
+			.then((data) => {
+				jugadoresbbdd = data
+				jugadoresbbdd.forEach((jugador) => {
+					if (jugador.jugadormail === datospartido.jugadormail){
+						jugadorguardado = true;
+					}
+				});
+				console.log(jugadorguardado);
+				if (jugadorguardado === false){
+					fetch('https://api.jsonstorage.net/v1/json/7e2093a7-3b66-461c-a119-c86d353146b1/b54647b1-2752-4b1d-9193-c7ed5d86e700?apiKey=cdba6a81-10bf-4f9a-8885-73e785a58675', {
+						method: 'POST',
+						headers: {
+						'Content-Type': 'application/json; charset=utf-',
+						'dataType': 'json',
+						},
+						body: JSON.stringify(JSON.stringify(datosguardados)),
+					})
+						.then((response) => response.json())
+						.then((data) => {
+						console.log('Success:', data);
+						})
+						.catch((error) => {
+						console.error('Error:', error);
+						});		
+				}
+			});
+		// Si el jugador no esta en la bbdd subo la informacion
 	}
 	//--console.log(datosguardados);
 	// creamos un nuevo partido
